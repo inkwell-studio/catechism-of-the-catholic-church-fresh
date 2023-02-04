@@ -1,0 +1,17 @@
+{
+    "tasks": {
+        "build-mock-data": "deno run --allow-read --allow-write utils/mock-data/build.ts"
+    },
+    "fmt": {
+        "files": {
+            "exclude": [
+                "utils/mock-data/output"
+            ]
+        },
+        "options": {
+            "indentWidth": 4,
+            "lineWidth": 120,
+            "singleQuote": true
+        }
+    }
+}
