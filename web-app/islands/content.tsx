@@ -27,7 +27,7 @@ export default function Content() {
         const content = getContent(state.value.path);
         return (
             <main>
-                {content.map(c => ContentBase(c))}
+                {content.map((c) => ContentBase(c))}
             </main>
         );
     }
@@ -123,9 +123,9 @@ function ChapterContent(chapter: Chapter) {
 function InBriefContent(inBrief: InBrief) {
     return (
         <div class='border border-red-900/15 border-2 rounded p-3 my-4'>
-            <strong class="font-sans text-lg block mb-1">In Brief</strong>
+            <strong class='font-sans text-lg block mb-1'>In Brief</strong>
             <ol>
-                {inBrief.mainContent.map((c) => <li class="mb-2">{ContentBase(c)}</li>)}
+                {inBrief.mainContent.map((c) => <li class='mb-2'>{ContentBase(c)}</li>)}
             </ol>
         </div>
     );

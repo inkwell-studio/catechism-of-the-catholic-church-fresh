@@ -26,7 +26,7 @@ export default {
                 fontFamily: 'PTSerif',
                 fontStyle: 'italic',
                 src: 'url(/fonts/PTSerif-Italic.ttf) format("truetype")',
-                },
+            },
             {
                 fontFamily: 'PTSerif',
                 fontWeight: 'bold',
@@ -47,28 +47,28 @@ export default {
             h4: apply('font-sans'),
             h5: apply('font-sans'),
             h6: apply('font-sans'),
-        }
+        },
     },
     theme: {
         colors: {
             tan: {
                 '50': 'hsl(36, 71%, 94%)',
-                '100': 'hsl(36, 29%, 83%)'
+                '100': 'hsl(36, 29%, 83%)',
             },
             red: {
                 '900': 'hsl(24, 45%, 20%)',
-                '900/15': 'hsl(24, 45%, 20%, 15%)'
-            }
+                '900/15': 'hsl(24, 45%, 20%, 15%)',
+            },
         },
         fontFamily: {
             sans: ['PTSans', 'sans-serif'],
             'sans-caption': ['PTSansCaption', 'sans-serif'],
-            serif: ['PTSerif', 'serif']
+            serif: ['PTSerif', 'serif'],
         },
         extend: {
             fontSize: {
                 'base': ['16px', '1.5rem'],
-            }
-        }
+            },
+        },
     },
 } as Options;
