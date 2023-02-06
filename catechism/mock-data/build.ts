@@ -32,9 +32,8 @@ function buildMockData(): CatechismStructure {
         prologue: buildPrologue('0'),
         parts: [
             buildPart(PartEnum.PART_ONE, 1),
-            // TODO: Revert
-            // buildPart(PartEnum.PART_TWO, 2),
-            // buildPart(PartEnum.PART_THREE, 3),
+            buildPart(PartEnum.PART_TWO, 2),
+            buildPart(PartEnum.PART_THREE, 3),
         ],
     };
 

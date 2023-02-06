@@ -26,7 +26,7 @@ export const Limits = {
         },
     },
     inBrief: {
-        paragraph: { min: 3, max: 3 },
+        paragraph: { min: 3, max: 5 },
     },
     paragraph: {
         crossReference: {
@@ -70,7 +70,7 @@ export const Probability = {
     },
     crossReference: {
         // The probability of creating a Paragraph cross reference from a Text object
-        create: 0.15,
+        create: 0.5,
         // The probability that multiple cross references will be created instead of a single one
         multiple: 0.20,
         // The probability that a cross reference will reference a range paragraphs instead of a single one
