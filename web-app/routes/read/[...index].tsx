@@ -1,7 +1,7 @@
 import { Head } from '$fresh/runtime.ts';
 
-import Content from '../../../islands/content.tsx';
-import { ActionBar } from '../../../components/action-bar.tsx';
+import Content from '../../islands/content.tsx';
+import { ActionBar } from '../../components/action-bar.tsx';
 
 export default function Home() {
     return (
