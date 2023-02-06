@@ -6,19 +6,13 @@ export default function Home() {
             <Head>
                 <title>Catechism</title>
             </Head>
-            <body class='bg-gray-500 text-gray-100 font-mono'>
-                <div class='h-[80vh] flex flex-col justify-center items-center'>
-                    <div class='text-lg sm:text-2xl md:text-2xl lg:text-3xl p-8 flex items-center'>
-                        <span className='text-4xl sm:text-6xl opacity-50'>[</span>
-                        <span class='px-4 text-center'>Under Construction</span>
-                        <span className='text-4xl sm:text-6xl opacity-50'>]</span>
-                    </div>
-                    <div class='font-italic text-sm sm:text-base'>
-                        <span>Please check back on February 7.</span>
-                    </div>
+            <body class="bg-tan-100">
+                <div class='h-[80vh] flex flex-col justify-center items-center px-8'>
+                    <h1 class="font-serif font-bold text-4xl md:text-5xl lg:text-6xl text-center">Catechism of&nbsp;the Catholic&nbsp;Church</h1>
+                    <h2 class='italic text-xl md:text-2xl lg:text-3xl my-4'>Proof of Concept</h2>
                 </div>
                 <a
-                    class='fixed bottom-0 left-0 right-0 text-center py-4 opacity-60 hover:opacity-100 transition-opacity'
+                    class='fixed bottom-0 left-0 right-0 text-center py-4 opacity-60 hover:opacity-100 transition-opacity font-sans md:text-lg'
                     href='mailto:joecode@tuta.io'
                 >
                     Contact
