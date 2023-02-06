@@ -7,11 +7,14 @@ export default function Home() {
                 <title>Catechism</title>
             </Head>
             <body class='bg-gray-500 text-gray-100 font-mono'>
-                <div class='h-[80vh] flex justify-center items-center'>
+                <div class='h-[80vh] flex flex-col justify-center items-center'>
                     <div class='text-lg sm:text-2xl md:text-2xl lg:text-3xl p-8 flex items-center'>
                         <span className='text-4xl sm:text-6xl opacity-50'>[</span>
                         <span class='px-4 text-center'>Under Construction</span>
                         <span className='text-4xl sm:text-6xl opacity-50'>]</span>
+                    </div>
+                    <div class='font-italic text-sm sm:text-base'>
+                        <span>Please check back on February 7.</span>
                     </div>
                 </div>
                 <a
