@@ -6,7 +6,7 @@ export default function Demo() {
             <Head>
                 <title>Catechism</title>
             </Head>
-            <body class='bg-gray-600 text-gray-100 font-mono'>
+            <body class='font-mono'>
                 <div className='h-screen flex flex-col justify-center items-center'>
                     <span>Demo</span>
                     {/* TODO: Add information */}

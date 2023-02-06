@@ -25,7 +25,11 @@ export default function Content() {
         return Intro();
     } else {
         const content = getContent(state.value.path);
-        return ContentBase(content);
+        return (
+            <main>
+                {content.map(c => ContentBase(c))}
+            </main>
+        );
     }
 }
 
@@ -100,7 +104,7 @@ function ArticleParagraphContent(articleParagraph: ArticleParagraph) {
 function BlockQuoteContent(blockQuote: BlockQuote) {
     // TODO: Handle opening content
     return (
-        <blockquote class='bg-green-100'>
+        <blockquote class='px-8 mb-4'>
             {TextContainerArray(blockQuote.mainContent)}
         </blockquote>
     );
@@ -117,12 +121,11 @@ function ChapterContent(chapter: Chapter) {
 }
 
 function InBriefContent(inBrief: InBrief) {
-    // TODO: Handle opening content
     return (
-        <div class='bg-gray-300'>
-            <strong>In Brief</strong>
+        <div class='border border-red-900/15 border-2 rounded p-3 my-4'>
+            <strong class="font-sans text-lg block mb-1">In Brief</strong>
             <ol>
-                {inBrief.mainContent.map((c) => <li>{ContentBase(c)}</li>)}
+                {inBrief.mainContent.map((c) => <li class="mb-2">{ContentBase(c)}</li>)}
             </ol>
         </div>
     );
@@ -131,8 +134,8 @@ function InBriefContent(inBrief: InBrief) {
 function ParagraphContent(paragraph: Paragraph) {
     // TODO: Handle opening content
     return (
-        <div class='mb-4 pr-12'>
-            <div class='text-sm align-text-bottom text-gray-600 font-bold inline mr-1 sm:text-lg sm:align-baseline sm:mr-2'>
+        <div class='pr-12'>
+            <div class='text-sm align-text-bottom font-bold inline mr-1 sm:text-lg sm:align-baseline sm:mr-2'>
                 {paragraph.paragraphNumber}
             </div>
             <div class='inline'>
@@ -200,7 +203,7 @@ function TextContainerArray(array: Array<ContentBase | TextContainer>) {
 function TextContainerContent(textContainer: TextContainer) {
     return (
         <span>
-            <span class='font-sans-caption text-sm absolute right-0 w-16 text-left bg-red-200'>
+            <span class='font-sans-caption text-xs absolute right-0 w-8 text-left'>
                 {textContainer.paragraphReferences.map((ref) => ref.toString()).join(', ')}
             </span>
             <span>

@@ -10,12 +10,12 @@ export default function Home() {
                 <title>Catechism of the Catholic Church</title>
             </Head>
             <div class='h-screen flex flex-col'>
-                <div class='overflow-y-scroll flex justify-center bg-gray-300'>
-                    <div class='relative max-w-xl h-[min-content] pl-4 pr-8 bg-gray-200'>
+                <div class='overflow-y-scroll flex justify-center bg-tan-100'>
+                    <div class='relative max-w-xl h-[min-content] pl-6 pr-8 bg-tan-50'>
                         <Content></Content>
                     </div>
                 </div>
-                <div class='bg-green-500'>
+                <div>
                     <ActionBar></ActionBar>
                 </div>
             </div>

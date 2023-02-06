@@ -5,7 +5,7 @@ import TrailHistorical from '../islands/trail-historical.tsx';
 
 export function ActionBar() {
     return (
-        <div class='bg-red-300'>
+        <div>
             <TrailHierarchical></TrailHierarchical>
             <TrailHistorical></TrailHistorical>
             <Menu></Menu>

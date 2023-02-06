@@ -39,7 +39,7 @@ export default {
                 src: 'url(/fonts/PTSerif-BoldItalic.ttf) format("truetype")',
             },
         ],
-        html: apply('font-serif'),
+        html: apply('font-serif text-red-900'),
         body: {
             h1: apply('font-sans'),
             h2: apply('font-sans'),
@@ -50,6 +50,16 @@ export default {
         }
     },
     theme: {
+        colors: {
+            tan: {
+                '50': 'hsl(36, 71%, 93%)',
+                '100': 'hsl(36, 29%, 83%)'
+            },
+            red: {
+                '900': 'hsl(24, 45%, 20%)',
+                '900/15': 'hsl(24, 45%, 20%, 15%)'
+            }
+        },
         fontFamily: {
             sans: ['PTSans', 'sans-serif'],
             'sans-caption': ['PTSansCaption', 'sans-serif'],

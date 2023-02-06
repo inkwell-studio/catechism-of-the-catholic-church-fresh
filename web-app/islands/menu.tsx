@@ -6,7 +6,7 @@ export default function Menu() {
     return (
         <>
             <div onClick={toggle} class='block sm:hidden'>[M]</div>
-            <div onClick={toggle} class={`hidden sm:block ${open.value ? 'bg-green-400' : 'bg-blue-400'}`}>
+            <div onClick={toggle} class={`hidden sm:block ${open.value ? 'bg-tan-50' : 'bg-tan-100'}`}>
                 [ Menu ]
             </div>
         </>
