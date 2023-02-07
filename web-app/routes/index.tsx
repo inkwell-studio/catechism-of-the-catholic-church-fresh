@@ -123,7 +123,8 @@ export default function Home() {
                         randomly.<br />
                     </Paragraph>
                     <Paragraph>
-                        Many features are not yet implemented. What you will see is primarily a demonstration of the layout, not interactive functionality.
+                        Many features are not yet implemented. What you will see is primarily a demonstration of the
+                        layout, not interactive functionality.
                     </Paragraph>
                     <Paragraph>
                         <div className='mt-3 mx-4 flex'>

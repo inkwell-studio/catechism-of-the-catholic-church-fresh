@@ -25,11 +25,7 @@ export default function Content() {
         return Intro();
     } else {
         const content = getContent(state.value.path);
-        return (
-            <main>
-                {content.map((c) => ContentBase(c))}
-            </main>
-        );
+        return content.map((c) => ContentBase(c));
     }
 }
 
