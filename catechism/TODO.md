@@ -1,3 +1,3 @@
 - add GitHooks for linting and formatting on commits [to just `master`, if possible]
 - implement unimplemented tests
-- add a test to ensure that all cross-references are paired (in `catechism.test.ts`) `./utils/`)
+- add a test to ensure that all cross-references are paired (in `catechism.test.ts`)
