@@ -119,25 +119,18 @@ export default function Home() {
 
                     <Title highlight={true}>View the Demo</Title>
                     <Paragraph>
-                        <span class='italic'>
-                            Please check back later today, February 7, 2023.
-                        </span>
-                    </Paragraph>
-                    {
-                        /*
-                    <Paragraph>
-                        The sample text is from Matthew's Gospel, and bold and italic text formatting is added randomly.<br/>
+                        The sample text is from Matthew's Gospel, and bold and italic text formatting is added
+                        randomly.<br />
                     </Paragraph>
                     <Paragraph>
                         Many features are not yet implemented.
                     </Paragraph>
                     <Paragraph>
-                        <div className='mt-4 flex justify-center'>
-                            <ButtonLink newTab={false} classes='w-full  text-lg' href='/read' text='Enter'></ButtonLink>
+                        <div className='mt-3 flex justify-center'>
+                            <ButtonLink newTab={false} classes='w-full text-lg mx-4' href='/read' text='Enter'>
+                            </ButtonLink>
                         </div>
                     </Paragraph>
-                    */
-                    }
                 </div>
                 <div class='bg-red-900 w-full h-6 md:h-8 opacity-70 mt-8 md:mt-16 md:opacity-80'>&nbsp;</div>
             </body>
