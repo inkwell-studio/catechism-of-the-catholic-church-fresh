@@ -107,7 +107,7 @@ export default function Home() {
                     <Paragraph>
                         If you would like to see the code or contact&nbsp;the&nbsp;developer, please&nbsp;do&nbsp;so:
                     </Paragraph>
-                    <div className='my-4 flex justify-center'>
+                    <div className='my-4 mx-4 flex flex-col md:flex-row gap-3'>
                         <ButtonLink
                             newTab={true}
                             href='https://github.com/inkwell-studio/catechism-of-the-catholic-church'
@@ -126,8 +126,8 @@ export default function Home() {
                         Many features are not yet implemented.
                     </Paragraph>
                     <Paragraph>
-                        <div className='mt-3 flex justify-center'>
-                            <ButtonLink newTab={false} classes='w-full text-lg mx-4' href='/read' text='Enter'>
+                        <div className='mt-3 mx-4 flex'>
+                            <ButtonLink newTab={false} href='/read' text='Enter'>
                             </ButtonLink>
                         </div>
                     </Paragraph>
@@ -153,15 +153,14 @@ function Paragraph({ children }) {
     return <p class='px-4 mb-2'>{children}</p>;
 }
 
-function ButtonLink({ href, text, newTab, classes }) {
+function ButtonLink({ href, text, newTab }) {
     const target = newTab ? '_blank' : '';
 
     return (
         <a
             href={href}
             target={target}
-            class={classes +
-                ' inline-block font-sans text-center border border-2 rounded bg-tan-50/20 hover:bg-tan-50 transition-bg p-3 mt-2 mr-3'}
+            class='flex-grow inline-block font-sans text-center border border-2 rounded bg-tan-50/20 hover:bg-tan-50 transition-bg p-3'
         >
             {text}
         </a>
