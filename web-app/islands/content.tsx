@@ -203,7 +203,7 @@ function TextContainerArray(array: Array<ContentBase | TextContainer>) {
 function TextContainerContent(textContainer: TextContainer) {
     return (
         <span>
-            <span class='font-sans-caption text-xs absolute right-0 w-8 text-left'>
+            <span class='absolute right-0 font-sans-caption text-xs text-left pt-1 w-6 sm:w-14 md:w-12 lg:w-20 xl:w-24'>
                 {textContainer.paragraphReferences.map((ref) => ref.toString()).join(', ')}
             </span>
             <span>
