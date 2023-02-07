@@ -53,6 +53,7 @@ export default {
         colors: {
             tan: {
                 '50': 'hsl(36, 71%, 94%)',
+                '50/20': 'hsl(36, 71%, 94%, 20%)',
                 '100': 'hsl(36, 29%, 83%)',
             },
             red: {
@@ -68,6 +69,9 @@ export default {
         extend: {
             fontSize: {
                 'base': ['16px', '1.5rem'],
+            },
+            screens: {
+                xs: '320px',
             },
         },
     },
