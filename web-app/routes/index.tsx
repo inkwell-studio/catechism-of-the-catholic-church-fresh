@@ -86,10 +86,9 @@ export default function Home() {
                         <span class='italic'>Please check back later today, February 7, 2023.</span>
                     </Paragraph>
 
-                    <Title>Seeing More</Title>
+                    <Title>Learning More</Title>
                     <Paragraph>
-                        If you would like more information, you may view the source code or email me, the sole
-                        developer:
+                        If you would like to see the code or contact the sole developer, please do so:
                     </Paragraph>
                     <div className='my-4 flex justify-center'>
                         <ButtonLink
