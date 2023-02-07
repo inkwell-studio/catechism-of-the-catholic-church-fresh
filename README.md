@@ -1,6 +1,6 @@
-# Catechism of the Catholic Church:
+# Catechism of the Catholic Church
 
-_A proof-of-concept of how the Catechism can be presented online in a more user-friendly way._
+_A proof-of-concept showing how the Catechism can be presented online in a more user-friendly way._
 
 ## Development
 
