@@ -14,10 +14,10 @@ _A proof-of-concept showing how the Catechism can be presented online in a more 
 
 ### Tasks
 
-- `deno fmt` (all code is formatted with this)
+- `deno fmt` (code formatting)
 - `deno test`
-- `deno task build-mock-data` (see [`./catechism/mock-data/README.md`]())
-- `deno task web-app-start` (for running the web app locally)
+- `deno task build-mock-data`
+- `deno task web-app-start`
 
 ### Committing changes
 
