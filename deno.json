@@ -1,14 +1,9 @@
 {
     "tasks": {
-        "build-mock-data": "deno run --allow-read --allow-write catechism/mock-data/build.ts",
+        "build-mock-data": "deno run --allow-read --allow-write content/mock-data/build.ts",
         "web-app-start": "deno run -A --watch=static/,routes/ web-app/dev.ts"
     },
     "fmt": {
-        "files": {
-            "exclude": [
-                "utils/mock-data/output"
-            ]
-        },
         "options": {
             "indentWidth": 4,
             "lineWidth": 120,

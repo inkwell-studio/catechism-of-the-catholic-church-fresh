@@ -1,5 +1,5 @@
 import { signal } from '@preact/signals';
-import { PathID } from '../../catechism/source/types/types.ts';
+import { PathID } from '../../content/source/types/types.ts';
 
 export type State = {
     path: PathID;

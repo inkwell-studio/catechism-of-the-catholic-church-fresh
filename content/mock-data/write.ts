@@ -11,9 +11,9 @@ export function writeSourceCode(catechism: CatechismStructure): void {
     const texts = getTextValuesSourceCode(results.texts);
     const catechismCode = getCatechismSourceCode(results.catechism);
 
-    Deno.writeTextFileSync(join('catechism/source/types', 'text-key.ts'), textKeys);
-    Deno.writeTextFileSync(join('catechism/source/text', 'text-en.ts'), texts);
-    Deno.writeTextFileSync(join('catechism/source', 'catechism.ts'), catechismCode);
+    Deno.writeTextFileSync(join('content/source/types', 'text-key.ts'), textKeys);
+    Deno.writeTextFileSync(join('content/source/text', 'text-en.ts'), texts);
+    Deno.writeTextFileSync(join('content/source', 'catechism.ts'), catechismCode);
 }
 
 function getTextKeysSourceCode(texts: Array<TextKeyAndValue>): string {
@@ -23,7 +23,7 @@ function getTextKeysSourceCode(texts: Array<TextKeyAndValue>): string {
         .map((entry) => `${entry.key} = '${entry.key}',`)
         .join('\n' + indent);
 
-    return `\
+    return `// deno-fmt-ignore-file
 /**
  * Double-underscores are used to separate parts (e.g. "Prologue" from "Sub-article")
  */
@@ -39,7 +39,7 @@ function getTextValuesSourceCode(texts: Array<TextKeyAndValue>): string {
         .map((entry) => `[TextKey.${entry.key}]: \`${entry.value}\`,`)
         .join('\n' + indent);
 
-    return `\
+    return `// deno-fmt-ignore-file
 import { CatechismText, TextKey } from '../types/types.ts';
 
 /**

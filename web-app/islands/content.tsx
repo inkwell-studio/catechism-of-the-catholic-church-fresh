@@ -17,7 +17,7 @@ import {
     Subarticle,
     Text,
     TextContainer,
-} from '../../catechism/source/types/types.ts';
+} from '../../content/source/types/types.ts';
 
 export default function Content() {
     // TODO: Fix
