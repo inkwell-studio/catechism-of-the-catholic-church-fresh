@@ -9,9 +9,9 @@ export default function Home() {
             <Head>
                 <title>Catechism of the Catholic Church</title>
             </Head>
-            <div class='h-screen flex flex-col'>
-                <div class='overflow-y-scroll flex justify-center bg-tan-100'>
-                    <div class='relative max-w-xl h-[min-content] pl-6 pr-8 bg-tan-50'>
+            <div class='h-screen flex flex-col bg-tan-100'>
+                <div class='overflow-y-scroll flex justify-center'>
+                    <div class='relative max-w-xl h-[min-content] pl-6 pr-8 bg-tan-50 py-4 my-8 text-justify'>
                         <Content></Content>
                     </div>
                 </div>
