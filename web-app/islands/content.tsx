@@ -134,8 +134,8 @@ function InBriefContent(inBrief: InBrief) {
 function ParagraphContent(paragraph: Paragraph) {
     // TODO: Handle opening content
     return (
-        <div class='pr-12'>
-            <div class='text-sm align-text-bottom font-bold inline mr-1 sm:text-lg sm:align-baseline sm:mr-2'>
+        <div class=''>
+            <div class='text-sm align-text-bottom font-bold inline mr-1 sm:mr-2 sm:text-lg sm:align-baseline'>
                 {paragraph.paragraphNumber}
             </div>
             <div class='inline'>
