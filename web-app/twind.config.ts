@@ -63,7 +63,7 @@ export default {
             purple: {
                 '900': '#0f1f6b',
             },
-            white: '#fff'
+            white: '#fff',
         },
         fontFamily: {
             sans: ['PTSans', 'sans-serif'],

@@ -189,7 +189,7 @@ function TextContainerArray(array: Array<ContentBase | TextContainer>) {
                 ContentEnum.TEXT_CONTAINER === array[index - 1].contentType;
             const spacer = precedingContentWasTextContainer ? ' ' : '';
 
-            return <>{spacer}{TextContainerContent(c)}</>;
+            return <>{spacer}{TextContainerContent(c as TextContainer)}</>;
         } else {
             return ContentBase(c);
         }

@@ -9,5 +9,10 @@
             "lineWidth": 120,
             "singleQuote": true
         }
+    },
+    "importMap": "./web-app/import_map.json",
+    "compilerOptions": {
+        "jsx": "react-jsx",
+        "jsxImportSource": "preact"
     }
 }
