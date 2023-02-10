@@ -76,12 +76,12 @@ export default function Home() {
                         this site is capable of:
                         <ul class='list-disc mb-4 ml-6 space-y-0.5'>
                             <li>responsive design</li>
-                            <li>a single site for all translations</li>
-                            <li>URL navigation by paragraph number, chapter number, etc.</li>
                             <li>robust and intuitive search</li>
+                            <li>a single site for all translations</li>
                             <li>
                                 intuitive and traceable navigation by paragraph numbers, cross references, and topics
                             </li>
+                            <li>URL navigation by paragraph number, chapter number, etc.</li>
                             <li>
                                 API for human and machine querying (to help make projects like{' '}
                                 <a href='https://github.com/konohitowa/catebot' class='italic'>CateBot</a> possible)
@@ -133,7 +133,7 @@ export default function Home() {
                         </div>
                     </Paragraph>
                 </div>
-                <div class='bg-red-900 w-full h-6 md:h-8 opacity-70 mt-8 md:mt-16 md:opacity-80'>&nbsp;</div>
+                <div class='bg-purple-900 w-full h-6 md:h-8 opacity-70 mt-8 md:mt-16 md:opacity-80'>&nbsp;</div>
             </body>
         </>
     );

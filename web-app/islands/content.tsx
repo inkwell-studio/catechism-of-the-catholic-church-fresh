@@ -118,8 +118,8 @@ function ChapterContent(chapter: Chapter) {
 
 function InBriefContent(inBrief: InBrief) {
     return (
-        <div class='border border-red-900/15 border-2 rounded p-3 my-4'>
-            <strong class='font-sans text-lg block mb-1'>In Brief</strong>
+        <div class='bg-white bg-opacity-20 border border-red-900/15 border-2 rounded p-3 my-4'>
+            <strong class='font-sans text-lg text-purple-900 block mb-1'>In Brief</strong>
             <ol>
                 {inBrief.mainContent.map((c) => <li class='mb-2'>{ContentBase(c)}</li>)}
             </ol>

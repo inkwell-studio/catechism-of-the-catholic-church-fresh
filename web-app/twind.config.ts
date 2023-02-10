@@ -60,6 +60,10 @@ export default {
                 '900': 'hsl(24, 45%, 20%)',
                 '900/15': 'hsl(24, 45%, 20%, 15%)',
             },
+            purple: {
+                '900': '#0f1f6b',
+            },
+            white: '#fff'
         },
         fontFamily: {
             sans: ['PTSans', 'sans-serif'],
