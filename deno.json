@@ -1,7 +1,7 @@
 {
     "tasks": {
         "build-mock-data": "deno run --allow-read --allow-write content/mock-data/build.ts",
-        "web-app-start": "deno run -A --watch=static/,routes/ web-app/dev.ts"
+        "web-app-start": "deno run -A --watch=static/,routes/ dev.ts"
     },
     "fmt": {
         "options": {
@@ -10,7 +10,7 @@
             "singleQuote": true
         }
     },
-    "importMap": "./web-app/import_map.json",
+    "importMap": "./import_map.json",
     "compilerOptions": {
         "jsx": "react-jsx",
         "jsxImportSource": "preact"

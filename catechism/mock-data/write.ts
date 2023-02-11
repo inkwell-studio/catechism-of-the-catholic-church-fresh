@@ -1,7 +1,7 @@
 import { getCatechismSourceCode } from './converters/catechism-converter.ts';
 import { TextKeyAndValue } from './converters/text-key-and-value.ts';
 import { determineTextKeysAndValuesAndUpdateCatechismObject } from './converters/text-keys-and-values-converter.ts';
-import { join } from '../../dependencies.ts';
+import { join } from '../dependencies.ts';
 import { CatechismStructure } from '../source/types/catechism-structure.ts';
 
 export function writeSourceCode(catechism: CatechismStructure): void {

@@ -1,5 +1,6 @@
 # Tasks
 
+- add GitHooks for linting and formatting on commits [to just `master`, if possible]
 - render all content
   - citation markers
   - opening content

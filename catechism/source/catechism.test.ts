@@ -1,7 +1,7 @@
 import { Catechism } from './catechism.ts';
-import { assert, assertStrictEquals } from '../../dependencies.ts';
 import { PathID } from './types/path-id.ts';
 import { Subarticle } from './types/subarticle.ts';
+import { assert, assertStrictEquals } from '../../dependencies.ts';
 
 import { CatechismStructure, Content, ContentBase, ContentContainer, Paragraph } from './types/types.ts';
 
