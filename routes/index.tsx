@@ -1,4 +1,5 @@
 import { Head } from '$fresh/runtime.ts';
+import { ComponentChildren } from '../utils/types.ts';
 
 export default function Home() {
     return (
@@ -114,7 +115,7 @@ export default function Home() {
                             text='source code'
                         >
                         </ButtonLink>
-                        <ButtonLink newTab='true' href='mailto:joecode@tuta.io' text='joecode@tuta.io'></ButtonLink>
+                        <ButtonLink newTab={true} href='mailto:joecode@tuta.io' text='joecode@tuta.io'></ButtonLink>
                     </div>
 
                     <Title highlight={true}>View the Demo</Title>
@@ -128,42 +129,41 @@ export default function Home() {
                     </Paragraph>
                     <Paragraph>
                         <div className='mt-3 mx-4 flex'>
-                            <ButtonLink newTab={false} href='/read' text='Enter'>
-                            </ButtonLink>
+                            <ButtonLink newTab={false} href='/read' text='Enter'></ButtonLink>
                         </div>
                     </Paragraph>
                 </div>
-                <div class='bg-purple-900 w-full h-6 md:h-8 opacity-70 mt-8 md:mt-16 md:opacity-80'>&nbsp;</div>
+                <div class='bg-red-900 w-full h-6 md:h-8 opacity-70 mt-8 md:mt-16 md:opacity-80'>&nbsp;</div>
             </body>
         </>
     );
 }
 
-function Title({ children, highlight }) {
+function Title(props: { children: ComponentChildren; highlight?: boolean }) {
     return (
         <span class='relative'>
-            {highlight ? <span class='block absolute -inset-1 rounded-sm bg-tan-50 opacity-30'></span> : {}}
-            <h3 class={(highlight ? 'mt-8' : 'mt-6') + ' relative font-serif font-bold italic text-xl p-1 mb-4'}>
-                {children}
+            {props.highlight ? <span class='block absolute -inset-1 rounded-sm bg-tan-50 opacity-30'></span> : {}}
+            <h3 class={(props.highlight ? 'mt-8' : 'mt-6') + ' relative font-serif font-bold italic text-xl p-1 mb-4'}>
+                {props.children}
             </h3>
         </span>
     );
 }
 
-function Paragraph({ children }) {
-    return <p class='px-4 mb-2'>{children}</p>;
+function Paragraph(props: { children: ComponentChildren }) {
+    return <p class='px-4 mb-2'>{props.children}</p>;
 }
 
-function ButtonLink({ href, text, newTab }) {
-    const target = newTab ? '_blank' : '';
+function ButtonLink(props: { children?: ComponentChildren; href: string; text: string; newTab: boolean }) {
+    const target = props.newTab ? '_blank' : '';
 
     return (
         <a
-            href={href}
+            href={props.href}
             target={target}
             class='flex-grow inline-block font-sans text-center border border-2 rounded bg-tan-50/20 hover:bg-tan-50 transition-bg p-3'
         >
-            {text}
+            {props.text}
         </a>
     );
 }
