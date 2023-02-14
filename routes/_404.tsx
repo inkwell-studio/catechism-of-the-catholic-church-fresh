@@ -1,4 +1,4 @@
-export default function FourHundred() {
+export default function FourHundredFour() {
     return (
         <div class='h-[70vh] flex flex-col justify-center'>
             <div class='bg-tan-50 flex flex-col justify-center items-center gap-4 py-40 md:mx-auto md:rounded md:px-40 md:gap-6'>
