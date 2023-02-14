@@ -19,13 +19,13 @@ import {
     TextContainer,
 } from '../catechism/source/types/types.ts';
 
-export default function Content() {
+export default function Content(): JSX.Element {
     // TODO: Fix
     if (state.value.path === '1') {
         return Intro();
     } else {
         const content = getContent(state.value.path);
-        return content.map((c) => ContentBase(c));
+        return <>{content.map((c) => ContentBase(c))}</>;
     }
 }
 

@@ -1,14 +1,10 @@
-import { Head } from '$fresh/runtime.ts';
 import { ComponentChildren } from '../utils/types.ts';
 
 export default function Home() {
     return (
         <>
-            <Head>
-                <title>Catechism of the Catholic Church</title>
-            </Head>
-            <body class='flex flex-col items-center bg-tan-100'>
-                <div class='bg-red-900 w-full h-8 opacity-70'>&nbsp;</div>
+            <div class='flex flex-col items-center z-10'>
+                <div class='w-full h-8 opacity-70'>&nbsp;</div>
 
                 <div class='h-[80vh] flex flex-col justify-center items-center px-8'>
                     <h1 class='font-serif font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-center'>
@@ -45,26 +41,41 @@ export default function Home() {
                         listed above.
                         <ol class='list-disc ml-6 space-y-0.5'>
                             <li>
-                                <a href='http://www.vatican.va/archive/ENG0015/_INDEX.HTM'>Vatican archive</a>
+                                <a class='hover:underline' href='http://www.vatican.va/archive/ENG0015/_INDEX.HTM'>
+                                    Vatican archive
+                                </a>
                             </li>
                             <li>
-                                <a href='https://www.usccb.org/beliefs-and-teachings/what-we-believe/catechism/catechism-of-the-catholic-church'>
+                                <a
+                                    class='hover:underline'
+                                    href='https://www.usccb.org/beliefs-and-teachings/what-we-believe/catechism/catechism-of-the-catholic-church'
+                                >
                                     United States Conference of Catholic Bishops
                                 </a>
                             </li>
                             <li>
-                                <a href='https://scborromeo2.org/catechism-of-the-catholic-church'>
+                                <a
+                                    class='hover:underline'
+                                    href='https://scborromeo2.org/catechism-of-the-catholic-church'
+                                >
                                     St. Charles Borromeo Catholic Church of Picayune, Mississippi
                                 </a>
                             </li>
                             <li>
-                                <a href='http://cccref.com/'>A wrapper around the St. Charles Borromeo website</a>
+                                <a class='hover:underline' href='http://cccref.com/'>
+                                    A wrapper around the St. Charles Borromeo website
+                                </a>
                             </li>
                             <li>
-                                <a href='https://www.catechismonline.com/home'>www.catechismonline.com</a>
+                                <a class='hover:underline' href='https://www.catechismonline.com/home'>
+                                    www.catechismonline.com
+                                </a>
                             </li>
                             <li>
-                                <a href='https://www.catholicculture.org/culture/library/catechism/index.cfm'>
+                                <a
+                                    class='hover:underline'
+                                    href='https://www.catholicculture.org/culture/library/catechism/index.cfm'
+                                >
                                     www.catholicculture.org
                                 </a>
                             </li>
@@ -98,9 +109,9 @@ export default function Home() {
                         Much development work remains.
                     </Paragraph>
                     <Paragraph>
-                        Licensing permission needs to be obtained before the actual text of the{' '}
+                        Licensing permission needs to be obtained before the text of the{' '}
                         <span class='italic'>Catechism</span>{' '}
-                        can be used here (the United&nbsp;States Conference of Catholic&nbsp;Bishops holds the copyright
+                        can be used (the United&nbsp;States&nbsp;Conference of Catholic&nbsp;Bishops holds the copyright
                         for the English translation).
                     </Paragraph>
 
@@ -134,7 +145,7 @@ export default function Home() {
                     </Paragraph>
                 </div>
                 <div class='bg-red-900 w-full h-6 md:h-8 opacity-70 mt-8 md:mt-16 md:opacity-80'>&nbsp;</div>
-            </body>
+            </div>
         </>
     );
 }
