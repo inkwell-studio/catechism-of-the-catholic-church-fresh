@@ -3,25 +3,33 @@
 // This file is automatically updated during development when running `dev.ts`.
 
 import config from './deno.json' assert { type: 'json' };
-import * as $0 from './routes/index.tsx';
-import * as $1 from './routes/read/[...index].tsx';
-import * as $$0 from './islands/content.tsx';
-import * as $$1 from './islands/menu.tsx';
-import * as $$2 from './islands/search.tsx';
-import * as $$3 from './islands/trail-hierarchical.tsx';
-import * as $$4 from './islands/trail-historical.tsx';
+import * as $0 from './routes/_404.tsx';
+import * as $1 from './routes/_app.tsx';
+import * as $2 from './routes/index.tsx';
+import * as $3 from './routes/read/[...index].tsx';
+import * as $$0 from './islands/changelog-trigger.tsx';
+import * as $$1 from './islands/changelog.tsx';
+import * as $$2 from './islands/content.tsx';
+import * as $$3 from './islands/menu.tsx';
+import * as $$4 from './islands/search.tsx';
+import * as $$5 from './islands/trail-hierarchical.tsx';
+import * as $$6 from './islands/trail-historical.tsx';
 
 const manifest = {
     routes: {
-        './routes/index.tsx': $0,
-        './routes/read/[...index].tsx': $1,
+        './routes/_404.tsx': $0,
+        './routes/_app.tsx': $1,
+        './routes/index.tsx': $2,
+        './routes/read/[...index].tsx': $3,
     },
     islands: {
-        './islands/content.tsx': $$0,
-        './islands/menu.tsx': $$1,
-        './islands/search.tsx': $$2,
-        './islands/trail-hierarchical.tsx': $$3,
-        './islands/trail-historical.tsx': $$4,
+        './islands/changelog-trigger.tsx': $$0,
+        './islands/changelog.tsx': $$1,
+        './islands/content.tsx': $$2,
+        './islands/menu.tsx': $$3,
+        './islands/search.tsx': $$4,
+        './islands/trail-hierarchical.tsx': $$5,
+        './islands/trail-historical.tsx': $$6,
     },
     baseUrl: import.meta.url,
     config,
