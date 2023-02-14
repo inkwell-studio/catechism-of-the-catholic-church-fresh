@@ -1,31 +1,5 @@
+import { changelog, CodeChanges, Commit } from '../data/changelog.ts';
 import { state } from '../state/state.ts';
-
-type Commit = {
-    hash: string;
-    message: string;
-};
-
-type DayOfCommits = {
-    date: Date;
-    commits: Array<Commit>;
-};
-
-const commitLog: Array<DayOfCommits> = [
-    {
-        date: new Date(2023, 1, 14),
-        commits: [
-            { hash: '81149e5094203ca2427b28d9e1d1258bcceb3f0c', message: 'add update log', },
-            { hash: '752e91674205f7a441b4a8043ad4cac2cd0a2c52', message: 'extract common code' },
-            { hash: 'e89d792bdee6ab4acd77bbd104ce8de395fbe904', message: 'add 404 page' },
-        ],
-    },
-    {
-        date: new Date(2023, 1, 10),
-        commits: [
-            { hash: '4e5f4a61e67ae845d0cb645b28dc580cf57da47f', message: 'add complementary color' },
-        ],
-    },
-];
 
 export default function Changelog() {
     return (
@@ -38,7 +12,7 @@ export default function Changelog() {
                 <button onClick={close} class='absolute top-4 right-4'>Close</button>
                 <strong class='text-xl font-bold'>Updates</strong>
                 <ol class='space-y-6'>
-                    {commitLog.map((commits) => DayOfCommitsElement(commits))}
+                    {changelog.map((changes) => Changes(changes))}
                 </ol>
                 <a
                     class='hover:underline'
@@ -52,18 +26,18 @@ export default function Changelog() {
     );
 }
 
-function DayOfCommitsElement(day: DayOfCommits) {
+function Changes(changes: CodeChanges) {
     return (
         <div>
-            <strong className='font-bold'>{day.date.toLocaleDateString()}</strong>
+            <strong className='font-bold'>{changes.date.toLocaleDateString()}</strong>
             <ol class='list-disc list-inside font-sans'>
-                {day.commits.map((c) => <li>{CommitElement(c)}</li>)}
+                {changes.commits.map((c) => <li>{Commit(c)}</li>)}
             </ol>
         </div>
     );
 }
 
-function CommitElement(commit: Commit) {
+function Commit(commit: Commit) {
     return (
         <a
             class='hover:underline'

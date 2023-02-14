@@ -1,4 +1,6 @@
-import { ComponentChildren } from '../utils/types.ts';
+import { JSX } from 'preact';
+
+import { getLatestChanges } from '../data/changelog.ts';
 
 import Changelog from '../islands/changelog.tsx';
 import ChangelogTrigger from '../islands/changelog-trigger.tsx';
@@ -19,6 +21,11 @@ export default function Home() {
                     <h2 class='italic text-center text-lg sm:text-xl md:text-2xl lg:text-3xl my-8'>
                         A Better Online Version — Proof&nbsp;of&nbsp;Concept
                     </h2>
+                    <ChangelogTrigger
+                        text={`Last updated on ${getLatestChanges().date.toLocaleDateString()}.`}
+                        classes='hover:underline text-sm xs:font-bold sm:text-base lg:text-lg md:mt-8'
+                    >
+                    </ChangelogTrigger>
                 </div>
 
                 <div class='max-w-xl md:max-w-2xl px-6 sm:px-8'>
@@ -27,82 +34,91 @@ export default function Home() {
                     </div>
                     <Title highlight={true}>What This Is</Title>
                     <Paragraph>
-                        A proof-of-concept for a better online version of the{' '}
-                        <span class='italic'>Catechism of the Catholic&nbsp;Church</span>.
+                        <>
+                            A proof-of-concept for a better online version of the{' '}
+                            <span class='italic'>Catechism of the Catholic&nbsp;Church</span>.
+                        </>
                     </Paragraph>
 
                     <Title>Why It Exists</Title>
                     <Paragraph>
-                        To provide a more fitting digital home for one of the Church's great treasures, and to
-                        demonstrate how the <span class='italic'>Catechism</span>{' '}
-                        can be better presented with modern web features:
+                        <>
+                            To provide a more fitting digital home for one of the Church's great treasures, and to
+                            demonstrate how the <span class='italic'>Catechism</span>{' '}
+                            can be better presented with modern web features:
+                        </>
                     </Paragraph>
 
                     <Title>What Already Exists</Title>
                     <Paragraph>
-                        Currently, there are six websites with the English translation of the{' '}
-                        <span class='italic'>Catechism</span>. All of these lack some, if not all, of the features
-                        listed above.
-                        <ol class='list-disc ml-6 space-y-0.5'>
-                            <li>
-                                <a class='hover:underline' href='http://www.vatican.va/archive/ENG0015/_INDEX.HTM'>
-                                    Vatican archive
-                                </a>
-                            </li>
-                            <li>
-                                <a
-                                    class='hover:underline'
-                                    href='https://www.usccb.org/beliefs-and-teachings/what-we-believe/catechism/catechism-of-the-catholic-church'
-                                >
-                                    United States Conference of Catholic Bishops
-                                </a>
-                            </li>
-                            <li>
-                                <a
-                                    class='hover:underline'
-                                    href='https://scborromeo2.org/catechism-of-the-catholic-church'
-                                >
-                                    St. Charles Borromeo Catholic Church of Picayune, Mississippi
-                                </a>
-                            </li>
-                            <li>
-                                <a class='hover:underline' href='http://cccref.com/'>
-                                    A wrapper around the St. Charles Borromeo website
-                                </a>
-                            </li>
-                            <li>
-                                <a class='hover:underline' href='https://www.catechismonline.com/home'>
-                                    www.catechismonline.com
-                                </a>
-                            </li>
-                            <li>
-                                <a
-                                    class='hover:underline'
-                                    href='https://www.catholicculture.org/culture/library/catechism/index.cfm'
-                                >
-                                    www.catholicculture.org
-                                </a>
-                            </li>
-                        </ol>
+                        <>
+                            Currently, there are six websites with the English translation of the{' '}
+                            <span class='italic'>Catechism</span>. All of these lack some, if not all, of the features
+                            listed above.
+                            <ol class='list-disc ml-6 space-y-0.5'>
+                                <li>
+                                    <a class='hover:underline' href='http://www.vatican.va/archive/ENG0015/_INDEX.HTM'>
+                                        Vatican archive
+                                    </a>
+                                </li>
+                                <li>
+                                    <a
+                                        class='hover:underline'
+                                        href='https://www.usccb.org/beliefs-and-teachings/what-we-believe/catechism/catechism-of-the-catholic-church'
+                                    >
+                                        United States Conference of Catholic Bishops
+                                    </a>
+                                </li>
+                                <li>
+                                    <a
+                                        class='hover:underline'
+                                        href='https://scborromeo2.org/catechism-of-the-catholic-church'
+                                    >
+                                        St. Charles Borromeo Catholic Church of Picayune, Mississippi
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class='hover:underline' href='http://cccref.com/'>
+                                        A wrapper around the St. Charles Borromeo website
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class='hover:underline' href='https://www.catechismonline.com/home'>
+                                        www.catechismonline.com
+                                    </a>
+                                </li>
+                                <li>
+                                    <a
+                                        class='hover:underline'
+                                        href='https://www.catholicculture.org/culture/library/catechism/index.cfm'
+                                    >
+                                        www.catholicculture.org
+                                    </a>
+                                </li>
+                            </ol>
+                        </>
                     </Paragraph>
 
                     <Title>Why not improve an existing site?</Title>
                     <Paragraph>
-                        The existing sites do not appear to have the technical foundation for providing all the features
-                        this site is capable of:
-                        <ul class='list-disc mb-4 ml-6 space-y-0.5'>
-                            <li>responsive design</li>
-                            <li>robust and intuitive search</li>
-                            <li>a single site for all translations</li>
-                            <li>
-                                intuitive and traceable navigation by paragraph numbers, cross references, and topics
-                            </li>
-                            <li>URL navigation by paragraph number, chapter number, etc.</li>
-                            <li>
-                                API for human and machine querying (to help make projects like{' '}
-                                <a href='https://github.com/konohitowa/catebot' class='italic'>CateBot</a> possible)
-                            </li>
-                        </ul>
+                        <>
+                            The existing sites do not appear to have the technical foundation for providing all the
+                            features this site is capable of:
+                            <ul class='list-disc mb-4 ml-6 space-y-0.5'>
+                                <li>responsive design</li>
+                                <li>robust and intuitive search</li>
+                                <li>a single site for all translations</li>
+                                <li>
+                                    intuitive and traceable navigation by paragraph numbers, cross references, and
+                                    topics
+                                </li>
+                                <li>URL navigation by paragraph number, chapter number, etc.</li>
+                                <li>
+                                    API for human and machine querying (to help make projects like{' '}
+                                    <a href='https://github.com/konohitowa/catebot' class='italic'>CateBot</a> possible)
+                                </li>
+                            </ul>
+                        </>
                     </Paragraph>
                     <Paragraph>
                         This new site, with its architecture, provides opportunity for all these.
@@ -110,14 +126,19 @@ export default function Home() {
 
                     <Title highlight={true}>What Comes Next</Title>
                     <Paragraph>
-                        Much development work remains.{' '}
-                        <ChangelogTrigger text='Here are the latest updates.'></ChangelogTrigger>
+                        <>
+                            Much development work remains.{' '}
+                            <ChangelogTrigger text='Here are the latest updates.' classes='font-bold hover:underline'>
+                            </ChangelogTrigger>
+                        </>
                     </Paragraph>
                     <Paragraph>
-                        Licensing permission needs to be obtained before the text of the{' '}
-                        <span class='italic'>Catechism</span>{' '}
-                        can be used (the United&nbsp;States&nbsp;Conference of Catholic&nbsp;Bishops holds the copyright
-                        for the English translation).
+                        <>
+                            Licensing permission needs to be obtained before the text of the{' '}
+                            <span class='italic'>Catechism</span>{' '}
+                            can be used (the United&nbsp;States&nbsp;Conference of Catholic&nbsp;Bishops holds the
+                            copyright for the English translation).
+                        </>
                     </Paragraph>
 
                     <Title>Learning More</Title>
@@ -130,18 +151,23 @@ export default function Home() {
                             href='https://github.com/inkwell-studio/catechism-of-the-catholic-church'
                             text='source code'
                         >
+                            <></>
                         </ButtonLink>
                         <ButtonLink newTab={true} href='mailto:joecode@tuta.io' text='joecode@tuta.io'></ButtonLink>
                     </div>
 
                     <Title highlight={true}>View the Demo</Title>
                     <Paragraph>
-                        The sample text is from Matthew's Gospel, and bold and italic text formatting is added
-                        randomly.<br />
+                        <>
+                            The sample text is from Matthew's Gospel, and bold and italic text formatting is added
+                            randomly.<br />
+                        </>
                     </Paragraph>
                     <Paragraph>
-                        Many features are not yet implemented. What you will see is primarily a demonstration of the
-                        layout, not interactive functionality.
+                        <>
+                            Many features are not yet implemented. What you will see is primarily a demonstration of the
+                            layout, not interactive functionality.
+                        </>
                     </Paragraph>
                     <Paragraph>
                         <div className='mt-3 mx-4 flex'>
@@ -155,7 +181,7 @@ export default function Home() {
     );
 }
 
-function Title(props: { children: ComponentChildren; highlight?: boolean }) {
+function Title(props: { children: JSX.Element | string; highlight?: boolean }) {
     return (
         <span class='relative'>
             {props.highlight ? <span class='block absolute -inset-1 rounded-sm bg-tan-50 opacity-30'></span> : {}}
@@ -166,11 +192,11 @@ function Title(props: { children: ComponentChildren; highlight?: boolean }) {
     );
 }
 
-function Paragraph(props: { children: ComponentChildren }) {
+function Paragraph(props: { children: JSX.Element | string }) {
     return <p class='px-4 mb-2'>{props.children}</p>;
 }
 
-function ButtonLink(props: { children?: ComponentChildren; href: string; text: string; newTab: boolean }) {
+function ButtonLink(props: { children?: JSX.Element; href: string; text: string; newTab: boolean }) {
     const target = props.newTab ? '_blank' : '';
 
     return (
