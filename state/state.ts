@@ -2,8 +2,12 @@ import { signal } from '@preact/signals';
 import { PathID } from '../catechism/source/types/types.ts';
 
 export type State = {
+    showChangelog: boolean;
     path: PathID;
 };
 
-const initialState = { path: '0' as PathID };
+const initialState: State = {
+    showChangelog: false,
+    path: '0' as PathID,
+};
 export const state = signal<State>(initialState);

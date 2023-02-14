@@ -1,8 +1,12 @@
 import { ComponentChildren } from '../utils/types.ts';
 
+import Changelog from '../islands/changelog.tsx';
+import ChangelogTrigger from '../islands/changelog-trigger.tsx';
+
 export default function Home() {
     return (
         <>
+            <Changelog></Changelog>
             <div class='flex flex-col items-center z-10'>
                 <div class='w-full h-8 opacity-70'>&nbsp;</div>
 
@@ -106,7 +110,8 @@ export default function Home() {
 
                     <Title highlight={true}>What Comes Next</Title>
                     <Paragraph>
-                        Much development work remains.
+                        Much development work remains.{' '}
+                        <ChangelogTrigger text='Here are the latest updates.'></ChangelogTrigger>
                     </Paragraph>
                     <Paragraph>
                         Licensing permission needs to be obtained before the text of the{' '}
