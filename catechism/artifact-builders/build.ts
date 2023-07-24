@@ -1,5 +1,6 @@
 import { build as buildPathMap } from './path-map.ts';
 import { build as buildTableOfContents } from './table-of-contents.ts';
+import { PathMap, TableOfContentsType } from '../source/types/types.ts';
 
 buildArtifacts();
 
@@ -15,7 +16,7 @@ function buildArtifacts(): void {
     writeJson(pathMap, 'semantic-path-to-path-id');
 }
 
-function writeJson(object: Record<string, unknown>, filename: string): void {
+function writeJson(object: PathMap | TableOfContentsType, filename: string): void {
     Deno.writeTextFileSync(
         `catechism/artifacts/${filename}.json`,
         JSON.stringify(object, undefined, '    ') + '\n',

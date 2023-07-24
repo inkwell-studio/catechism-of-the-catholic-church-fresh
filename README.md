@@ -49,7 +49,6 @@ more details (optional)
 
 Where `type` is one of:
 
-- `chore`
 - `docs`
 - `build`
 - `feat`

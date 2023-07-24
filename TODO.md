@@ -1,11 +1,5 @@
 # Tasks
 
-- [ ] try converting JSON artifacts to YAML
-- [ ] upgrade Fresh
-- [ ] move import-map specs into `deno.json`
-- [ ] use Twind v1: https://fresh.deno.dev/docs/examples/using-twind-v1
-- [ ] document link regarding Radix colors and their other tools
-
 - [ ] rebuild the table-of-contents generation algorithm:
   - [ ] the algorithm:
     - [ ] for the four parts:
@@ -33,6 +27,19 @@
 
 ## Unprioritized
 
+- UI:
+  - consider using Twind presets:
+    - https://twind.style/presets#official-presets
+  - consider using Radix UI things:
+    - https://twind.style/preset-radix-ui
+      - https://www.radix-ui.com/colors
+    - https://www.radix-ui.com/
+    - https://icons.radix-ui.com/
+  - [ ] light/dark/high-contrast mode toggle
+    - [ ] dark mode: try to avoid the "window blending" problem (cannot tell where the browser window starts and another
+          application window begins)
+  - [ ] consider using the following colors:
+    - [ ] #E86D82 (red-pink)
 - [ ] implement unimplemented tests
 - [ ] add a test to ensure that all cross-references are paired (in `catechism.test.ts`)
 - [ ] implement hierarchical navigation
@@ -41,11 +48,6 @@
 - [ ] implement index
 - [ ] implement glossary
 - [ ] implement "copy" buttons (click a button to copy the entire text of a paragraph, quote, etc.)
-- [ ] light/dark/high-contrast mode toggle
-  - [ ] dark mode: try to avoid the "window blending" problem (cannot tell where the browser window starts and another
-        application window begins)
-- [ ] consider using the following colors:
-  - [ ] #E86D82 (red-pink)
 
 # Possible features
 

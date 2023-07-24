@@ -24,8 +24,7 @@ export default function Home() {
                     <ChangelogTrigger
                         text={`Last updated on ${getLatestChanges().date.toLocaleDateString()}.`}
                         classes='hover:underline text-sm xs:font-bold sm:text-base lg:text-lg md:mt-8'
-                    >
-                    </ChangelogTrigger>
+                    />
                 </div>
 
                 <div class='max-w-xl md:max-w-2xl px-6 sm:px-8'>
@@ -100,15 +99,24 @@ export default function Home() {
                     </ol>
                     <Paragraph>
                         <>
-                            There is also the <a href="https://ascensionpress.com/pages/ascension-app" class="hover:underline italic">Bible & Catechsim App</a> from Ascension, which includes many of the features below. However, the app is available only on particular devices and users must have an account with an app store, whereas a simple web site has the advantage of being immediately and directly accessible by all modern-web-capable devices.
+                            There is also the{' '}
+                            <a href='https://ascensionpress.com/pages/ascension-app' class='hover:underline italic'>
+                                Bible & Catechsim App
+                            </a>{' '}
+                            from Ascension, which includes many of the features below. However, the app is available
+                            only on particular devices and users must have an account with an app store, whereas a
+                            simple web site has the advantage of being immediately and directly accessible by all
+                            modern-web-capable devices.
                         </>
                     </Paragraph>
                     <Paragraph>
                         <>
-                            Also, the app has functionality not directly related to the <span className="italic">Catechism</span>, which may result in a less-intuitive experience for users who are interested in solely the <span className="italic">Catechism's</span> content.
+                            Also, the app has functionality not directly related to the{' '}
+                            <span className='italic'>Catechism</span>, which may result in a less-intuitive experience
+                            for users who are interested in solely the <span className='italic'>Catechism's</span>{' '}
+                            content.
                         </>
                     </Paragraph>
-
 
                     <Title>Why not improve an existing site?</Title>
                     <Paragraph>
@@ -139,8 +147,7 @@ export default function Home() {
                     <Paragraph>
                         <>
                             Much development work remains.{' '}
-                            <ChangelogTrigger text='Here are the latest updates.' classes='font-bold hover:underline'>
-                            </ChangelogTrigger>
+                            <ChangelogTrigger text='Here are the latest updates.' classes='font-bold hover:underline' />
                         </>
                     </Paragraph>
                     <Paragraph>
@@ -195,7 +202,7 @@ export default function Home() {
 function Title(props: { children: JSX.Element | string; highlight?: boolean }) {
     return (
         <span class='relative'>
-            {props.highlight ? <span class='block absolute -inset-1 rounded-sm bg-tan-50 opacity-30'></span> : {}}
+            {props.highlight ? <span class='block absolute -inset-1 rounded-sm bg-tan-50 opacity-30'></span> : ''}
             <h3 class={(props.highlight ? 'mt-8' : 'mt-6') + ' relative font-serif font-bold italic text-xl p-1 mb-4'}>
                 {props.children}
             </h3>
