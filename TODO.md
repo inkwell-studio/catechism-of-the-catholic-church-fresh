@@ -33,6 +33,8 @@
 
 ## Unprioritized
 
+- [ ] implement unimplemented tests
+- [ ] add a test to ensure that all cross-references are paired (in `catechism.test.ts`)
 - [ ] implement hierarchical navigation
 - [ ] implement historical navigation
 - [ ] implement search
