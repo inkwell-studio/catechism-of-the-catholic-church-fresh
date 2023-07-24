@@ -54,50 +54,61 @@ export default function Home() {
                         <>
                             Currently, there are six websites with the English translation of the{' '}
                             <span class='italic'>Catechism</span>. All of these lack some, if not all, of the features
-                            listed below.
-                            <ol class='list-disc ml-6 space-y-0.5'>
-                                <li>
-                                    <a class='hover:underline' href='http://www.vatican.va/archive/ENG0015/_INDEX.HTM'>
-                                        Vatican archive
-                                    </a>
-                                </li>
-                                <li>
-                                    <a
-                                        class='hover:underline'
-                                        href='https://www.usccb.org/beliefs-and-teachings/what-we-believe/catechism/catechism-of-the-catholic-church'
-                                    >
-                                        United States Conference of Catholic Bishops
-                                    </a>
-                                </li>
-                                <li>
-                                    <a
-                                        class='hover:underline'
-                                        href='https://scborromeo2.org/catechism-of-the-catholic-church'
-                                    >
-                                        St. Charles Borromeo Catholic Church of Picayune, Mississippi
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class='hover:underline' href='http://cccref.com/'>
-                                        A wrapper around the St. Charles Borromeo website
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class='hover:underline' href='https://www.catechismonline.com/home'>
-                                        www.catechismonline.com
-                                    </a>
-                                </li>
-                                <li>
-                                    <a
-                                        class='hover:underline'
-                                        href='https://www.catholicculture.org/culture/library/catechism/index.cfm'
-                                    >
-                                        www.catholicculture.org
-                                    </a>
-                                </li>
-                            </ol>
+                            listed in the next section.
                         </>
                     </Paragraph>
+                    <ol class='list-disc mb-2 ml-6 space-y-0.5'>
+                        <li>
+                            <a class='hover:underline' href='http://www.vatican.va/archive/ENG0015/_INDEX.HTM'>
+                                Vatican archive
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                class='hover:underline'
+                                href='https://www.usccb.org/beliefs-and-teachings/what-we-believe/catechism/catechism-of-the-catholic-church'
+                            >
+                                United States Conference of Catholic Bishops
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                class='hover:underline'
+                                href='https://scborromeo2.org/catechism-of-the-catholic-church'
+                            >
+                                St. Charles Borromeo Catholic Church of Picayune, Mississippi
+                            </a>
+                        </li>
+                        <li>
+                            <a class='hover:underline' href='http://cccref.com/'>
+                                A wrapper around the St. Charles Borromeo website
+                            </a>
+                        </li>
+                        <li>
+                            <a class='hover:underline' href='https://www.catechismonline.com/home'>
+                                www.catechismonline.com
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                class='hover:underline'
+                                href='https://www.catholicculture.org/culture/library/catechism/index.cfm'
+                            >
+                                www.catholicculture.org
+                            </a>
+                        </li>
+                    </ol>
+                    <Paragraph>
+                        <>
+                            There is also the <a href="https://ascensionpress.com/pages/ascension-app" class="hover:underline italic">Bible & Catechsim App</a> from Ascension, which includes many of the features below. However, the app is available only on particular devices and users must have an account with an app store, whereas a simple web site has the advantage of being immediately and directly accessible by all modern-web-capable devices.
+                        </>
+                    </Paragraph>
+                    <Paragraph>
+                        <>
+                            Also, the app has functionality not directly related to the <span className="italic">Catechism</span>, which may result in a less-intuitive experience for users who are interested in solely the <span className="italic">Catechism's</span> content.
+                        </>
+                    </Paragraph>
+
 
                     <Title>Why not improve an existing site?</Title>
                     <Paragraph>

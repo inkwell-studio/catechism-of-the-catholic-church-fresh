@@ -16,8 +16,11 @@ export const changelog: Changelog = [
     {
         date: new Date(2023, 6, 24),
         commits: [
-            { hash: '0e92881a9850c3116a98a97992d6f4df879eabe4', message: 'add ability to navigate to particular sections' },
-        ]
+            {
+                hash: '0e92881a9850c3116a98a97992d6f4df879eabe4',
+                message: 'add ability to navigate to particular sections',
+            },
+        ],
     },
     {
         date: new Date(2023, 1, 14),
