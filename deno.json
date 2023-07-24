@@ -1,14 +1,14 @@
 {
     "tasks": {
-        "build-mock-data": "deno run --allow-read --allow-write content/mock-data/build.ts",
+        "pre-commit": "deno lint && deno test && deno fmt && deno task build-artifacts",
+        "build-artifacts": "deno run --allow-write catechism/artifact-builders/build.ts",
+        "build-mock-data": "deno run --allow-read --allow-write catechism/mock-data/run.ts && deno task build-artifacts",
         "web-app-start": "deno run -A --watch=static/,routes/ dev.ts"
     },
     "fmt": {
-        "options": {
-            "indentWidth": 4,
-            "lineWidth": 120,
-            "singleQuote": true
-        }
+        "indentWidth": 4,
+        "lineWidth": 120,
+        "singleQuote": true
     },
     "importMap": "./import_map.json",
     "compilerOptions": {

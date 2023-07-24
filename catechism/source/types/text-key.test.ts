@@ -13,9 +13,9 @@ Deno.test('values match their key', () => {
 
 Deno.test('have unique values', () => {
     const values = Object.values(TextKey);
-    const uniqueValues = [...new Set(values)];
+    const uniqueValues = new Set(values);
 
-    if (uniqueValues.length !== values.length) {
+    if (uniqueValues.size !== values.length) {
         // Now do extra work to display the duplicates
         const duplicateValues = values.filter((value, index) => values.indexOf(value, index + 1) > 0);
 

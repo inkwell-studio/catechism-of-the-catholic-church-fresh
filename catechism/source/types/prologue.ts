@@ -5,8 +5,9 @@ import { Subarticle } from './subarticle.ts';
 import { TextContent } from './text-content.ts';
 import { TextKey } from './text-key.ts';
 
-export type Prologue = ContentBase & ContentContainer & {
+export interface Prologue extends ContentBase, ContentContainer {
     readonly contentType: Content.PROLOGUE;
     readonly title: TextKey;
-    readonly mainContent: Array<Subarticle | TextContent>;
-};
+    readonly openingContent: Array<TextContent>;
+    readonly mainContent: Array<Subarticle>;
+}

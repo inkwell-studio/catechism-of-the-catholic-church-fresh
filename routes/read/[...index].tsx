@@ -1,26 +1,49 @@
-import Content from '../../islands/content.tsx';
-import { ActionBar } from '../../components/action-bar.tsx';
+import { HandlerContext, PageProps } from '$fresh/server.ts';
 
-export default function Home() {
+import TableOfContents from '../../islands/table-of-contents.tsx';
+import { ActionBar } from '../../components/action-bar.tsx';
+import { ContentContainer } from '../../components/content-container.tsx';
+
+import { Element, getElementAndPathID } from '../../utils/element.ts';
+
+export function handler(request: Request, context: HandlerContext) {
+    const contentPath = context.params.index;
+
+    const elementAndPathID = getElementAndPathID(contentPath);
+    if (elementAndPathID) {
+        return context.render({
+            element: elementAndPathID.element,
+            pathID: elementAndPathID.pathID,
+        });
+    } else {
+        return context.renderNotFound();
+    }
+}
+
+export default function Home(props: PageProps) {
+    const { element, pathID } = props.data;
+
+    let mainElement = <></>;
+
+    // TODO: Reimplement when the table of contents is ready for users
+    mainElement = <ContentContainer pathID={pathID}></ContentContainer>;
+    /*
+    if (Element.TABLE_OF_CONTENTS === element) {
+        mainElement = <TableOfContents></TableOfContents>;
+    } else if (Element.CONTENT === element) {
+        mainElement = <ContentContainer pathID={pathID}></ContentContainer>;
+    }
+    */
+
     return (
         <div class='flex flex-col'>
-            <div class='flex justify-center'>
-                <main class='
-                        relative bg-tan-50 text-justify h-[min-content]
-                        rounded-md shadow md:shadow-2xl
-                        w-full md:max-w-2xl lg:max-w-3xl
-                        px-6 xs:px-10 sm:px-20 lg:px-32
-                        pb-4 pt-4 sm:pt-8 md:pt-14 md:my-8 lg:pt-16
-                    '>
-                    <Content></Content>
-                </main>
-            </div>
+            {mainElement}
             {
                 /*
-                <div>
-                    <ActionBar></ActionBar>
-                </div>
-                */
+            <div>
+                <ActionBar></ActionBar>
+            </div>
+            */
             }
         </div>
     );

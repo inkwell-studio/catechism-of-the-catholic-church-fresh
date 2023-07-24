@@ -1,5 +1,4 @@
 import { BlockQuote } from './block-quote.ts';
-import { Paragraph } from './paragraph.ts';
-import { TextContainer } from './text-container.ts';
+import { TextBlock } from './text-block.ts';
 
-export type TextContent = BlockQuote | Paragraph | TextContainer;
+export type TextContent = BlockQuote | TextBlock;

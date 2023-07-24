@@ -45,7 +45,7 @@ export default function Home() {
                         <>
                             To provide a more fitting digital home for one of the Church's great treasures, and to
                             demonstrate how the <span class='italic'>Catechism</span>{' '}
-                            can be better presented with modern web features:
+                            can be better presented with modern web features.
                         </>
                     </Paragraph>
 
@@ -54,7 +54,7 @@ export default function Home() {
                         <>
                             Currently, there are six websites with the English translation of the{' '}
                             <span class='italic'>Catechism</span>. All of these lack some, if not all, of the features
-                            listed above.
+                            listed below.
                             <ol class='list-disc ml-6 space-y-0.5'>
                                 <li>
                                     <a class='hover:underline' href='http://www.vatican.va/archive/ENG0015/_INDEX.HTM'>

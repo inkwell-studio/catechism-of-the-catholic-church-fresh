@@ -2,12 +2,13 @@ import { BlockQuote } from './block-quote.ts';
 import { Content } from './content.ts';
 import { ContentBase } from './content-base.ts';
 import { ContentContainer } from './content-container.ts';
-import { TextContainer } from './text-container.ts';
+import { ParagraphSubitemContainer } from './paragraph-subitem-container.ts';
+import { TextBlock } from './text-block.ts';
+import { TextHeading } from './text-heading.ts';
 
-export type Paragraph = ContentBase & ContentContainer & {
+export interface Paragraph extends ContentBase, ContentContainer {
     readonly contentType: Content.PARAGRAPH;
     readonly paragraphNumber: number;
-    // Paragraphs are considered to be supplementary if they are historical or apologetic in nature, or if they are supplementary doctrinal explanations (see §20).
-    readonly supplementary: boolean;
-    readonly mainContent: Array<BlockQuote | TextContainer>;
-};
+    readonly openingContent: Array<never>;
+    readonly mainContent: Array<BlockQuote | ParagraphSubitemContainer | TextHeading | TextBlock>;
+}

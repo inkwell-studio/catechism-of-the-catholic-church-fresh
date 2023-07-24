@@ -1,6 +1,6 @@
 import { Content } from './content.ts';
 import { ContentBase } from './content-base.ts';
 
-export type TenCommandments = ContentBase & {
+export interface TenCommandments extends ContentBase {
     readonly contentType: Content.SPECIAL_2;
-};
+}

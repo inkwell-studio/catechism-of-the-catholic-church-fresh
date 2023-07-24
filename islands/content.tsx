@@ -1,7 +1,8 @@
-import { JSX } from 'preact';
+import { Fragment, JSX } from 'preact';
 
 import { state } from '../state/state.ts';
-import { getContent, getText } from '../state/get.ts';
+import { getContent } from '../utils/content.ts';
+import { getText } from '../utils/text.ts';
 import {
     Article,
     ArticleParagraph,
@@ -12,27 +13,29 @@ import {
     InBrief,
     Paragraph,
     ParagraphGroup,
+    ParagraphSubitem,
+    ParagraphSubitemContainer,
     Part,
+    PathID,
+    Prologue,
     Section,
     Subarticle,
     Text,
-    TextContainer,
+    TextBlock,
+    TextWrapper,
 } from '../catechism/source/types/types.ts';
 
-export default function Content(): JSX.Element {
-    // TODO: Fix
-    if (state.value.path === '1') {
-        return Intro();
-    } else {
-        const content = getContent(state.value.path);
-        return <>{content.map((c) => ContentBase(c))}</>;
-    }
+export default function Content(props: { pathID: PathID | null }): JSX.Element {
+    const pathID: PathID = props.pathID ?? state.value.path;
+
+    const content = getContent(pathID);
+    return <>{ContentBase(content)}</>;
 }
 
-function Intro() {
-    return <h1>Catechism of the Catholic Church</h1>;
-}
+// TODO: Add return type of `JSX.Element` to all appropriate functions
+// TODO: Add return types to all remaining functions
 
+// TODO: Consider all rendering function implementations to be incomplete
 function ContentBase(content: ContentBase): JSX.Element {
     switch (content.contentType) {
         case ContentEnum.PART: {
@@ -59,59 +62,69 @@ function ContentBase(content: ContentBase): JSX.Element {
         case ContentEnum.PARAGRAPH_GROUP: {
             return ParagraphGroupContent(content as ParagraphGroup);
         }
+        case ContentEnum.PARAGRAPH_SUB_ITEM: {
+            return ParagraphSubitemContent(content as ParagraphSubitem);
+        }
+        case ContentEnum.PARAGRAPH_SUB_ITEM_CONTAINER: {
+            return ParagraphSubitemContainerContent(content as ParagraphSubitemContainer);
+        }
+        case ContentEnum.PROLOGUE: {
+            return PrologueContent(content as Prologue);
+        }
         case ContentEnum.SECTION: {
             return SectionContent(content as Section);
         }
         case ContentEnum.SUB_ARTICLE: {
             return SubarticleContent(content as Subarticle);
         }
-        case ContentEnum.TEXT_CONTAINER: {
-            return TextContainerContent(content as TextContainer);
+        case ContentEnum.TEXT_BLOCK: {
+            return TextBlockContent(content as TextBlock);
+        }
+        case ContentEnum.TEXT_WRAPPER: {
+            return TextWrapperContent(content as TextWrapper);
         }
         default: {
-            // TODO: Log a warning
-            return <div>Unhandled content: {content.contentType}</div>;
+            return UnknownContent(content);
         }
     }
 }
 
 function ArticleContent(article: Article) {
-    // TODO: Handle opening content
     return (
         <>
             <h4 class='text-3xl'>{getText(article.title)}</h4>
-            {article.mainContent.map((c) => ContentBase(c))}
+            {ContentBaseArray(article.mainContent)}
+            {article.inBrief ? InBriefContent(article.inBrief) : ''}
         </>
     );
 }
 
 function ArticleParagraphContent(articleParagraph: ArticleParagraph) {
-    // TODO: Handle opening content
     return (
         <>
             <h5 class='text-2xl'>
                 {getText(articleParagraph.title)}
             </h5>
-            {articleParagraph.mainContent.map((c) => ContentBase(c))}
+            {ContentBaseArray(articleParagraph.mainContent)}
+            {InBriefContent(articleParagraph.inBrief)}
         </>
     );
 }
 
 function BlockQuoteContent(blockQuote: BlockQuote) {
-    // TODO: Handle opening content
     return (
         <blockquote class='px-8 mb-4'>
-            {TextContainerArray(blockQuote.mainContent)}
+            {TextWrapperArray(blockQuote.mainContent)}
         </blockquote>
     );
 }
 
 function ChapterContent(chapter: Chapter) {
-    // TODO: Handle opening content
     return (
         <>
             <h3 class='text-4xl'>{getText(chapter.title)}</h3>
-            {chapter.mainContent.map((c) => ContentBase(c))}
+            {ContentBaseArray(chapter.mainContent)}
+            {chapter.inBrief ? InBriefContent(chapter.inBrief) : ''}
         </>
     );
 }
@@ -121,92 +134,120 @@ function InBriefContent(inBrief: InBrief) {
         <div class='bg-white bg-opacity-20 border border-red-900/15 border-2 rounded p-3 my-4'>
             <strong class='font-sans text-lg text-purple-900 block mb-1'>In Brief</strong>
             <ol>
-                {inBrief.mainContent.map((c) => <li class='mb-2'>{ContentBase(c)}</li>)}
+                {inBrief.mainContent.map((c) => <li key={c} class='mb-2'>{ContentBase(c)}</li>)}
             </ol>
         </div>
     );
 }
 
 function ParagraphContent(paragraph: Paragraph) {
-    // TODO: Handle opening content
     return (
         <div class=''>
             <div class='text-sm align-text-bottom font-bold inline mr-1 sm:mr-2 sm:text-lg sm:align-baseline'>
                 {paragraph.paragraphNumber}
             </div>
             <div class='inline'>
-                {TextContainerArray(paragraph.mainContent)}
+                {TextWrapperArray(paragraph.mainContent)}
             </div>
         </div>
     );
 }
 
 function ParagraphGroupContent(paragraphGroup: ParagraphGroup) {
-    // TODO: Handle opening content
     return (
         <>
             <h6 class='text-lg'>{getText(paragraphGroup.title)}</h6>
-            {paragraphGroup.mainContent.map((c) => ContentBase(c))}
+            {ContentBaseArray(paragraphGroup.mainContent)}
         </>
     );
 }
 
+function ParagraphSubitemContainerContent(paragraphSubitemContainer: ParagraphSubitemContainer) {
+    return (
+        <ol>
+            {paragraphSubitemContainer.mainContent
+                .map((subitem) => {
+                    return <Fragment key={subitem}>{ParagraphSubitemContent(subitem)}</Fragment>;
+                })}
+        </ol>
+    );
+}
+
+function PrologueContent(prologue: Prologue) {
+    return (
+        <>
+            <h1 class='text-6xl'>{getText(prologue.title)}</h1>
+            {ContentBaseArray(prologue.openingContent)}
+            {ContentBaseArray(prologue.mainContent)}
+        </>
+    );
+}
+
+function ParagraphSubitemContent(paragraphSubitem: ParagraphSubitem) {
+    return <li>{TextWrapperArray(paragraphSubitem.mainContent)}</li>;
+}
+
 function PartContent(part: Part) {
-    // TODO: Handle opening content
     return (
         <>
             <h1 class='text-6xl'>{getText(part.title)}</h1>
-            {part.mainContent.map((c) => ContentBase(c))}
+            {ContentBaseArray(part.mainContent)}
         </>
     );
 }
 
 function SectionContent(section: Section) {
-    // TODO: Handle opening content
     return (
         <>
             <h2 class='text-5xl'>{getText(section.title)}</h2>
-            {section.mainContent.map((c) => ContentBase(c))}
+            {ContentBaseArray(section.mainContent)}
         </>
     );
 }
 
 function SubarticleContent(subarticle: Subarticle) {
-    // TODO: Handle opening content
     return (
         <>
             <h6 class='text-xl'>{getText(subarticle.title)}</h6>
-            {subarticle.mainContent.map((c) => ContentBase(c))}
+            {ContentBaseArray(subarticle.mainContent)}
         </>
     );
 }
 
-function TextContainerArray(array: Array<ContentBase | TextContainer>) {
+function TextWrapperArray(array: Array<ContentBase | TextWrapper>) {
     return array.map((c, index) => {
-        const isTextContainer = ContentEnum.TEXT_CONTAINER === c.contentType;
-        if (isTextContainer) {
-            const precedingContentWasTextContainer = index > 0 &&
-                ContentEnum.TEXT_CONTAINER === array[index - 1].contentType;
-            const spacer = precedingContentWasTextContainer ? ' ' : '';
+        const isTextWrapper = ContentEnum.TEXT_WRAPPER === c.contentType;
+        if (isTextWrapper) {
+            const precedingContentWasTextWrapper = index > 0 &&
+                ContentEnum.TEXT_WRAPPER === array[index - 1].contentType;
+            const spacer = precedingContentWasTextWrapper ? ' ' : '';
 
-            return <>{spacer}{TextContainerContent(c as TextContainer)}</>;
+            return <Fragment key={c}>{spacer}{TextWrapperContent(c as TextWrapper)}</Fragment>;
         } else {
-            return ContentBase(c);
+            return <Fragment key={c}>{ContentBase(c)}</Fragment>;
         }
     });
 }
 
-function TextContainerContent(textContainer: TextContainer) {
+function TextBlockContent(textBlock: TextBlock) {
+    return (
+        <div>
+            {TextWrapperArray(textBlock.mainContent)}
+        </div>
+    );
+}
+
+function TextWrapperContent(textWrapper: TextWrapper) {
     return (
         <span>
             <span class='absolute right-0 font-sans-caption text-xs text-left pt-1 w-6 sm:w-14 md:w-12 lg:w-20 xl:w-24'>
-                {textContainer.paragraphReferences.map((ref) => ref.toString()).join(', ')}
+                {textWrapper.paragraphReferences.map((ref) => ref.toString()).join(', ')}
             </span>
             <span>
-                {textContainer.mainContent
+                {textWrapper.mainContent
                     .map((text, index) => {
-                        const lastFragment = index === textContainer.mainContent.length - 1;
-                        return PlainText(text as Text, lastFragment);
+                        const lastFragment = index === textWrapper.mainContent.length - 1;
+                        return <Fragment key={text}>{PlainText(text as Text, lastFragment)}</Fragment>;
                     })}
             </span>
         </span>
@@ -250,4 +291,13 @@ function PlainText(text: Text, lastFragment: boolean) {
             </span>
         );
     }
+}
+
+function ContentBaseArray<T extends ContentBase>(content: Array<T>) {
+    return content.map((c) => <Fragment key={c}>{ContentBase(c)}</Fragment>);
+}
+
+function UnknownContent(content: ContentBase) {
+    // TODO: Log a warning
+    return <div>Unhandled content: {content.contentType}</div>;
 }
