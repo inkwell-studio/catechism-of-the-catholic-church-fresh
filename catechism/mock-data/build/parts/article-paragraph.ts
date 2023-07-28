@@ -14,6 +14,7 @@ export function buildArticleParagraph(articleParagraphNumber: number): ArticlePa
         title: getTitleText(Content.ARTICLE_PARAGRAPH, articleParagraphNumber) as TextKey,
         openingContent: [],
         mainContent: buildContent(),
+        finalContent: [],
         inBrief: buildInBrief(),
     };
 }

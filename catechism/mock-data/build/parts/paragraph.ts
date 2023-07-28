@@ -12,6 +12,7 @@ export function buildParagraph(): Paragraph {
         paragraphNumber: 1,
         openingContent: [],
         mainContent: buildContent(),
+        finalContent: [],
     };
 }
 

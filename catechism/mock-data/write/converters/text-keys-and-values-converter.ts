@@ -111,10 +111,7 @@ export function determineTextKeysAndValuesAndUpdateCatechismObject(
  *
  * `n1` is padded with leading zeroes as necessary to ensure its length as a string is two characters; e.g. `7` becomes `07`.
  */
-function determineTextKeyAndValue<T extends ContentBase>(
-    content: T,
-    path: Array<string>,
-): TextKeyAndValue {
+function determineTextKeyAndValue(content: ContentBase, path: Array<string>): TextKeyAndValue {
     const propertyName = getPropertyRequiringTextReplacement(content) ?? 'MISSING_PROPERTY';
     if (!propertyName) {
         console.log(`WARNING: A property name could not be determined for ${content.contentType} at ${path.join('-')}`);
@@ -133,7 +130,7 @@ function determineTextKeyAndValue<T extends ContentBase>(
 /**
  * @returns the name of the property on `content` requiring replacement with a `TextKey` reference, or `null` if no such property exists on the content
  */
-function getPropertyRequiringTextReplacement<T extends ContentBase>(content: T): string | null {
+function getPropertyRequiringTextReplacement(content: ContentBase): string | null {
     switch (content.contentType) {
         case Content.PROLOGUE: {
             return 'title';

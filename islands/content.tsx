@@ -24,6 +24,7 @@ import {
     TextBlock,
     TextWrapper,
 } from '../catechism/source/types/types.ts';
+import { getAllChildContent } from '../catechism/utils.ts';
 
 export default function Content(props: { pathID: PathID | null }): JSX.Element {
     const pathID: PathID = props.pathID ?? state.value.path;
@@ -93,8 +94,7 @@ function ArticleContent(article: Article) {
     return (
         <>
             <h4 class='text-3xl'>{getText(article.title)}</h4>
-            {ContentBaseArray(article.mainContent)}
-            {article.inBrief ? InBriefContent(article.inBrief) : ''}
+            {ContentBaseArray(getAllChildContent(article))}
         </>
     );
 }
@@ -105,8 +105,7 @@ function ArticleParagraphContent(articleParagraph: ArticleParagraph) {
             <h5 class='text-2xl'>
                 {getText(articleParagraph.title)}
             </h5>
-            {ContentBaseArray(articleParagraph.mainContent)}
-            {InBriefContent(articleParagraph.inBrief)}
+            {ContentBaseArray(getAllChildContent(articleParagraph))}
         </>
     );
 }
@@ -114,7 +113,7 @@ function ArticleParagraphContent(articleParagraph: ArticleParagraph) {
 function BlockQuoteContent(blockQuote: BlockQuote) {
     return (
         <blockquote class='px-8 mb-4'>
-            {TextWrapperArray(blockQuote.mainContent)}
+            {TextWrapperArray(getAllChildContent(blockQuote))}
         </blockquote>
     );
 }
@@ -123,8 +122,7 @@ function ChapterContent(chapter: Chapter) {
     return (
         <>
             <h3 class='text-4xl'>{getText(chapter.title)}</h3>
-            {ContentBaseArray(chapter.mainContent)}
-            {chapter.inBrief ? InBriefContent(chapter.inBrief) : ''}
+            {ContentBaseArray(getAllChildContent(chapter))}
         </>
     );
 }
@@ -134,7 +132,7 @@ function InBriefContent(inBrief: InBrief) {
         <div class='bg-white bg-opacity-20 border border-red-900/15 border-2 rounded p-3 my-4'>
             <strong class='font-sans text-lg text-purple-900 block mb-1'>In Brief</strong>
             <ol>
-                {inBrief.mainContent.map((c) => <li key={c} class='mb-2'>{ContentBase(c)}</li>)}
+                {getAllChildContent(inBrief).map((c) => <li key={c} class='mb-2'>{ContentBase(c)}</li>)}
             </ol>
         </div>
     );
@@ -147,7 +145,7 @@ function ParagraphContent(paragraph: Paragraph) {
                 {paragraph.paragraphNumber}
             </div>
             <div class='inline'>
-                {TextWrapperArray(paragraph.mainContent)}
+                {TextWrapperArray(getAllChildContent(paragraph))}
             </div>
         </div>
     );
@@ -157,7 +155,7 @@ function ParagraphGroupContent(paragraphGroup: ParagraphGroup) {
     return (
         <>
             <h6 class='text-lg'>{getText(paragraphGroup.title)}</h6>
-            {ContentBaseArray(paragraphGroup.mainContent)}
+            {ContentBaseArray(getAllChildContent(paragraphGroup))}
         </>
     );
 }
@@ -177,21 +175,20 @@ function PrologueContent(prologue: Prologue) {
     return (
         <>
             <h1 class='text-6xl'>{getText(prologue.title)}</h1>
-            {ContentBaseArray(prologue.openingContent)}
-            {ContentBaseArray(prologue.mainContent)}
+            {ContentBaseArray(getAllChildContent(prologue))}
         </>
     );
 }
 
 function ParagraphSubitemContent(paragraphSubitem: ParagraphSubitem) {
-    return <li>{TextWrapperArray(paragraphSubitem.mainContent)}</li>;
+    return <li>{TextWrapperArray(getAllChildContent(paragraphSubitem))}</li>;
 }
 
 function PartContent(part: Part) {
     return (
         <>
             <h1 class='text-6xl'>{getText(part.title)}</h1>
-            {ContentBaseArray(part.mainContent)}
+            {ContentBaseArray(getAllChildContent(part))}
         </>
     );
 }
@@ -200,7 +197,7 @@ function SectionContent(section: Section) {
     return (
         <>
             <h2 class='text-5xl'>{getText(section.title)}</h2>
-            {ContentBaseArray(section.mainContent)}
+            {ContentBaseArray(getAllChildContent(section))}
         </>
     );
 }
@@ -209,7 +206,7 @@ function SubarticleContent(subarticle: Subarticle) {
     return (
         <>
             <h6 class='text-xl'>{getText(subarticle.title)}</h6>
-            {ContentBaseArray(subarticle.mainContent)}
+            {ContentBaseArray(getAllChildContent(subarticle))}
         </>
     );
 }
@@ -232,7 +229,7 @@ function TextWrapperArray(array: Array<ContentBase | TextWrapper>) {
 function TextBlockContent(textBlock: TextBlock) {
     return (
         <div>
-            {TextWrapperArray(textBlock.mainContent)}
+            {TextWrapperArray(getAllChildContent(textBlock))}
         </div>
     );
 }
@@ -293,7 +290,7 @@ function PlainText(text: Text, lastFragment: boolean) {
     }
 }
 
-function ContentBaseArray<T extends ContentBase>(content: Array<T>) {
+function ContentBaseArray(content: Array<ContentBase>) {
     return content.map((c) => <Fragment key={c}>{ContentBase(c)}</Fragment>);
 }
 

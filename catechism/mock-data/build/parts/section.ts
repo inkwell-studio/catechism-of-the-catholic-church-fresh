@@ -26,6 +26,7 @@ export function buildSection(index: number): Section {
         title: getTitleText(Content.SECTION, index) as TextKey,
         openingContent,
         mainContent: buildContent(),
+        finalContent: [],
     };
 }
 

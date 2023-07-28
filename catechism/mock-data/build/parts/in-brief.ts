@@ -10,6 +10,7 @@ export function buildInBrief(): InBrief {
         pathID: '0',
         openingContent: [],
         mainContent: buildContent(),
+        finalContent: [],
     };
 }
 

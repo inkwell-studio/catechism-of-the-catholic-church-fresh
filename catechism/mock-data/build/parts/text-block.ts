@@ -13,6 +13,7 @@ export function buildTextBlock(): TextBlock {
         supplementary,
         openingContent: [],
         mainContent: buildContent(),
+        finalContent: [],
     };
 }
 

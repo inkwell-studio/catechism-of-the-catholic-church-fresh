@@ -10,6 +10,7 @@ export function buildBlockQuote(): BlockQuote {
         pathID: '0',
         openingContent: [],
         mainContent: buildContent(),
+        finalContent: [],
     };
 }
 

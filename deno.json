@@ -1,6 +1,8 @@
 {
     "tasks": {
-        "pre-commit": "deno lint && deno test && deno fmt && deno task build-artifacts",
+        "pre-commit": "deno lint && deno task test-source && deno fmt && deno task build-artifacts && deno task test-artifacts",
+        "test-source": "deno test catechism/source",
+        "test-artifacts": "deno test catechism/artifacts",
         "build-artifacts": "deno run --allow-write catechism/artifact-builders/build.ts",
         "build-mock-data": "deno run --allow-read --allow-write catechism/mock-data/run.ts && deno task build-artifacts",
         "web-app-start": "deno run -A --watch=static/,routes/ dev.ts"

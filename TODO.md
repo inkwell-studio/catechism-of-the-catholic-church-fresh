@@ -1,16 +1,47 @@
 # Tasks
 
-- [ ] rebuild the table-of-contents generation algorithm:
-  - [ ] the algorithm:
-    - [ ] for the four parts:
-      - [ ] all populated `openingContent` arrays are an entry (referenced by the parent)
-      - [ ] all `mainContent` arrays are split by `InBrief` content; entries are created for each sub-array (referenced
-            by the first element in the sub-array)
-        - [ ] write tests to verify that all content is accessible via the generated table-of-contents
-  - [ ] determine if the semantic-path-to-path-id map needs refactoring
+- [ ] implement proper content routing/rendering
 
-- [ ] investigate "TODO" note above `utils::hasChildContent()`
-- [ ] investigate `utils::getOpeningAndMainContent()`: should the return type be `ContentBase` instead of `T`?
+## Rendering content
+
+| content type selected | content type loaded and rendered  |
+| --------------------- | --------------------------------- |
+| `Prologue`            | Prologue                          |
+| `Part`                | `openingContent` and first child  |
+| `Section`             | `openingContent` and first child  |
+| `Chapter`             | `openingContent` and first child  |
+| `Article`             | see _Rendering Article_           |
+| `Article Paragraph`   | see _Rendering Article Paragraph_ |
+| all else              | see _Rendering low-level content_ |
+
+### Rendering `Article`
+
+- If `mainContent` contains any `ArticleParagraph`s:
+  - render `openingContent` and `mainContent[0]`
+- Else:
+  - render entire element
+
+### Rendering `Article Paragraph`
+
+- If it is the first child of its parent:
+  - render its parent according to its rule
+- Else:
+  - render entire element
+
+### Rendering low-level content
+
+- Render the nearest ancestor of the following types according to its rule:
+  - `Prologue`
+  - `Part`
+  - `Section`
+  - `Chapter`
+  - `Article`
+  - `Article Paragraph`
+
+---
+
+- [ ] determine if the semantic-path-to-path-id map needs refactoring
+- [ ] use `.json` files instead of "hand-built" `.ts` files (e.g. `catechism.ts`)
 
 - [ ] render all content
   - [ ] re-do the rendering structures (reorganize components, etc.)
@@ -51,7 +82,7 @@
 
 # Possible features
 
-- [ ] the ability to ask a question in natural language (via text or mic), e.g. "What happens in the sacrament of
+- [ ] the ability to ask a question in natural language (via text or mic), e.g. "What happens in the Sacrament of
       Confirmation?"
 - [ ] note-taking and highlighting
   - [ ] permanent and temporary storage (easily toggleable)

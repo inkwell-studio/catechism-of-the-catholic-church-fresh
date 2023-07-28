@@ -17,6 +17,7 @@ export function buildPart(partNumber: number): Part {
         title: getTitleText(Content.PART, partNumber) as TextKey,
         openingContent,
         mainContent,
+        finalContent: [],
     };
 }
 

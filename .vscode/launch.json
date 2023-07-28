@@ -32,9 +32,24 @@
         },
         {
             "request": "launch",
+            "name": "Artifacts",
+            "type": "node",
+            "program": "${workspaceFolder}/catechism/artifact-builders/build.ts",
+            "cwd": "${workspaceFolder}",
+            "runtimeExecutable": "deno",
+            "runtimeArgs": [
+                "run",
+                "--inspect-brk",
+                "--allow-read",
+                "--allow-write"
+            ],
+            "attachSimplePort": 9229
+        },
+        {
+            "request": "launch",
             "name": "Mock Data",
             "type": "node",
-            "program": "${workspaceFolder}/catechism/mock-data/build.ts",
+            "program": "${workspaceFolder}/catechism/mock-data/build/build.ts",
             "cwd": "${workspaceFolder}",
             "runtimeExecutable": "deno",
             "runtimeArgs": [

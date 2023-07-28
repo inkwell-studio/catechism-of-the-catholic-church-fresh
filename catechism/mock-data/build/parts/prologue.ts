@@ -14,6 +14,7 @@ export function buildPrologue(pathID: PathID): Prologue {
         title: getTitleText(Content.PROLOGUE, 1) as TextKey,
         openingContent: buildOpeningContent(),
         mainContent: buildMainContent(),
+        finalContent: [],
     };
 }
 

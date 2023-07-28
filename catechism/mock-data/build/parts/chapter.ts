@@ -17,6 +17,7 @@ export function buildChapter(chapterNumber: number): Chapter {
         title: getTitleText(Content.CHAPTER, chapterNumber) as TextKey,
         openingContent,
         mainContent: buildContent(),
+        finalContent: [],
         inBrief: buildInBriefHelper(),
     };
 }

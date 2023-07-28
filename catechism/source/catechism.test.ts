@@ -1,6 +1,6 @@
 import { Catechism } from './catechism.ts';
-import { ContentBase, ContentContainer, PathID } from './types/types.ts';
-import { getAllContent, getAllParagraphs, getAllPathIDs, getOpeningAndMainContent, hasMainContent } from '../utils.ts';
+import { ContentBase, PathID } from './types/types.ts';
+import { getAllChildContent, getAllContent, getAllParagraphs, getAllPathIDs } from '../utils.ts';
 import { assert, assertStrictEquals } from '../../dependencies.ts';
 
 console.log('\nCatechism data ...');
@@ -18,11 +18,11 @@ Deno.test('all pathIDs are unique', () => {
 Deno.test('all pathIDs are correctly set relative to their parent', () => {
     const allContent = getAllContent(Catechism);
     allContent.forEach((content) => {
-        const childContent = getOpeningAndMainContent(content);
+        const childContent = getAllChildContent(content);
         childContent.forEach((child, index) => helper(child, index, content.pathID));
     });
 
-    function helper<T extends ContentBase & ContentContainer>(content: T, index: number, parentPathID: PathID): void {
+    function helper(content: ContentBase, index: number, parentPathID: PathID): void {
         const expectedPathID = `${parentPathID}-${index}`;
         assertStrictEquals(
             content.pathID,
@@ -30,10 +30,8 @@ Deno.test('all pathIDs are correctly set relative to their parent', () => {
             `Content expected to have pathID of ${expectedPathID}, but has ${content.pathID} instead`,
         );
 
-        if (hasMainContent(content)) {
-            const childContent = getOpeningAndMainContent(content);
-            childContent.forEach((child, childIndex) => helper(child, childIndex, content.pathID));
-        }
+        const childContent = getAllChildContent(content);
+        childContent.forEach((child, childIndex) => helper(child, childIndex, content.pathID));
     }
 });
 

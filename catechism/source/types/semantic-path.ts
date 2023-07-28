@@ -11,9 +11,11 @@ export type SemanticPath =
 
 export type SemanticPathSource = { content: Content; number: number | null };
 
+/**
+ * @param ancestors a list of ancestors of `child`, in descending order (i.e. `ancestors[i]` is the parent of `ancestors[i+1]`)
+ */
 export function buildSemanticPath(child: SemanticPathSource, ancestors: Array<SemanticPathSource>): SemanticPath {
-    return [child, ...ancestors]
-        .reverse()
+    return [...ancestors, child]
         .map((segment) => getSegmentString(segment))
         .join('/');
 }

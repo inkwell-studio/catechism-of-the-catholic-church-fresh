@@ -29,11 +29,10 @@ export function randomBoolean(): boolean {
 }
 
 /**
- * @returns an array of integers, starting at `min`, and ending there or going up to `max` inclusively
+ * @returns an array of integers whose length is between the given limits (inclusively)
  */
 export function intArrayOfRandomLength(limits: MinMax): Array<number> {
-    const max = randomInt(limits);
-    const length = (max - limits.min) + 1;
+    const length = randomInt(limits);
 
     const array = [];
     for (let i = 1; i <= length; i++) {

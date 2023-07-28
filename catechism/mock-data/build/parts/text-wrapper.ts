@@ -9,8 +9,9 @@ export function buildTextWrapper(): TextWrapper {
         contentType: Content.TEXT_WRAPPER,
         // This will be set later, after all content is created
         pathID: '0',
-        mainContent: buildContent(),
         openingContent: [],
+        mainContent: buildContent(),
+        finalContent: [],
         references: buildReferences(),
         // These are set later, after all content is created
         paragraphReferences: [],

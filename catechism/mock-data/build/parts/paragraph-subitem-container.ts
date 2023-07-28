@@ -11,6 +11,7 @@ export function buildParagraphSubitemContainer(): ParagraphSubitemContainer {
         ordered: randomBoolean(),
         openingContent: [],
         mainContent: buildContent(),
+        finalContent: [],
     };
 }
 

@@ -14,6 +14,7 @@ export function buildSubarticle(i: number): Subarticle {
         title: getTitleText(Content.SUB_ARTICLE, i) as TextKey,
         openingContent: [],
         mainContent: buildContent(),
+        finalContent: [],
     };
 }
 

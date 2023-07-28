@@ -3,10 +3,22 @@ import { Limits, Probability } from './config.ts';
 import { buildPart } from './parts/part.ts';
 import { buildPrologue } from './parts/prologue.ts';
 import { chance, intArrayOfRandomLength, MinMax, randomInt } from '../utils.ts';
-import { CatechismStructure, Content, ContentBase, ContentContainer } from '../../source/types/types.ts';
-import { NumberOrNumberRange } from '../../source/types/number-or-number-range.ts';
-import { PathID } from '../../source/types/path-id.ts';
-import { getAllParagraphs, getOpeningAndMainContent, hasMainContent, hasOpeningContent } from '../../utils.ts';
+import {
+    CatechismStructure,
+    Content,
+    ContentBase,
+    ContentContainer,
+    NumberOrNumberRange,
+    PathID,
+} from '../../source/types/types.ts';
+import {
+    getAllChildContent,
+    getAllParagraphs,
+    hasFinalContent,
+    hasInBrief,
+    hasMainContent,
+    hasOpeningContent,
+} from '../../utils.ts';
 
 //#region top-level functions
 export function buildMockData(): CatechismStructure {
@@ -52,14 +64,25 @@ function setPathIDs(catechism: CatechismStructure): CatechismStructure {
     const offset = catechism.prologue.openingContent.length;
     (catechism.prologue as any).openingContent = setPathIDsHelper(catechism.prologue.openingContent, prologuePathID);
     (catechism.prologue as any).mainContent = setPathIDsHelper(catechism.prologue.mainContent, prologuePathID, offset);
+    (catechism.prologue as any).finalContent = setPathIDsHelper(
+        catechism.prologue.finalContent,
+        prologuePathID,
+        offset,
+    );
 
     catechism.parts.forEach((part, index) => {
         const pathID: PathID = `${index + 1}`;
         (part as any).pathID = pathID;
-        (part as any).openingContent = setPathIDsHelper(part.openingContent, pathID);
 
-        const openingContentOffset = part.openingContent.length;
-        (part as any).mainContent = setPathIDsHelper(part.mainContent, pathID, openingContentOffset);
+        let contentOffset = 0;
+
+        (part as any).openingContent = setPathIDsHelper(part.openingContent, pathID, contentOffset);
+        contentOffset += part.openingContent.length;
+
+        (part as any).mainContent = setPathIDsHelper(part.mainContent, pathID, contentOffset);
+        contentOffset += part.mainContent.length;
+
+        (part as any).finalContent = setPathIDsHelper(part.finalContent, pathID, contentOffset);
     });
 
     return catechism;
@@ -74,14 +97,25 @@ function setPathIDsHelper<T extends ContentBase>(
         const pathID = getPathID(index + offset, parentPathID);
         (c as any).pathID = pathID;
 
-        let openingContentOffset = 0;
+        let contentOffset = 0;
+
         if (hasOpeningContent(c)) {
             (c as any).openingContent = setPathIDsHelper((c as any).openingContent, pathID);
-            openingContentOffset = (c as any).openingContent.length;
+            contentOffset += (c as any).openingContent.length;
         }
 
         if (hasMainContent(c)) {
-            (c as any).mainContent = setPathIDsHelper((c as any).mainContent, pathID, openingContentOffset);
+            (c as any).mainContent = setPathIDsHelper((c as any).mainContent, pathID, contentOffset);
+            contentOffset += (c as any).mainContent.length;
+        }
+
+        if (hasFinalContent(c)) {
+            (c as any).finalContent = setPathIDsHelper((c as any).finalContent, pathID, contentOffset);
+            contentOffset += (c as unknown as ContentContainer).finalContent.length;
+        }
+
+        if (hasInBrief(c)) {
+            (c as any).inBrief = setPathIDsHelper([(c as any).inBrief], pathID, contentOffset)[0];
         }
     });
 
@@ -104,16 +138,16 @@ function setParagraphNumbers(catechism: CatechismStructure): CatechismStructure 
     return catechism;
 }
 
-function setParagraphNumbersHelper<T extends ContentBase & ContentContainer>(
-    content: Array<T>,
+function setParagraphNumbersHelper(
+    content: Array<ContentBase>,
     nextParagraphNumber: number,
-): { content: Array<T>; nextParagraphNumber: number } {
+): { content: Array<ContentBase>; nextParagraphNumber: number } {
     content.forEach((c) => {
         if (Content.PARAGRAPH === c.contentType) {
             (c as any)['paragraphNumber'] = nextParagraphNumber++;
         } else if (hasMainContent(c)) {
-            const mainAndOpeningContent = getOpeningAndMainContent(c);
-            const results = setParagraphNumbersHelper(mainAndOpeningContent, nextParagraphNumber);
+            const childContent = getAllChildContent(c);
+            const results = setParagraphNumbersHelper(childContent, nextParagraphNumber);
             nextParagraphNumber = results.nextParagraphNumber;
 
             return {
@@ -172,11 +206,11 @@ function buildParagraphCrossReferences(
         crossReferenceCount: partsResults.crossReferenceCount,
     };
 
-    function helper<T extends ContentBase & ContentContainer>(
-        content: Array<T>,
+    function helper(
+        content: Array<ContentBase>,
         maxParagraphNumber: number,
         crossReferenceCount: number,
-    ): { content: Array<T>; crossReferenceCount: number } {
+    ): { content: Array<ContentBase>; crossReferenceCount: number } {
         content.forEach((c) => {
             // Only build cross references for paragraphs outside of the "In Brief" sections
             const properContent = Content.PARAGRAPH_GROUP === c.contentType || Content.TEXT_WRAPPER === c.contentType;
@@ -185,10 +219,10 @@ function buildParagraphCrossReferences(
                 (c as any)['paragraphReferences'] = references;
                 crossReferenceCount += references.length;
             } else if (Content.IN_BRIEF !== c.contentType && hasMainContent(c)) {
-                const mainAndOpeningContent = getOpeningAndMainContent(c);
+                const childContent = getAllChildContent(c);
 
                 const results = helper(
-                    mainAndOpeningContent,
+                    childContent,
                     maxParagraphNumber,
                     crossReferenceCount,
                 );

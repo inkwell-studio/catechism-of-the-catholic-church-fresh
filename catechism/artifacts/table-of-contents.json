@@ -1,98 +1,182 @@
 {
     "prologue": {
         "contentType": "PROLOGUE",
-        "title": "PROLOGUE 0",
+        "title": "Prologue",
         "pathID": "0",
         "semanticPath": "prologue",
         "firstParagraphNumber": 1,
-        "children": []
+        "lastParagraphNumber": 14,
+        "children": [
+            {
+                "contentType": "SUB_ARTICLE",
+                "title": "Subarticle 1",
+                "pathID": "0-3",
+                "semanticPath": "prologue/subarticle-1",
+                "firstParagraphNumber": 1,
+                "lastParagraphNumber": 5,
+                "children": []
+            },
+            {
+                "contentType": "SUB_ARTICLE",
+                "title": "Subarticle 2",
+                "pathID": "0-4",
+                "semanticPath": "prologue/subarticle-2",
+                "firstParagraphNumber": 6,
+                "lastParagraphNumber": 7,
+                "children": []
+            },
+            {
+                "contentType": "SUB_ARTICLE",
+                "title": "Subarticle 3",
+                "pathID": "0-5",
+                "semanticPath": "prologue/subarticle-3",
+                "firstParagraphNumber": 8,
+                "lastParagraphNumber": 14,
+                "children": []
+            }
+        ]
     },
     "parts": [
         {
             "contentType": "PART",
-            "title": "PART 1",
+            "title": "Part 1",
             "pathID": "1",
             "semanticPath": "part-1",
-            "firstParagraphNumber": 6,
+            "firstParagraphNumber": 15,
+            "lastParagraphNumber": 68,
             "children": [
                 {
                     "contentType": "SECTION",
-                    "title": "SECTION 1-0",
-                    "pathID": "1-0",
+                    "title": "Section 1",
+                    "pathID": "1-3",
                     "semanticPath": "part-1/section-1",
-                    "firstParagraphNumber": 6,
+                    "firstParagraphNumber": 18,
+                    "lastParagraphNumber": 68,
                     "children": [
                         {
                             "contentType": "CHAPTER",
-                            "title": "CHAPTER 1-0-0",
-                            "pathID": "1-0-0",
+                            "title": "Chapter 1",
+                            "pathID": "1-3-0",
                             "semanticPath": "part-1/section-1/chapter-1",
-                            "firstParagraphNumber": 6,
+                            "firstParagraphNumber": 18,
+                            "lastParagraphNumber": 68,
                             "children": [
                                 {
                                     "contentType": "ARTICLE",
-                                    "title": "ARTICLE 1-0-0-1",
-                                    "pathID": "1-0-0-1",
+                                    "title": "Article 1",
+                                    "pathID": "1-3-0-3",
                                     "semanticPath": "part-1/section-1/chapter-1/article-1",
-                                    "firstParagraphNumber": 6,
+                                    "firstParagraphNumber": 18,
+                                    "lastParagraphNumber": 32,
                                     "children": [
                                         {
                                             "contentType": "SUB_ARTICLE",
-                                            "title": "SUB_ARTICLE 1-0-0-1-2",
-                                            "pathID": "1-0-0-1-2",
+                                            "title": "Subarticle 1",
+                                            "pathID": "1-3-0-3-2",
                                             "semanticPath": "part-1/section-1/chapter-1/article-1/subarticle-1",
-                                            "firstParagraphNumber": 6,
-                                            "children": []
-                                        }
-                                    ]
-                                },
-                                {
-                                    "contentType": "ARTICLE",
-                                    "title": "ARTICLE 1-0-0-2",
-                                    "pathID": "1-0-0-2",
-                                    "semanticPath": "part-1/section-1/chapter-1/article-2",
-                                    "firstParagraphNumber": 8,
-                                    "children": [
-                                        {
-                                            "contentType": "ARTICLE_PARAGRAPH",
-                                            "title": "ARTICLE_PARAGRAPH 1-0-0-2-2",
-                                            "pathID": "1-0-0-2-2",
-                                            "semanticPath": "part-1/section-1/chapter-1/article-2/article-paragraph-1",
-                                            "firstParagraphNumber": 8,
-                                            "children": [
-                                                {
-                                                    "contentType": "SUB_ARTICLE",
-                                                    "title": "SUB_ARTICLE 1-0-0-2-2-0",
-                                                    "pathID": "1-0-0-2-2-0",
-                                                    "semanticPath": "part-1/section-1/chapter-1/article-2/article-paragraph-1/subarticle-1",
-                                                    "firstParagraphNumber": 8,
-                                                    "children": []
-                                                }
-                                            ]
-                                        }
-                                    ]
-                                },
-                                {
-                                    "contentType": "ARTICLE",
-                                    "title": "ARTICLE 1-0-0-3",
-                                    "pathID": "1-0-0-3",
-                                    "semanticPath": "part-1/section-1/chapter-1/article-3",
-                                    "firstParagraphNumber": 13,
-                                    "children": [
-                                        {
-                                            "contentType": "SUB_ARTICLE",
-                                            "title": "SUB_ARTICLE 1-0-0-3-2",
-                                            "pathID": "1-0-0-3-2",
-                                            "semanticPath": "part-1/section-1/chapter-1/article-3/subarticle-1",
-                                            "firstParagraphNumber": 13,
+                                            "firstParagraphNumber": 18,
+                                            "lastParagraphNumber": 21,
                                             "children": []
                                         },
                                         {
                                             "contentType": "SUB_ARTICLE",
-                                            "title": "SUB_ARTICLE 1-0-0-3-3",
-                                            "pathID": "1-0-0-3-3",
+                                            "title": "Subarticle 2",
+                                            "pathID": "1-3-0-3-3",
+                                            "semanticPath": "part-1/section-1/chapter-1/article-1/subarticle-2",
+                                            "firstParagraphNumber": 22,
+                                            "lastParagraphNumber": 24,
+                                            "children": []
+                                        },
+                                        {
+                                            "contentType": "IN_BRIEF",
+                                            "title": "In Brief",
+                                            "pathID": "1-3-0-3-5",
+                                            "semanticPath": "part-1/section-1/chapter-1/article-1/in-brief",
+                                            "firstParagraphNumber": 28,
+                                            "lastParagraphNumber": 32,
+                                            "children": []
+                                        }
+                                    ]
+                                },
+                                {
+                                    "contentType": "ARTICLE",
+                                    "title": "Article 2",
+                                    "pathID": "1-3-0-4",
+                                    "semanticPath": "part-1/section-1/chapter-1/article-2",
+                                    "firstParagraphNumber": 33,
+                                    "lastParagraphNumber": 53,
+                                    "children": [
+                                        {
+                                            "contentType": "SUB_ARTICLE",
+                                            "title": "Subarticle 1",
+                                            "pathID": "1-3-0-4-2",
+                                            "semanticPath": "part-1/section-1/chapter-1/article-2/subarticle-1",
+                                            "firstParagraphNumber": 33,
+                                            "lastParagraphNumber": 38,
+                                            "children": []
+                                        },
+                                        {
+                                            "contentType": "SUB_ARTICLE",
+                                            "title": "Subarticle 2",
+                                            "pathID": "1-3-0-4-3",
+                                            "semanticPath": "part-1/section-1/chapter-1/article-2/subarticle-2",
+                                            "firstParagraphNumber": 39,
+                                            "lastParagraphNumber": 41,
+                                            "children": []
+                                        },
+                                        {
+                                            "contentType": "SUB_ARTICLE",
+                                            "title": "Subarticle 3",
+                                            "pathID": "1-3-0-4-4",
+                                            "semanticPath": "part-1/section-1/chapter-1/article-2/subarticle-3",
+                                            "firstParagraphNumber": 42,
+                                            "lastParagraphNumber": 44,
+                                            "children": []
+                                        },
+                                        {
+                                            "contentType": "IN_BRIEF",
+                                            "title": "In Brief",
+                                            "pathID": "1-3-0-4-8",
+                                            "semanticPath": "part-1/section-1/chapter-1/article-2/in-brief",
+                                            "firstParagraphNumber": 51,
+                                            "lastParagraphNumber": 53,
+                                            "children": []
+                                        }
+                                    ]
+                                },
+                                {
+                                    "contentType": "ARTICLE",
+                                    "title": "Article 3",
+                                    "pathID": "1-3-0-5",
+                                    "semanticPath": "part-1/section-1/chapter-1/article-3",
+                                    "firstParagraphNumber": 54,
+                                    "lastParagraphNumber": 68,
+                                    "children": [
+                                        {
+                                            "contentType": "SUB_ARTICLE",
+                                            "title": "Subarticle 1",
+                                            "pathID": "1-3-0-5-3",
+                                            "semanticPath": "part-1/section-1/chapter-1/article-3/subarticle-1",
+                                            "firstParagraphNumber": 54,
+                                            "lastParagraphNumber": 56,
+                                            "children": []
+                                        },
+                                        {
+                                            "contentType": "SUB_ARTICLE",
+                                            "title": "Subarticle 2",
+                                            "pathID": "1-3-0-5-4",
                                             "semanticPath": "part-1/section-1/chapter-1/article-3/subarticle-2",
-                                            "firstParagraphNumber": 15,
+                                            "firstParagraphNumber": 57,
+                                            "lastParagraphNumber": 61,
+                                            "children": []
+                                        },
+                                        {
+                                            "contentType": "IN_BRIEF",
+                                            "title": "In Brief",
+                                            "pathID": "1-3-0-5-7",
+                                            "semanticPath": "part-1/section-1/chapter-1/article-3/in-brief",
+                                            "firstParagraphNumber": 66,
+                                            "lastParagraphNumber": 68,
                                             "children": []
                                         }
                                     ]
@@ -105,72 +189,126 @@
         },
         {
             "contentType": "PART",
-            "title": "PART 2",
+            "title": "Part 2",
             "pathID": "2",
             "semanticPath": "part-2",
-            "firstParagraphNumber": 20,
+            "firstParagraphNumber": 69,
+            "lastParagraphNumber": 176,
             "children": [
                 {
                     "contentType": "SECTION",
-                    "title": "SECTION 2-0",
+                    "title": "Section 1",
                     "pathID": "2-0",
                     "semanticPath": "part-2/section-1",
-                    "firstParagraphNumber": 20,
+                    "firstParagraphNumber": 69,
+                    "lastParagraphNumber": 176,
                     "children": [
                         {
                             "contentType": "CHAPTER",
-                            "title": "CHAPTER 2-0-0",
+                            "title": "Chapter 1",
                             "pathID": "2-0-0",
                             "semanticPath": "part-2/section-1/chapter-1",
-                            "firstParagraphNumber": 20,
+                            "firstParagraphNumber": 69,
+                            "lastParagraphNumber": 116,
                             "children": [
                                 {
                                     "contentType": "ARTICLE",
-                                    "title": "ARTICLE 2-0-0-0",
-                                    "pathID": "2-0-0-0",
+                                    "title": "Article 1",
+                                    "pathID": "2-0-0-2",
                                     "semanticPath": "part-2/section-1/chapter-1/article-1",
-                                    "firstParagraphNumber": 20,
-                                    "children": []
-                                },
-                                {
-                                    "contentType": "ARTICLE",
-                                    "title": "ARTICLE 2-0-0-1",
-                                    "pathID": "2-0-0-1",
-                                    "semanticPath": "part-2/section-1/chapter-1/article-2",
-                                    "firstParagraphNumber": 29,
+                                    "firstParagraphNumber": 69,
+                                    "lastParagraphNumber": 91,
                                     "children": [
                                         {
-                                            "contentType": "ARTICLE_PARAGRAPH",
-                                            "title": "ARTICLE_PARAGRAPH 2-0-0-1-1",
-                                            "pathID": "2-0-0-1-1",
-                                            "semanticPath": "part-2/section-1/chapter-1/article-2/article-paragraph-1",
-                                            "firstParagraphNumber": 29,
-                                            "children": [
-                                                {
-                                                    "contentType": "SUB_ARTICLE",
-                                                    "title": "SUB_ARTICLE 2-0-0-1-1-0",
-                                                    "pathID": "2-0-0-1-1-0",
-                                                    "semanticPath": "part-2/section-1/chapter-1/article-2/article-paragraph-1/subarticle-1",
-                                                    "firstParagraphNumber": 29,
-                                                    "children": []
-                                                }
-                                            ]
+                                            "contentType": "SUB_ARTICLE",
+                                            "title": "Subarticle 1",
+                                            "pathID": "2-0-0-2-3",
+                                            "semanticPath": "part-2/section-1/chapter-1/article-1/subarticle-1",
+                                            "firstParagraphNumber": 69,
+                                            "lastParagraphNumber": 76,
+                                            "children": []
+                                        },
+                                        {
+                                            "contentType": "SUB_ARTICLE",
+                                            "title": "Subarticle 2",
+                                            "pathID": "2-0-0-2-4",
+                                            "semanticPath": "part-2/section-1/chapter-1/article-1/subarticle-2",
+                                            "firstParagraphNumber": 77,
+                                            "lastParagraphNumber": 79,
+                                            "children": []
+                                        },
+                                        {
+                                            "contentType": "SUB_ARTICLE",
+                                            "title": "Subarticle 3",
+                                            "pathID": "2-0-0-2-5",
+                                            "semanticPath": "part-2/section-1/chapter-1/article-1/subarticle-3",
+                                            "firstParagraphNumber": 80,
+                                            "lastParagraphNumber": 85,
+                                            "children": []
+                                        },
+                                        {
+                                            "contentType": "IN_BRIEF",
+                                            "title": "In Brief",
+                                            "pathID": "2-0-0-2-7",
+                                            "semanticPath": "part-2/section-1/chapter-1/article-1/in-brief",
+                                            "firstParagraphNumber": 88,
+                                            "lastParagraphNumber": 91,
+                                            "children": []
                                         }
                                     ]
                                 },
                                 {
                                     "contentType": "ARTICLE",
-                                    "title": "ARTICLE 2-0-0-2",
-                                    "pathID": "2-0-0-2",
+                                    "title": "Article 2",
+                                    "pathID": "2-0-0-3",
+                                    "semanticPath": "part-2/section-1/chapter-1/article-2",
+                                    "firstParagraphNumber": 92,
+                                    "lastParagraphNumber": 103,
+                                    "children": [
+                                        {
+                                            "contentType": "IN_BRIEF",
+                                            "title": "In Brief",
+                                            "pathID": "2-0-0-3-9",
+                                            "semanticPath": "part-2/section-1/chapter-1/article-2/in-brief",
+                                            "firstParagraphNumber": 101,
+                                            "lastParagraphNumber": 103,
+                                            "children": []
+                                        }
+                                    ]
+                                },
+                                {
+                                    "contentType": "ARTICLE",
+                                    "title": "Article 3",
+                                    "pathID": "2-0-0-4",
                                     "semanticPath": "part-2/section-1/chapter-1/article-3",
-                                    "firstParagraphNumber": 34,
+                                    "firstParagraphNumber": 104,
+                                    "lastParagraphNumber": 116,
                                     "children": [
                                         {
                                             "contentType": "SUB_ARTICLE",
-                                            "title": "SUB_ARTICLE 2-0-0-2-2",
-                                            "pathID": "2-0-0-2-2",
+                                            "title": "Subarticle 1",
+                                            "pathID": "2-0-0-4-3",
                                             "semanticPath": "part-2/section-1/chapter-1/article-3/subarticle-1",
-                                            "firstParagraphNumber": 34,
+                                            "firstParagraphNumber": 104,
+                                            "lastParagraphNumber": 106,
+                                            "children": []
+                                        },
+                                        {
+                                            "contentType": "SUB_ARTICLE",
+                                            "title": "Subarticle 2",
+                                            "pathID": "2-0-0-4-4",
+                                            "semanticPath": "part-2/section-1/chapter-1/article-3/subarticle-2",
+                                            "firstParagraphNumber": 107,
+                                            "lastParagraphNumber": 112,
+                                            "children": []
+                                        },
+                                        {
+                                            "contentType": "IN_BRIEF",
+                                            "title": "In Brief",
+                                            "pathID": "2-0-0-4-6",
+                                            "semanticPath": "part-2/section-1/chapter-1/article-3/in-brief",
+                                            "firstParagraphNumber": 114,
+                                            "lastParagraphNumber": 116,
                                             "children": []
                                         }
                                     ]
@@ -179,35 +317,140 @@
                         },
                         {
                             "contentType": "CHAPTER",
-                            "title": "CHAPTER 2-0-1",
+                            "title": "Chapter 2",
                             "pathID": "2-0-1",
                             "semanticPath": "part-2/section-1/chapter-2",
-                            "firstParagraphNumber": 39,
+                            "firstParagraphNumber": 117,
+                            "lastParagraphNumber": 176,
                             "children": [
                                 {
                                     "contentType": "ARTICLE",
-                                    "title": "ARTICLE 2-0-1-0",
-                                    "pathID": "2-0-1-0",
+                                    "title": "Article 1",
+                                    "pathID": "2-0-1-1",
                                     "semanticPath": "part-2/section-1/chapter-2/article-1",
-                                    "firstParagraphNumber": 39,
+                                    "firstParagraphNumber": 117,
+                                    "lastParagraphNumber": 141,
                                     "children": [
                                         {
                                             "contentType": "SUB_ARTICLE",
-                                            "title": "SUB_ARTICLE 2-0-1-0-1",
-                                            "pathID": "2-0-1-0-1",
+                                            "title": "Subarticle 1",
+                                            "pathID": "2-0-1-1-1",
                                             "semanticPath": "part-2/section-1/chapter-2/article-1/subarticle-1",
-                                            "firstParagraphNumber": 39,
+                                            "firstParagraphNumber": 117,
+                                            "lastParagraphNumber": 121,
+                                            "children": []
+                                        },
+                                        {
+                                            "contentType": "SUB_ARTICLE",
+                                            "title": "Subarticle 2",
+                                            "pathID": "2-0-1-1-2",
+                                            "semanticPath": "part-2/section-1/chapter-2/article-1/subarticle-2",
+                                            "firstParagraphNumber": 122,
+                                            "lastParagraphNumber": 126,
+                                            "children": []
+                                        },
+                                        {
+                                            "contentType": "SUB_ARTICLE",
+                                            "title": "Subarticle 3",
+                                            "pathID": "2-0-1-1-3",
+                                            "semanticPath": "part-2/section-1/chapter-2/article-1/subarticle-3",
+                                            "firstParagraphNumber": 127,
+                                            "lastParagraphNumber": 131,
+                                            "children": []
+                                        },
+                                        {
+                                            "contentType": "IN_BRIEF",
+                                            "title": "In Brief",
+                                            "pathID": "2-0-1-1-7",
+                                            "semanticPath": "part-2/section-1/chapter-2/article-1/in-brief",
+                                            "firstParagraphNumber": 139,
+                                            "lastParagraphNumber": 141,
                                             "children": []
                                         }
                                     ]
                                 },
                                 {
                                     "contentType": "ARTICLE",
-                                    "title": "ARTICLE 2-0-1-1",
-                                    "pathID": "2-0-1-1",
+                                    "title": "Article 2",
+                                    "pathID": "2-0-1-2",
                                     "semanticPath": "part-2/section-1/chapter-2/article-2",
-                                    "firstParagraphNumber": 43,
-                                    "children": []
+                                    "firstParagraphNumber": 142,
+                                    "lastParagraphNumber": 157,
+                                    "children": [
+                                        {
+                                            "contentType": "SUB_ARTICLE",
+                                            "title": "Subarticle 1",
+                                            "pathID": "2-0-1-2-2",
+                                            "semanticPath": "part-2/section-1/chapter-2/article-2/subarticle-1",
+                                            "firstParagraphNumber": 142,
+                                            "lastParagraphNumber": 143,
+                                            "children": []
+                                        },
+                                        {
+                                            "contentType": "SUB_ARTICLE",
+                                            "title": "Subarticle 2",
+                                            "pathID": "2-0-1-2-3",
+                                            "semanticPath": "part-2/section-1/chapter-2/article-2/subarticle-2",
+                                            "firstParagraphNumber": 144,
+                                            "lastParagraphNumber": 148,
+                                            "children": []
+                                        },
+                                        {
+                                            "contentType": "IN_BRIEF",
+                                            "title": "In Brief",
+                                            "pathID": "2-0-1-2-6",
+                                            "semanticPath": "part-2/section-1/chapter-2/article-2/in-brief",
+                                            "firstParagraphNumber": 153,
+                                            "lastParagraphNumber": 157,
+                                            "children": []
+                                        }
+                                    ]
+                                },
+                                {
+                                    "contentType": "ARTICLE",
+                                    "title": "Article 3",
+                                    "pathID": "2-0-1-3",
+                                    "semanticPath": "part-2/section-1/chapter-2/article-3",
+                                    "firstParagraphNumber": 158,
+                                    "lastParagraphNumber": 176,
+                                    "children": [
+                                        {
+                                            "contentType": "SUB_ARTICLE",
+                                            "title": "Subarticle 1",
+                                            "pathID": "2-0-1-3-1",
+                                            "semanticPath": "part-2/section-1/chapter-2/article-3/subarticle-1",
+                                            "firstParagraphNumber": 158,
+                                            "lastParagraphNumber": 161,
+                                            "children": []
+                                        },
+                                        {
+                                            "contentType": "SUB_ARTICLE",
+                                            "title": "Subarticle 2",
+                                            "pathID": "2-0-1-3-2",
+                                            "semanticPath": "part-2/section-1/chapter-2/article-3/subarticle-2",
+                                            "firstParagraphNumber": 162,
+                                            "lastParagraphNumber": 167,
+                                            "children": []
+                                        },
+                                        {
+                                            "contentType": "SUB_ARTICLE",
+                                            "title": "Subarticle 3",
+                                            "pathID": "2-0-1-3-3",
+                                            "semanticPath": "part-2/section-1/chapter-2/article-3/subarticle-3",
+                                            "firstParagraphNumber": 168,
+                                            "lastParagraphNumber": 170,
+                                            "children": []
+                                        },
+                                        {
+                                            "contentType": "IN_BRIEF",
+                                            "title": "In Brief",
+                                            "pathID": "2-0-1-3-5",
+                                            "semanticPath": "part-2/section-1/chapter-2/article-3/in-brief",
+                                            "firstParagraphNumber": 172,
+                                            "lastParagraphNumber": 176,
+                                            "children": []
+                                        }
+                                    ]
                                 }
                             ]
                         }
@@ -217,32 +460,468 @@
         },
         {
             "contentType": "PART",
-            "title": "PART 3",
+            "title": "Part 3",
             "pathID": "3",
             "semanticPath": "part-3",
-            "firstParagraphNumber": 47,
+            "firstParagraphNumber": 177,
+            "lastParagraphNumber": 396,
             "children": [
                 {
                     "contentType": "SECTION",
-                    "title": "SECTION 3-0",
+                    "title": "Section 1",
                     "pathID": "3-0",
                     "semanticPath": "part-3/section-1",
-                    "firstParagraphNumber": 47,
+                    "firstParagraphNumber": 177,
+                    "lastParagraphNumber": 292,
                     "children": [
                         {
                             "contentType": "CHAPTER",
-                            "title": "CHAPTER 3-0-1",
-                            "pathID": "3-0-1",
+                            "title": "Chapter 1",
+                            "pathID": "3-0-0",
                             "semanticPath": "part-3/section-1/chapter-1",
-                            "firstParagraphNumber": 49,
+                            "firstParagraphNumber": 177,
+                            "lastParagraphNumber": 201,
                             "children": [
                                 {
                                     "contentType": "ARTICLE",
-                                    "title": "ARTICLE 3-0-1-3",
-                                    "pathID": "3-0-1-3",
+                                    "title": "Article 1",
+                                    "pathID": "3-0-0-0",
                                     "semanticPath": "part-3/section-1/chapter-1/article-1",
-                                    "firstParagraphNumber": 49,
+                                    "firstParagraphNumber": 177,
+                                    "lastParagraphNumber": 201,
+                                    "children": [
+                                        {
+                                            "contentType": "SUB_ARTICLE",
+                                            "title": "Subarticle 1",
+                                            "pathID": "3-0-0-0-3",
+                                            "semanticPath": "part-3/section-1/chapter-1/article-1/subarticle-1",
+                                            "firstParagraphNumber": 177,
+                                            "lastParagraphNumber": 183,
+                                            "children": []
+                                        },
+                                        {
+                                            "contentType": "SUB_ARTICLE",
+                                            "title": "Subarticle 2",
+                                            "pathID": "3-0-0-0-4",
+                                            "semanticPath": "part-3/section-1/chapter-1/article-1/subarticle-2",
+                                            "firstParagraphNumber": 184,
+                                            "lastParagraphNumber": 187,
+                                            "children": []
+                                        },
+                                        {
+                                            "contentType": "SUB_ARTICLE",
+                                            "title": "Subarticle 3",
+                                            "pathID": "3-0-0-0-5",
+                                            "semanticPath": "part-3/section-1/chapter-1/article-1/subarticle-3",
+                                            "firstParagraphNumber": 188,
+                                            "lastParagraphNumber": 194,
+                                            "children": []
+                                        },
+                                        {
+                                            "contentType": "IN_BRIEF",
+                                            "title": "In Brief",
+                                            "pathID": "3-0-0-0-9",
+                                            "semanticPath": "part-3/section-1/chapter-1/article-1/in-brief",
+                                            "firstParagraphNumber": 199,
+                                            "lastParagraphNumber": 201,
+                                            "children": []
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "contentType": "CHAPTER",
+                            "title": "Chapter 2",
+                            "pathID": "3-0-1",
+                            "semanticPath": "part-3/section-1/chapter-2",
+                            "firstParagraphNumber": 202,
+                            "lastParagraphNumber": 292,
+                            "children": [
+                                {
+                                    "contentType": "ARTICLE",
+                                    "title": "Article 1",
+                                    "pathID": "3-0-1-2",
+                                    "semanticPath": "part-3/section-1/chapter-2/article-1",
+                                    "firstParagraphNumber": 202,
+                                    "lastParagraphNumber": 224,
+                                    "children": [
+                                        {
+                                            "contentType": "SUB_ARTICLE",
+                                            "title": "Subarticle 1",
+                                            "pathID": "3-0-1-2-1",
+                                            "semanticPath": "part-3/section-1/chapter-2/article-1/subarticle-1",
+                                            "firstParagraphNumber": 202,
+                                            "lastParagraphNumber": 206,
+                                            "children": []
+                                        },
+                                        {
+                                            "contentType": "SUB_ARTICLE",
+                                            "title": "Subarticle 2",
+                                            "pathID": "3-0-1-2-2",
+                                            "semanticPath": "part-3/section-1/chapter-2/article-1/subarticle-2",
+                                            "firstParagraphNumber": 207,
+                                            "lastParagraphNumber": 212,
+                                            "children": []
+                                        },
+                                        {
+                                            "contentType": "SUB_ARTICLE",
+                                            "title": "Subarticle 3",
+                                            "pathID": "3-0-1-2-3",
+                                            "semanticPath": "part-3/section-1/chapter-2/article-1/subarticle-3",
+                                            "firstParagraphNumber": 213,
+                                            "lastParagraphNumber": 218,
+                                            "children": []
+                                        },
+                                        {
+                                            "contentType": "IN_BRIEF",
+                                            "title": "In Brief",
+                                            "pathID": "3-0-1-2-5",
+                                            "semanticPath": "part-3/section-1/chapter-2/article-1/in-brief",
+                                            "firstParagraphNumber": 222,
+                                            "lastParagraphNumber": 224,
+                                            "children": []
+                                        }
+                                    ]
+                                },
+                                {
+                                    "contentType": "ARTICLE",
+                                    "title": "Article 2",
+                                    "pathID": "3-0-1-3",
+                                    "semanticPath": "part-3/section-1/chapter-2/article-2",
+                                    "firstParagraphNumber": 225,
+                                    "lastParagraphNumber": 241,
+                                    "children": [
+                                        {
+                                            "contentType": "SUB_ARTICLE",
+                                            "title": "Subarticle 1",
+                                            "pathID": "3-0-1-3-3",
+                                            "semanticPath": "part-3/section-1/chapter-2/article-2/subarticle-1",
+                                            "firstParagraphNumber": 225,
+                                            "lastParagraphNumber": 227,
+                                            "children": []
+                                        },
+                                        {
+                                            "contentType": "SUB_ARTICLE",
+                                            "title": "Subarticle 2",
+                                            "pathID": "3-0-1-3-4",
+                                            "semanticPath": "part-3/section-1/chapter-2/article-2/subarticle-2",
+                                            "firstParagraphNumber": 228,
+                                            "lastParagraphNumber": 229,
+                                            "children": []
+                                        },
+                                        {
+                                            "contentType": "IN_BRIEF",
+                                            "title": "In Brief",
+                                            "pathID": "3-0-1-3-8",
+                                            "semanticPath": "part-3/section-1/chapter-2/article-2/in-brief",
+                                            "firstParagraphNumber": 238,
+                                            "lastParagraphNumber": 241,
+                                            "children": []
+                                        }
+                                    ]
+                                },
+                                {
+                                    "contentType": "ARTICLE",
+                                    "title": "Article 3",
+                                    "pathID": "3-0-1-4",
+                                    "semanticPath": "part-3/section-1/chapter-2/article-3",
+                                    "firstParagraphNumber": 242,
+                                    "lastParagraphNumber": 292,
+                                    "children": [
+                                        {
+                                            "contentType": "ARTICLE_PARAGRAPH",
+                                            "title": "Article Paragraph 1",
+                                            "pathID": "3-0-1-4-2",
+                                            "semanticPath": "part-3/section-1/chapter-2/article-3/article-paragraph-1",
+                                            "firstParagraphNumber": 242,
+                                            "lastParagraphNumber": 254,
+                                            "children": [
+                                                {
+                                                    "contentType": "IN_BRIEF",
+                                                    "title": "In Brief",
+                                                    "pathID": "3-0-1-4-2-2",
+                                                    "semanticPath": "part-3/section-1/chapter-2/article-3/article-paragraph-1/in-brief",
+                                                    "firstParagraphNumber": 251,
+                                                    "lastParagraphNumber": 254,
+                                                    "children": []
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "contentType": "ARTICLE_PARAGRAPH",
+                                            "title": "Article Paragraph 2",
+                                            "pathID": "3-0-1-4-3",
+                                            "semanticPath": "part-3/section-1/chapter-2/article-3/article-paragraph-2",
+                                            "firstParagraphNumber": 255,
+                                            "lastParagraphNumber": 269,
+                                            "children": [
+                                                {
+                                                    "contentType": "IN_BRIEF",
+                                                    "title": "In Brief",
+                                                    "pathID": "3-0-1-4-3-2",
+                                                    "semanticPath": "part-3/section-1/chapter-2/article-3/article-paragraph-2/in-brief",
+                                                    "firstParagraphNumber": 266,
+                                                    "lastParagraphNumber": 269,
+                                                    "children": []
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "contentType": "ARTICLE_PARAGRAPH",
+                                            "title": "Article Paragraph 3",
+                                            "pathID": "3-0-1-4-4",
+                                            "semanticPath": "part-3/section-1/chapter-2/article-3/article-paragraph-3",
+                                            "firstParagraphNumber": 270,
+                                            "lastParagraphNumber": 283,
+                                            "children": [
+                                                {
+                                                    "contentType": "IN_BRIEF",
+                                                    "title": "In Brief",
+                                                    "pathID": "3-0-1-4-4-2",
+                                                    "semanticPath": "part-3/section-1/chapter-2/article-3/article-paragraph-3/in-brief",
+                                                    "firstParagraphNumber": 280,
+                                                    "lastParagraphNumber": 283,
+                                                    "children": []
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "contentType": "IN_BRIEF",
+                                            "title": "In Brief",
+                                            "pathID": "3-0-1-4-7",
+                                            "semanticPath": "part-3/section-1/chapter-2/article-3/in-brief",
+                                            "firstParagraphNumber": 288,
+                                            "lastParagraphNumber": 292,
+                                            "children": []
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "contentType": "SECTION",
+                    "title": "Section 2",
+                    "pathID": "3-1",
+                    "semanticPath": "part-3/section-2",
+                    "firstParagraphNumber": 293,
+                    "lastParagraphNumber": 396,
+                    "children": [
+                        {
+                            "contentType": "CHAPTER",
+                            "title": "Chapter 1",
+                            "pathID": "3-1-2",
+                            "semanticPath": "part-3/section-2/chapter-1",
+                            "firstParagraphNumber": 297,
+                            "lastParagraphNumber": 318,
+                            "children": [
+                                {
+                                    "contentType": "ARTICLE",
+                                    "title": "Article 1",
+                                    "pathID": "3-1-2-3",
+                                    "semanticPath": "part-3/section-2/chapter-1/article-1",
+                                    "firstParagraphNumber": 297,
+                                    "lastParagraphNumber": 315,
+                                    "children": [
+                                        {
+                                            "contentType": "SUB_ARTICLE",
+                                            "title": "Subarticle 1",
+                                            "pathID": "3-1-2-3-1",
+                                            "semanticPath": "part-3/section-2/chapter-1/article-1/subarticle-1",
+                                            "firstParagraphNumber": 297,
+                                            "lastParagraphNumber": 300,
+                                            "children": []
+                                        },
+                                        {
+                                            "contentType": "SUB_ARTICLE",
+                                            "title": "Subarticle 2",
+                                            "pathID": "3-1-2-3-2",
+                                            "semanticPath": "part-3/section-2/chapter-1/article-1/subarticle-2",
+                                            "firstParagraphNumber": 301,
+                                            "lastParagraphNumber": 303,
+                                            "children": []
+                                        },
+                                        {
+                                            "contentType": "SUB_ARTICLE",
+                                            "title": "Subarticle 3",
+                                            "pathID": "3-1-2-3-3",
+                                            "semanticPath": "part-3/section-2/chapter-1/article-1/subarticle-3",
+                                            "firstParagraphNumber": 304,
+                                            "lastParagraphNumber": 310,
+                                            "children": []
+                                        },
+                                        {
+                                            "contentType": "IN_BRIEF",
+                                            "title": "In Brief",
+                                            "pathID": "3-1-2-3-5",
+                                            "semanticPath": "part-3/section-2/chapter-1/article-1/in-brief",
+                                            "firstParagraphNumber": 312,
+                                            "lastParagraphNumber": 315,
+                                            "children": []
+                                        }
+                                    ]
+                                },
+                                {
+                                    "contentType": "IN_BRIEF",
+                                    "title": "In Brief",
+                                    "pathID": "3-1-2-4",
+                                    "semanticPath": "part-3/section-2/chapter-1/in-brief",
+                                    "firstParagraphNumber": 316,
+                                    "lastParagraphNumber": 318,
                                     "children": []
+                                }
+                            ]
+                        },
+                        {
+                            "contentType": "CHAPTER",
+                            "title": "Chapter 2",
+                            "pathID": "3-1-3",
+                            "semanticPath": "part-3/section-2/chapter-2",
+                            "firstParagraphNumber": 319,
+                            "lastParagraphNumber": 376,
+                            "children": [
+                                {
+                                    "contentType": "ARTICLE",
+                                    "title": "Article 1",
+                                    "pathID": "3-1-3-3",
+                                    "semanticPath": "part-3/section-2/chapter-2/article-1",
+                                    "firstParagraphNumber": 319,
+                                    "lastParagraphNumber": 372,
+                                    "children": [
+                                        {
+                                            "contentType": "ARTICLE_PARAGRAPH",
+                                            "title": "Article Paragraph 1",
+                                            "pathID": "3-1-3-3-1",
+                                            "semanticPath": "part-3/section-2/chapter-2/article-1/article-paragraph-1",
+                                            "firstParagraphNumber": 319,
+                                            "lastParagraphNumber": 334,
+                                            "children": [
+                                                {
+                                                    "contentType": "IN_BRIEF",
+                                                    "title": "In Brief",
+                                                    "pathID": "3-1-3-3-1-2",
+                                                    "semanticPath": "part-3/section-2/chapter-2/article-1/article-paragraph-1/in-brief",
+                                                    "firstParagraphNumber": 331,
+                                                    "lastParagraphNumber": 334,
+                                                    "children": []
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "contentType": "ARTICLE_PARAGRAPH",
+                                            "title": "Article Paragraph 2",
+                                            "pathID": "3-1-3-3-2",
+                                            "semanticPath": "part-3/section-2/chapter-2/article-1/article-paragraph-2",
+                                            "firstParagraphNumber": 335,
+                                            "lastParagraphNumber": 346,
+                                            "children": [
+                                                {
+                                                    "contentType": "IN_BRIEF",
+                                                    "title": "In Brief",
+                                                    "pathID": "3-1-3-3-2-3",
+                                                    "semanticPath": "part-3/section-2/chapter-2/article-1/article-paragraph-2/in-brief",
+                                                    "firstParagraphNumber": 343,
+                                                    "lastParagraphNumber": 346,
+                                                    "children": []
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "contentType": "ARTICLE_PARAGRAPH",
+                                            "title": "Article Paragraph 3",
+                                            "pathID": "3-1-3-3-3",
+                                            "semanticPath": "part-3/section-2/chapter-2/article-1/article-paragraph-3",
+                                            "firstParagraphNumber": 347,
+                                            "lastParagraphNumber": 363,
+                                            "children": [
+                                                {
+                                                    "contentType": "IN_BRIEF",
+                                                    "title": "In Brief",
+                                                    "pathID": "3-1-3-3-3-2",
+                                                    "semanticPath": "part-3/section-2/chapter-2/article-1/article-paragraph-3/in-brief",
+                                                    "firstParagraphNumber": 359,
+                                                    "lastParagraphNumber": 363,
+                                                    "children": []
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "contentType": "IN_BRIEF",
+                                            "title": "In Brief",
+                                            "pathID": "3-1-3-3-6",
+                                            "semanticPath": "part-3/section-2/chapter-2/article-1/in-brief",
+                                            "firstParagraphNumber": 369,
+                                            "lastParagraphNumber": 372,
+                                            "children": []
+                                        }
+                                    ]
+                                },
+                                {
+                                    "contentType": "IN_BRIEF",
+                                    "title": "In Brief",
+                                    "pathID": "3-1-3-4",
+                                    "semanticPath": "part-3/section-2/chapter-2/in-brief",
+                                    "firstParagraphNumber": 373,
+                                    "lastParagraphNumber": 376,
+                                    "children": []
+                                }
+                            ]
+                        },
+                        {
+                            "contentType": "CHAPTER",
+                            "title": "Chapter 3",
+                            "pathID": "3-1-4",
+                            "semanticPath": "part-3/section-2/chapter-3",
+                            "firstParagraphNumber": 377,
+                            "lastParagraphNumber": 396,
+                            "children": [
+                                {
+                                    "contentType": "ARTICLE",
+                                    "title": "Article 1",
+                                    "pathID": "3-1-4-0",
+                                    "semanticPath": "part-3/section-2/chapter-3/article-1",
+                                    "firstParagraphNumber": 377,
+                                    "lastParagraphNumber": 396,
+                                    "children": [
+                                        {
+                                            "contentType": "SUB_ARTICLE",
+                                            "title": "Subarticle 1",
+                                            "pathID": "3-1-4-0-3",
+                                            "semanticPath": "part-3/section-2/chapter-3/article-1/subarticle-1",
+                                            "firstParagraphNumber": 377,
+                                            "lastParagraphNumber": 380,
+                                            "children": []
+                                        },
+                                        {
+                                            "contentType": "SUB_ARTICLE",
+                                            "title": "Subarticle 2",
+                                            "pathID": "3-1-4-0-4",
+                                            "semanticPath": "part-3/section-2/chapter-3/article-1/subarticle-2",
+                                            "firstParagraphNumber": 381,
+                                            "lastParagraphNumber": 386,
+                                            "children": []
+                                        },
+                                        {
+                                            "contentType": "SUB_ARTICLE",
+                                            "title": "Subarticle 3",
+                                            "pathID": "3-1-4-0-5",
+                                            "semanticPath": "part-3/section-2/chapter-3/article-1/subarticle-3",
+                                            "firstParagraphNumber": 387,
+                                            "lastParagraphNumber": 391,
+                                            "children": []
+                                        },
+                                        {
+                                            "contentType": "IN_BRIEF",
+                                            "title": "In Brief",
+                                            "pathID": "3-1-4-0-7",
+                                            "semanticPath": "part-3/section-2/chapter-3/article-1/in-brief",
+                                            "firstParagraphNumber": 393,
+                                            "lastParagraphNumber": 396,
+                                            "children": []
+                                        }
+                                    ]
                                 }
                             ]
                         }

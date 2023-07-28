@@ -10,6 +10,7 @@ export function buildParagraphSubitem(): ParagraphSubitem {
         pathID: '0',
         openingContent: [],
         mainContent: buildContent(),
+        finalContent: [],
     };
 }
 

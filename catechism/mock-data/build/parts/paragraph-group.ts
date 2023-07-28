@@ -13,6 +13,7 @@ export function buildParagraphGroup(index: number): ParagraphGroup {
         title: getTitleText(Content.PARAGRAPH_GROUP, index) as TextKey,
         openingContent: [],
         mainContent: buildContent(),
+        finalContent: [],
         // These are set later, after all content is created
         paragraphReferences: [],
     };

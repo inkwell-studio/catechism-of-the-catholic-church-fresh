@@ -9,7 +9,7 @@
  *      0 = CatechismStructure.prologue
  *      i where i > 0 = CatechismStructure.parts[i - 1]
  *
- * Each index thereafter refers to the index of the array of the parent's children as returned by `util.ts:getOpeningAndMainContent()`.
+ * Each index thereafter refers to the index of the array of the parent's children as returned by `util.ts:getAllChildContent()`.
  * This allows for the `PathID` of a parent to be determined from its childrens' `PathID` values: the last index is removed from the child's `PathID`.
  */
 export type PathID =

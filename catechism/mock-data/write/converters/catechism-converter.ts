@@ -79,6 +79,9 @@ function getSourceCodeForPrologue(prologue: Prologue): string {
             mainContent: [
                 ${getSourceCodeForContent(prologue.mainContent, 2)}
             ],
+            finalContent: [
+                ${getSourceCodeForContent(prologue.finalContent, 2)}
+            ],
         }`,
     );
 }
@@ -98,17 +101,20 @@ function getSourceCodeForPart(part: Part): string {
             mainContent: [
                 ${getSourceCodeForContent(part.mainContent, 2)}
             ],
+            finalContent: [
+                ${getSourceCodeForContent(part.finalContent, 2)}
+            ],
         }`,
     );
 }
 
-function getSourceCodeForContent<T extends ContentBase>(content: Array<T>, indentationLevel: number): string {
+function getSourceCodeForContent(content: Array<ContentBase>, indentationLevel: number): string {
     return content
         .map((contentItem) => getSourceCode(contentItem, indentationLevel))
         .join('\n');
 }
 
-function getSourceCode<T extends ContentBase>(content: T, indentationLevel: number): string {
+function getSourceCode(content: ContentBase, indentationLevel: number): string {
     switch (content.contentType) {
         case Content.SECTION: {
             return getSourceCodeForSection(content as unknown as Section, indentationLevel);
@@ -174,6 +180,9 @@ function getSourceCodeForSection(section: Section, indentationLevel: number): st
             mainContent: [
                 ${getSourceCodeForContent(section.mainContent, indentationLevel + 1)}
             ],
+            finalContent: [
+                ${getSourceCodeForContent(section.finalContent, indentationLevel + 1)}
+            ],
         },`,
     );
 }
@@ -192,6 +201,9 @@ function getSourceCodeForChapter(chapter: Chapter, indentationLevel: number): st
             ],
             mainContent: [
                 ${getSourceCodeForContent(chapter.mainContent, indentationLevel + 1)}
+            ],
+            finalContent: [
+                ${getSourceCodeForContent(chapter.finalContent, indentationLevel + 1)}
             ],
             inBrief: ${chapter.inBrief ? getSourceCodeForInBrief(chapter.inBrief, indentationLevel + 1) : 'null'}
         },`,
@@ -236,6 +248,9 @@ function getSourceCodeForArticleParagraph(articleParagraph: ArticleParagraph, in
             mainContent: [
                 ${getSourceCodeForContent(articleParagraph.mainContent, indentationLevel + 1)}
             ],
+            finalContent: [
+                ${getSourceCodeForContent(articleParagraph.finalContent, indentationLevel + 1)}
+            ],
             inBrief: ${getSourceCodeForInBrief(articleParagraph.inBrief, indentationLevel + 1)}
         },`,
     );
@@ -256,6 +271,9 @@ function getSourceCodeForSubarticle(subarticle: Subarticle, indentationLevel: nu
             mainContent: [
                 ${getSourceCodeForContent(subarticle.mainContent, indentationLevel + 1)}
             ],
+            finalContent: [
+                ${getSourceCodeForContent(subarticle.finalContent, indentationLevel + 1)}
+            ],
         },`,
     );
 }
@@ -272,6 +290,9 @@ function getSourceCodeForInBrief(inBrief: InBrief, indentationLevel: number): st
             ],
             mainContent: [
                 ${getSourceCodeForContent(inBrief.mainContent, indentationLevel + 1)}
+            ],
+            finalContent: [
+                ${getSourceCodeForContent(inBrief.finalContent, indentationLevel + 1)}
             ],
         },`,
     );
@@ -291,6 +312,9 @@ function getSourceCodeForParagraphGroup(paragraphGroup: ParagraphGroup, indentat
             ],
             mainContent: [
                 ${getSourceCodeForContent(paragraphGroup.mainContent, indentationLevel + 1)}
+            ],
+            finalContent: [
+                ${getSourceCodeForContent(paragraphGroup.finalContent, indentationLevel + 1)}
             ],
             paragraphReferences: [
                 ${getSourceCodeForParagraphReferences(paragraphGroup.paragraphReferences)}
@@ -312,6 +336,9 @@ function getSourceCodeForBlockQuote(blockQuote: BlockQuote, indentationLevel: nu
             mainContent: [
                 ${getSourceCodeForContent(blockQuote.mainContent, indentationLevel + 1)}
             ],
+            finalContent: [
+                ${getSourceCodeForContent(blockQuote.finalContent, indentationLevel + 1)}
+            ],
         },`,
     );
 }
@@ -329,6 +356,9 @@ function getSourceCodeForParagraph(paragraph: Paragraph, indentationLevel: numbe
             ],
             mainContent: [
                 ${getSourceCodeForContent(paragraph.mainContent, indentationLevel + 1)}
+            ],
+            finalContent: [
+                ${getSourceCodeForContent(paragraph.finalContent, indentationLevel + 1)}
             ],
         },`,
     );
@@ -350,6 +380,9 @@ function getSourceCodeForParagraphSubitemContainer(
             mainContent: [
                 ${getSourceCodeForContent(paragraphSubitemContainer.mainContent, indentationLevel + 1)}
             ],
+            finalContent: [
+                ${getSourceCodeForContent(paragraphSubitemContainer.finalContent, indentationLevel + 1)}
+            ],
         },`,
     );
 }
@@ -366,6 +399,9 @@ function getSourceCodeForParagraphSubitem(paragraphSubitem: ParagraphSubitem, in
             ],
             mainContent: [
                 ${getSourceCodeForContent(paragraphSubitem.mainContent, indentationLevel + 1)}
+            ],
+            finalContent: [
+                ${getSourceCodeForContent(paragraphSubitem.finalContent, indentationLevel + 1)}
             ],
         },`,
     );
@@ -385,6 +421,9 @@ function getSourceCodeForTextBlock(textBlock: TextBlock, indentationLevel: numbe
             mainContent: [
                 ${getSourceCodeForContent(textBlock.mainContent, indentationLevel + 1)}
             ],
+            finalContent: [
+                ${getSourceCodeForContent(textBlock.finalContent, indentationLevel + 1)}
+            ],
         },`,
     );
 }
@@ -401,6 +440,9 @@ function getSourceCodeForTextWrapper(textWrapper: TextWrapper, indentationLevel:
             ],
             mainContent: [
                 ${getSourceCodeForTextArray(textWrapper.mainContent, indentationLevel + 1)}
+            ],
+            finalContent: [
+                ${getSourceCodeForContent(textWrapper.finalContent, indentationLevel + 1)}
             ],
             references: [
                 ${getSourceCodeForReferences(textWrapper.references, indentationLevel + 1)}
