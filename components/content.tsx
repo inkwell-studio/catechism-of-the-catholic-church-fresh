@@ -26,6 +26,7 @@ import {
 } from '../catechism/source/types/types.ts';
 import { getAllChildContent } from '../catechism/utils.ts';
 
+//#region top-level components
 export default function Content(props: { pathID: PathID | null }): JSX.Element {
     const pathID: PathID = props.pathID ?? state.value.path;
 
@@ -89,7 +90,9 @@ function ContentBase(content: ContentBase): JSX.Element {
         }
     }
 }
+//#endregion
 
+//#region helper components
 function ArticleContent(article: Article) {
     return (
         <>
@@ -298,3 +301,4 @@ function UnknownContent(content: ContentBase) {
     // TODO: Log a warning
     return <div>Unhandled content: {content.contentType}</div>;
 }
+//#endregion

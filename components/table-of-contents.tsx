@@ -7,19 +7,32 @@ export function TableOfContents() {
     const toc = tableOfContents as TableOfContentsType;
 
     return (
-        <nav class='mx-auto py-12'>
-            <ol className='space-y-6'>
-                <li>
-                    {TopLevelEntry(toc.prologue)}
-                </li>
+        <>
+            <h1 class='font-serif font-bold text-5xl text-center mt-16'>
+                <span class='inline-block'>Catechism of&nbsp;the</span>
+                <br />
+                <span class='inline-block mt-1 md:mt-2 lg:mt-3'>Catholic Church</span>
+            </h1>
+            <div className='flex flex-col gap-12 my-12'>
+                <h2 class='text-3xl text-center'>
+                    Table of Contents
+                </h2>
+                <div class='w-48 mx-auto border border-red-900/50 rounded'></div>
+                <nav class='mx-auto'>
+                    <ol className='space-y-6'>
+                        <li>
+                            {TopLevelEntry(toc.prologue)}
+                        </li>
 
-                {toc.parts.map((part) => (
-                    <li key={part}>
-                        {TopLevelEntry(part)}
-                    </li>
-                ))}
-            </ol>
-        </nav>
+                        {toc.parts.map((part) => (
+                            <li key={part}>
+                                {TopLevelEntry(part)}
+                            </li>
+                        ))}
+                    </ol>
+                </nav>
+            </div>
+        </>
     );
 }
 
@@ -28,7 +41,7 @@ function TopLevelEntry(entry: TableOfContentsEntry): JSX.Element {
         <div>
             <span class='text-3xl'>{entry.title}</span>
             {ParagraphNumbers(entry, null, 'opacity-40 text-xl ml-3')}
-            <ol class='border rounded bg-white/30 py-4 px-10 mt-2'>
+            <ol class='border rounded bg-tan-50 py-4 px-10 mt-2'>
                 {entry.children.map((child) => (
                     <li>
                         {ChildEntry(child, entry, 0)}

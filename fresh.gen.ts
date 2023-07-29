@@ -8,11 +8,10 @@ import * as $2 from './routes/index.tsx';
 import * as $3 from './routes/read/[...index].tsx';
 import * as $$0 from './islands/changelog-trigger.tsx';
 import * as $$1 from './islands/changelog.tsx';
-import * as $$2 from './islands/content.tsx';
-import * as $$3 from './islands/menu.tsx';
-import * as $$4 from './islands/search.tsx';
-import * as $$5 from './islands/trail-hierarchical.tsx';
-import * as $$6 from './islands/trail-historical.tsx';
+import * as $$2 from './islands/menu.tsx';
+import * as $$3 from './islands/search.tsx';
+import * as $$4 from './islands/trail-hierarchical.tsx';
+import * as $$5 from './islands/trail-historical.tsx';
 
 const manifest = {
     routes: {
@@ -24,11 +23,10 @@ const manifest = {
     islands: {
         './islands/changelog-trigger.tsx': $$0,
         './islands/changelog.tsx': $$1,
-        './islands/content.tsx': $$2,
-        './islands/menu.tsx': $$3,
-        './islands/search.tsx': $$4,
-        './islands/trail-hierarchical.tsx': $$5,
-        './islands/trail-historical.tsx': $$6,
+        './islands/menu.tsx': $$2,
+        './islands/search.tsx': $$3,
+        './islands/trail-hierarchical.tsx': $$4,
+        './islands/trail-historical.tsx': $$5,
     },
     baseUrl: import.meta.url,
 };

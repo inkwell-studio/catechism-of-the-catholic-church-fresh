@@ -1,5 +1,5 @@
+import Content from './content.tsx';
 import { PathID } from '../catechism/source/types/path-id.ts';
-import Content from '../islands/content.tsx';
 
 export function ContentContainer(props: { pathID: PathID }) {
     return (
