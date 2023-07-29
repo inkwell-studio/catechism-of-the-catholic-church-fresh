@@ -49,9 +49,9 @@ more details (optional)
 
 Where `type` is one of:
 
-- `docs`
-- `build`
-- `feat`
-- `fix`
-- `refactor`
-- `style`
+- `feat` — _for user-facing functionality additions and improvements_
+- `fix` — _for bug fixes_
+- `refactor` — _for code refactoring that does not substantially change user-facing functionality_
+- `build` — _for build changes_
+- `style` — _for merely cosmetic code changes_
+- `docs` — _for documentation changes_
