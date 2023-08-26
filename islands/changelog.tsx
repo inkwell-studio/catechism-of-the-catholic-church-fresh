@@ -32,7 +32,7 @@ function Changes(changes: CodeChanges) {
     return (
         <div>
             <strong className='font-bold'>{changes.date.toLocaleDateString()}</strong>
-            <ol class='list-disc list-inside font-sans'>
+            <ol class='list-disc list-inside font-sans mt-1'>
                 {changes.commits.map((c) => <li key={c}>{Commit(c)}</li>)}
             </ol>
         </div>
