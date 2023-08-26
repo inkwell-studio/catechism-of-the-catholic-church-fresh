@@ -1,6 +1,6 @@
 import { Fragment } from 'preact';
 
-import { changelog, CodeChanges, Commit } from '../data/changelog.ts';
+import { changelog, CodeChanges, Commit } from '../project-data/changelog.ts';
 import { state } from '../state/state.ts';
 
 export default function Changelog() {

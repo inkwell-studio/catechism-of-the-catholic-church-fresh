@@ -1,49 +1,17 @@
 # Tasks
 
-- [ ] implement proper content routing/rendering
+## Ungrouped
 
-## Rendering content
-
-| content type selected | content type loaded and rendered  |
-| --------------------- | --------------------------------- |
-| `Prologue`            | Prologue                          |
-| `Part`                | `openingContent` and first child  |
-| `Section`             | `openingContent` and first child  |
-| `Chapter`             | `openingContent` and first child  |
-| `Article`             | see _Rendering Article_           |
-| `Article Paragraph`   | see _Rendering Article Paragraph_ |
-| all else              | see _Rendering low-level content_ |
-
-### Rendering `Article`
-
-- If `mainContent` contains any `ArticleParagraph`s:
-  - render `openingContent` and `mainContent[0]`
-- Else:
-  - render entire element
-
-### Rendering `Article Paragraph`
-
-- If it is the first child of its parent:
-  - render its parent according to its rule
-- Else:
-  - render entire element
-
-### Rendering low-level content
-
-- Render the nearest ancestor of the following types according to its rule:
-  - `Prologue`
-  - `Part`
-  - `Section`
-  - `Chapter`
-  - `Article`
-  - `Article Paragraph`
-
----
-
-- [ ] determine if the semantic-path-to-path-id map needs refactoring
-- [ ] use `.json` files instead of "hand-built" `.ts` files (e.g. `catechism.ts`)
-
+- [ ] determine feasibility of different data storage and retrieval mechanisms
+- [ ] add e2e tests for URLs (headless, if possible)
+- [ ] add multi-language support
+  - [ ] rename `catechism.ts` as `catechism-en.ts`
+    - [ ] rename variables appropriately
+  - [ ] rename other JSON artifacts
+  - [ ] determine routing logic
+- [ ] add JSON validation for `catechism.json`
 - [ ] render all content
+  - [ ] handle all TODO's in `content.tsx`
   - [ ] re-do the rendering structures (reorganize components, etc.)
   - [ ] opening content
   - [ ] citation markers
@@ -53,8 +21,6 @@
   - [ ] chapter > chapter navigation
   - [ ] routing
     - [ ] to in-page anchor tags
-
-- [ ] styling
 
 ## Unprioritized
 

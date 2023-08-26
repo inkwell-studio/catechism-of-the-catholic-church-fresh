@@ -1,4 +1,4 @@
-import { chance, indexLimits, randomBoolean, randomInt } from '../../utils.ts';
+import { chance, indexLimits, randomBoolean, randomInt } from '../utils.ts';
 import {
     BibleBook,
     BibleReference,
@@ -7,16 +7,13 @@ import {
     OtherSourceEnum,
     Reference,
     ReferenceEnum,
-    TextKey,
 } from '../../../source/types/types.ts';
-import { Limits, Probability } from '../config.ts';
-
-export function getTitleTextKey(contentType: Content, num: number): TextKey {
-    return contentType + '_' + num as TextKey;
-}
+import { Limit } from '../config/limit.ts';
+import { Probability } from '../config/probability.ts';
 
 export function getTitleText(contentType: Content, num: number): string {
     return contentType
+        .replaceAll('SUB_ARTICLE', 'SUBARTICLE')
         .split('_')
         // enforce title-case
         .map((text) => text[0].toUpperCase() + text.slice(1).toLowerCase())
@@ -61,10 +58,10 @@ function buildBibleReference(): BibleReference {
         BibleBook.HEBREWS,
     ];
 
-    let verses: number | `${number}-${number}` = randomInt(Limits.bibleReference.verses);
+    let verses: number | `${number}-${number}` = randomInt(Limit.bibleReference.verses);
     const multipleVerses = randomBoolean();
     if (multipleVerses) {
-        const upperVerse = verses + randomInt(Limits.bibleReference.verseRangeSize);
+        const upperVerse = verses + randomInt(Limit.bibleReference.verseRangeSize);
         verses = `${verses}-${upperVerse}`;
     }
 
@@ -72,7 +69,7 @@ function buildBibleReference(): BibleReference {
         referenceType: ReferenceEnum.BIBLE,
         direct: randomBoolean(),
         book: books[randomInt(indexLimits(books))],
-        chapter: randomInt(Limits.bibleReference.chapter),
+        chapter: randomInt(Limit.bibleReference.chapter),
         verses,
     };
 }

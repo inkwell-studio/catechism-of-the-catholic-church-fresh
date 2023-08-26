@@ -7,14 +7,13 @@ import { Paragraph } from './paragraph.ts';
 import { ParagraphGroup } from './paragraph-group.ts';
 import { Subarticle } from './subarticle.ts';
 import { TextContent } from './text-content.ts';
-import { TextKey } from './text-key.ts';
 
 export interface Chapter extends InBriefContainer {
     readonly contentType: Content.CHAPTER;
     readonly chapterNumber: number;
-    readonly title: TextKey;
+    readonly title: string;
     readonly openingContent: Array<ChapterSection | ParagraphGroup | Paragraph | TextContent>;
-    readonly mainContent: Array<Article | Subarticle>;
+    readonly mainContent: Array<Article> | Array<Subarticle>;
     readonly finalContent: Array<never>;
     readonly inBrief: InBrief | null;
 }

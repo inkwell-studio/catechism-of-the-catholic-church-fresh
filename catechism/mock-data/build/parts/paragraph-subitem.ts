@@ -1,6 +1,6 @@
 import { buildTextBlock } from './text-block.ts';
-import { Limits } from '../config.ts';
-import { intArrayOfRandomLength } from '../../utils.ts';
+import { Limit } from '../config/limit.ts';
+import { intArrayOfRandomLength } from '../utils.ts';
 import { Content, ParagraphSubitem, TextBlock } from '../../../source/types/types.ts';
 
 export function buildParagraphSubitem(): ParagraphSubitem {
@@ -8,6 +8,8 @@ export function buildParagraphSubitem(): ParagraphSubitem {
         contentType: Content.PARAGRAPH_SUB_ITEM,
         // This will be set later, after all content is created
         pathID: '0',
+        // This will be set later, after all content is created
+        semanticPath: '',
         openingContent: [],
         mainContent: buildContent(),
         finalContent: [],
@@ -15,5 +17,5 @@ export function buildParagraphSubitem(): ParagraphSubitem {
 }
 
 function buildContent(): Array<TextBlock> {
-    return intArrayOfRandomLength(Limits.paragraphSubitem.textBlocks).map(() => buildTextBlock());
+    return intArrayOfRandomLength(Limit.paragraphSubitem.textBlock).map(() => buildTextBlock());
 }

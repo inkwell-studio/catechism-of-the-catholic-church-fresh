@@ -7,6 +7,7 @@ export interface TableOfContentsEntry {
     readonly title: string;
     readonly pathID: PathID;
     readonly semanticPath: SemanticPath;
+    readonly url: string;
     readonly firstParagraphNumber: number;
     readonly lastParagraphNumber: number;
     readonly children: Array<TableOfContentsEntry>;

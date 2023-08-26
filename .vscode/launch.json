@@ -32,6 +32,19 @@
         },
         {
             "request": "launch",
+            "name": "Test (single test)",
+            "type": "node",
+            "cwd": "${workspaceFolder}",
+            "runtimeExecutable": "deno",
+            "runtimeArgs": [
+                "test",
+                "--inspect-brk",
+                "web-utils/rendering.test.ts"
+            ],
+            "attachSimplePort": 9229
+        },
+        {
+            "request": "launch",
             "name": "Artifacts",
             "type": "node",
             "program": "${workspaceFolder}/catechism/artifact-builders/build.ts",

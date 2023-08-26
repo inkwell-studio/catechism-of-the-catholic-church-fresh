@@ -1,6 +1,6 @@
 import { JSX } from 'preact';
 
-import { getLatestChanges } from '../data/changelog.ts';
+import { getLatestChanges } from '../project-data/changelog.ts';
 
 import Changelog from '../islands/changelog.tsx';
 import ChangelogTrigger from '../islands/changelog-trigger.tsx';

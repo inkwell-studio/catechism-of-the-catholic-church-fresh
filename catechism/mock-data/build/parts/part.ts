@@ -1,9 +1,10 @@
-import { Limits, Probability } from '../config.ts';
+import { Limit } from '../config/limit.ts';
+import { Probability } from '../config/probability.ts';
 import { getTitleText } from './general.ts';
 import { buildParagraphGroup } from './paragraph-group.ts';
 import { buildSection } from './section.ts';
-import { chance, intArrayOfRandomLength, randomBoolean } from '../../utils.ts';
-import { Content, Paragraph, ParagraphGroup, Part, Section, TextKey } from '../../../source/types/types.ts';
+import { chance, intArrayOfRandomLength, randomBoolean } from '../utils.ts';
+import { Content, Paragraph, ParagraphGroup, Part, Section } from '../../../source/types/types.ts';
 import { buildParagraph } from './paragraph.ts';
 
 export function buildPart(partNumber: number): Part {
@@ -13,11 +14,15 @@ export function buildPart(partNumber: number): Part {
     return {
         contentType: Content.PART,
         pathID: `${partNumber}`,
+        // This will be set later, after all content is created
+        semanticPath: '',
         partNumber,
-        title: getTitleText(Content.PART, partNumber) as TextKey,
+        title: getTitleText(Content.PART, partNumber),
         openingContent,
         mainContent,
         finalContent: [],
+        credo: null,
+        tenCommandments: null,
     };
 }
 
@@ -25,8 +30,8 @@ function buildOpeningContent(): Array<ParagraphGroup | Paragraph> {
     if (chance(Probability.part.hasOpeningContent)) {
         const useParagraphGroups = randomBoolean();
         return useParagraphGroups
-            ? intArrayOfRandomLength(Limits.part.openingContent).map((i) => buildParagraphGroup(i))
-            : intArrayOfRandomLength(Limits.part.openingContent).map(() => buildParagraph());
+            ? intArrayOfRandomLength(Limit.part.openingContent).map((i) => buildParagraphGroup(i))
+            : intArrayOfRandomLength(Limit.part.openingContent).map(() => buildParagraph());
     } else {
         return [];
     }
@@ -35,7 +40,7 @@ function buildOpeningContent(): Array<ParagraphGroup | Paragraph> {
 function buildSections(): Array<Section> {
     const multipleSections = chance(Probability.part.multipleSections);
     if (multipleSections) {
-        return intArrayOfRandomLength(Limits.part.multipleSections).map((i) => buildSection(i));
+        return intArrayOfRandomLength(Limit.part.multipleSections).map((i) => buildSection(i));
     } else {
         return [buildSection(1)];
     }

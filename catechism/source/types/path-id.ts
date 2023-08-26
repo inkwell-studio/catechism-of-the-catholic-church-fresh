@@ -2,65 +2,43 @@
  * This is used to identify each node in the `CatechismStructure` tree,
  * and to provide the traversal path from the root of a `CatechismStructure` object to the node.
  *
- * Each `PathID` value is a sequence of indices from the root of a `CatechismStructure` object to the indentified node.
- * The indices are separated by hyphens.
- * The top-level indexes refer to the following:
+ * Each `PathID` value is an a single number, optionally followed by a sequence of <bucket, index> tuples that specify
+ * the "bucket" on the parent that the item belongs to, and the 0-based index of the item within said bucket.
  *
- *      0 = CatechismStructure.prologue
- *      i where i > 0 = CatechismStructure.parts[i - 1]
+ * A "bucket" is one of the `openingContent`, `mainContent`, or `finalContent` properties of
+ * the `ContentContainer` interface (referred to by the values "o", "m", and "f", respectively).
  *
- * Each index thereafter refers to the index of the array of the parent's children as returned by `util.ts:getAllChildContent()`.
- * This allows for the `PathID` of a parent to be determined from its childrens' `PathID` values: the last index is removed from the child's `PathID`.
+ * For example, the `PathID` `1__m.0__o.3__f.2` refers to:
+ *
+ *          Part-1.mainContent[0].openingContent[3].finalContent[2]
+ *             |             |                 |               |
+ *             1          __m.0             __o.3           __f.2
+ *
+ * The initial number refers to the following:
+ *
+ *      0: CatechismStructure.prologue
+ *      >= 1: CatechismStructure.parts[i - 1] (so 1 = Part 1, 3 = Part 3, etc.)
+ *
+ * The `PathID` of a parent can be determined from its childrens' `PathID` values: the last <bucket, index> tuple is removed from the child's `PathID` to derive the parent's `PathID`.
+ *
+ * `PathID` values may be incomplete: a full `PathID` that has the root index and one or more parent tuples removed is still a valid `PathID` (e.g. `m.3` or `m.3__o.2` are both valid).
+ *
+ * This syntax may be expressed through the following types (these are not used because the resulting computations are too burdensom for the language server)
+ *      export type PathID =
+ *          | `${Index}`
+ *          | `${Parent | ''}${Child}`
+ *          | `${Parent | ''}${Parent}${Child}`
+ *          | `${Parent | ''}${Parent}${Parent}${Child}`
+ *          etc.
+
+ *      type Index = number;
+ *      type InBrief = 'i';
+ *      type Parent = `${Index}${ChildSeparator}` | `${Child}${ChildSeparator}`;
+ *      type Child = `${Bucket}${Dot}${Index}` | InBrief;
+
+ *      type ChildSeparator = '__';
+ *      type Dot = '.';
+ *      // These represent the `openingContent`, `mainContent`, and `finalContent` properties of the `ContentContainer` interface, respectively
+ *      type Bucket = 'o' | 'm' | 'f';
  */
-export type PathID =
-    | `${number}`
-    | `${number}${Separator}${number}`
-    | `${number}${Separator}${number}${Separator}${number}`
-    | `${number}${Separator}${number}${Separator}${number}${Separator}${number}`
-    | `${number}${Separator}${number}${Separator}${number}${Separator}${number}${Separator}${number}`
-    | `${number}${Separator}${number}${Separator}${number}${Separator}${number}${Separator}${number}${Separator}${number}`
-    | `${number}${Separator}${number}${Separator}${number}${Separator}${number}${Separator}${number}${Separator}${number}${Separator}${number}`
-    | `${number}${Separator}${number}${Separator}${number}${Separator}${number}${Separator}${number}${Separator}${number}${Separator}${number}${Separator}${number}`
-    | `${number}${Separator}${number}${Separator}${number}${Separator}${number}${Separator}${number}${Separator}${number}${Separator}${number}${Separator}${number}${Separator}${number}`
-    | `${number}${Separator}${number}${Separator}${number}${Separator}${number}${Separator}${number}${Separator}${number}${Separator}${number}${Separator}${number}${Separator}${number}${Separator}${number}`
-    | `${number}${Separator}${number}${Separator}${number}${Separator}${number}${Separator}${number}${Separator}${number}${Separator}${number}${Separator}${number}${Separator}${number}${Separator}${number}${Separator}${number}`;
-
-type Separator = '-';
-
-export function getTopIndex(pathID: PathID): number {
-    function fail(invalidInput: PathID): number {
-        console.error(`invalid pathID encountered: ${invalidInput}`);
-        return 0;
-    }
-
-    try {
-        if (pathID.includes('.')) {
-            return fail(pathID);
-        } else {
-            const firstSeparatorIndex = getFirstSeparatorIndex(pathID);
-            if (firstSeparatorIndex > 0) {
-                const topIndex = pathID.slice(0, firstSeparatorIndex);
-                return Number(topIndex);
-            } else if (firstSeparatorIndex < 0) {
-                return Number(pathID);
-            } else {
-                return fail(pathID);
-            }
-        }
-    } catch {
-        return fail(pathID);
-    }
-}
-
-export function getPartialChildPathID(pathID: PathID): PathID | null {
-    const firstSeparatorIndex = getFirstSeparatorIndex(pathID);
-    if (firstSeparatorIndex > 0) {
-        return pathID.slice(firstSeparatorIndex + 1) as PathID;
-    } else {
-        return null;
-    }
-}
-
-function getFirstSeparatorIndex(pathID: PathID): number {
-    return pathID.indexOf('-');
-}
+export type PathID = string;

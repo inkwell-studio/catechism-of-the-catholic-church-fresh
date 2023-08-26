@@ -1,8 +1,8 @@
 import { Fragment, JSX } from 'preact';
 
 import { state } from '../state/state.ts';
-import { getContent } from '../utils/content.ts';
-import { getText } from '../utils/text.ts';
+import { getContent } from '../web-utils/rendering.ts';
+import { getUrlFragment } from '../web-utils/routing.ts';
 import {
     Article,
     ArticleParagraph,
@@ -24,18 +24,23 @@ import {
     TextBlock,
     TextWrapper,
 } from '../catechism/source/types/types.ts';
-import { getAllChildContent } from '../catechism/utils.ts';
+import {
+    getAllChildContent,
+    getFinalContent,
+    getInBrief,
+    getMainContent,
+    getOpeningContent,
+} from '../catechism/source/utils/content.ts';
 
 //#region top-level components
 export default function Content(props: { pathID: PathID | null }): JSX.Element {
+    // TODO: What does `state.value.path` provide?
     const pathID: PathID = props.pathID ?? state.value.path;
 
+    // TODO: Use a new function
     const content = getContent(pathID);
     return <>{ContentBase(content)}</>;
 }
-
-// TODO: Add return type of `JSX.Element` to all appropriate functions
-// TODO: Add return types to all remaining functions
 
 // TODO: Consider all rendering function implementations to be incomplete
 function ContentBase(content: ContentBase): JSX.Element {
@@ -93,27 +98,43 @@ function ContentBase(content: ContentBase): JSX.Element {
 //#endregion
 
 //#region helper components
-function ArticleContent(article: Article) {
+function ArticleContent(article: Article): JSX.Element {
+    const nonFinalChildContent = [
+        ...getOpeningContent(article),
+        ...getMainContent(article),
+    ];
+
+    const inBrief = getInBrief(article);
+    if (inBrief) {
+        nonFinalChildContent.push(inBrief);
+    }
+
+    const finalContent = getFinalContent(article);
+    const finalContentContainer = finalContent.length > 0
+        ? <div id='final-content'>{ContentBaseArray(finalContent)}</div>
+        : <></>;
+
     return (
         <>
-            <h4 class='text-3xl'>{getText(article.title)}</h4>
-            {ContentBaseArray(getAllChildContent(article))}
+            <h4 id={getUrlFragment(article.semanticPath, false)} class='text-3xl'>{article.title}</h4>
+            {ContentBaseArray(nonFinalChildContent)}
+            {finalContentContainer}
         </>
     );
 }
 
-function ArticleParagraphContent(articleParagraph: ArticleParagraph) {
+function ArticleParagraphContent(articleParagraph: ArticleParagraph): JSX.Element {
     return (
         <>
-            <h5 class='text-2xl'>
-                {getText(articleParagraph.title)}
+            <h5 id={getUrlFragment(articleParagraph.semanticPath, false)} class='text-2xl'>
+                {articleParagraph.title}
             </h5>
             {ContentBaseArray(getAllChildContent(articleParagraph))}
         </>
     );
 }
 
-function BlockQuoteContent(blockQuote: BlockQuote) {
+function BlockQuoteContent(blockQuote: BlockQuote): JSX.Element {
     return (
         <blockquote class='px-8 mb-4'>
             {TextWrapperArray(getAllChildContent(blockQuote))}
@@ -121,18 +142,21 @@ function BlockQuoteContent(blockQuote: BlockQuote) {
     );
 }
 
-function ChapterContent(chapter: Chapter) {
+function ChapterContent(chapter: Chapter): JSX.Element {
     return (
         <>
-            <h3 class='text-4xl'>{getText(chapter.title)}</h3>
+            <h3 id={getUrlFragment(chapter.semanticPath, false)} class='text-4xl'>{chapter.title}</h3>
             {ContentBaseArray(getAllChildContent(chapter))}
         </>
     );
 }
 
-function InBriefContent(inBrief: InBrief) {
+function InBriefContent(inBrief: InBrief): JSX.Element {
     return (
-        <div class='bg-white bg-opacity-20 border border-red-900/15 border-2 rounded p-3 my-4'>
+        <div
+            id={getUrlFragment(inBrief.semanticPath, false)}
+            class='bg-white bg-opacity-20 border border-red-900/15 border-2 rounded p-3 my-4'
+        >
             <strong class='font-sans text-lg text-purple-900 block mb-1'>In Brief</strong>
             <ol>
                 {getAllChildContent(inBrief).map((c) => <li key={c} class='mb-2'>{ContentBase(c)}</li>)}
@@ -141,9 +165,9 @@ function InBriefContent(inBrief: InBrief) {
     );
 }
 
-function ParagraphContent(paragraph: Paragraph) {
+function ParagraphContent(paragraph: Paragraph): JSX.Element {
     return (
-        <div class=''>
+        <div id={`${paragraph.paragraphNumber}`}>
             <div class='text-sm align-text-bottom font-bold inline mr-1 sm:mr-2 sm:text-lg sm:align-baseline'>
                 {paragraph.paragraphNumber}
             </div>
@@ -154,16 +178,16 @@ function ParagraphContent(paragraph: Paragraph) {
     );
 }
 
-function ParagraphGroupContent(paragraphGroup: ParagraphGroup) {
+function ParagraphGroupContent(paragraphGroup: ParagraphGroup): JSX.Element {
     return (
         <>
-            <h6 class='text-lg'>{getText(paragraphGroup.title)}</h6>
+            <h6 id={getUrlFragment(paragraphGroup.semanticPath, false)} class='text-lg'>{paragraphGroup.title}</h6>
             {ContentBaseArray(getAllChildContent(paragraphGroup))}
         </>
     );
 }
 
-function ParagraphSubitemContainerContent(paragraphSubitemContainer: ParagraphSubitemContainer) {
+function ParagraphSubitemContainerContent(paragraphSubitemContainer: ParagraphSubitemContainer): JSX.Element {
     return (
         <ol>
             {paragraphSubitemContainer.mainContent
@@ -174,47 +198,47 @@ function ParagraphSubitemContainerContent(paragraphSubitemContainer: ParagraphSu
     );
 }
 
-function PrologueContent(prologue: Prologue) {
-    return (
-        <>
-            <h1 class='text-6xl'>{getText(prologue.title)}</h1>
-            {ContentBaseArray(getAllChildContent(prologue))}
-        </>
-    );
-}
-
-function ParagraphSubitemContent(paragraphSubitem: ParagraphSubitem) {
+function ParagraphSubitemContent(paragraphSubitem: ParagraphSubitem): JSX.Element {
     return <li>{TextWrapperArray(getAllChildContent(paragraphSubitem))}</li>;
 }
 
-function PartContent(part: Part) {
+function PartContent(part: Part): JSX.Element {
     return (
         <>
-            <h1 class='text-6xl'>{getText(part.title)}</h1>
+            <h1 class='text-6xl'>{part.title}</h1>
             {ContentBaseArray(getAllChildContent(part))}
         </>
     );
 }
 
-function SectionContent(section: Section) {
+function PrologueContent(prologue: Prologue): JSX.Element {
     return (
         <>
-            <h2 class='text-5xl'>{getText(section.title)}</h2>
+            <h1 class='text-6xl'>{prologue.title}</h1>
+            {ContentBaseArray(getAllChildContent(prologue))}
+        </>
+    );
+}
+
+function SectionContent(section: Section): JSX.Element {
+    return (
+        <>
+            <h2 id={getUrlFragment(section.semanticPath, false)} class='text-5xl'>{section.title}</h2>
             {ContentBaseArray(getAllChildContent(section))}
         </>
     );
 }
 
-function SubarticleContent(subarticle: Subarticle) {
+function SubarticleContent(subarticle: Subarticle): JSX.Element {
     return (
         <>
-            <h6 class='text-xl'>{getText(subarticle.title)}</h6>
+            <h6 id={getUrlFragment(subarticle.semanticPath, false)} class='text-xl'>{subarticle.title}</h6>
             {ContentBaseArray(getAllChildContent(subarticle))}
         </>
     );
 }
 
-function TextWrapperArray(array: Array<ContentBase | TextWrapper>) {
+function TextWrapperArray(array: Array<ContentBase | TextWrapper>): Array<JSX.Element> {
     return array.map((c, index) => {
         const isTextWrapper = ContentEnum.TEXT_WRAPPER === c.contentType;
         if (isTextWrapper) {
@@ -229,7 +253,7 @@ function TextWrapperArray(array: Array<ContentBase | TextWrapper>) {
     });
 }
 
-function TextBlockContent(textBlock: TextBlock) {
+function TextBlockContent(textBlock: TextBlock): JSX.Element {
     return (
         <div>
             {TextWrapperArray(getAllChildContent(textBlock))}
@@ -237,7 +261,7 @@ function TextBlockContent(textBlock: TextBlock) {
     );
 }
 
-function TextWrapperContent(textWrapper: TextWrapper) {
+function TextWrapperContent(textWrapper: TextWrapper): JSX.Element {
     return (
         <span>
             <span class='absolute right-0 font-sans-caption text-xs text-left pt-1 w-6 sm:w-14 md:w-12 lg:w-20 xl:w-24'>
@@ -254,7 +278,7 @@ function TextWrapperContent(textWrapper: TextWrapper) {
     );
 }
 
-function PlainText(text: Text, lastFragment: boolean) {
+function PlainText(text: Text, lastFragment: boolean): JSX.Element {
     const classes = [];
     if (text.strong) {
         classes.push('font-bold');
@@ -272,32 +296,32 @@ function PlainText(text: Text, lastFragment: boolean) {
     if (text.strong) {
         return (
             <strong class={classText}>
-                {getText(text.content)}
+                {text.content}
                 {spacer}
             </strong>
         );
     } else if (text.emphasis) {
         return (
             <em class={classText}>
-                {getText(text.content)}
+                {text.content}
                 {spacer}
             </em>
         );
     } else {
         return (
             <span class={classText}>
-                {getText(text.content)}
+                {text.content}
                 {spacer}
             </span>
         );
     }
 }
 
-function ContentBaseArray(content: Array<ContentBase>) {
+function ContentBaseArray(content: Array<ContentBase>): Array<JSX.Element> {
     return content.map((c) => <Fragment key={c}>{ContentBase(c)}</Fragment>);
 }
 
-function UnknownContent(content: ContentBase) {
+function UnknownContent(content: ContentBase): JSX.Element {
     // TODO: Log a warning
     return <div>Unhandled content: {content.contentType}</div>;
 }

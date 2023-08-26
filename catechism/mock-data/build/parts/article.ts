@@ -5,73 +5,83 @@ import { buildParagraph } from './paragraph.ts';
 import { buildParagraphGroup } from './paragraph-group.ts';
 import { buildSubarticle } from './subarticle.ts';
 import { buildTextContent } from './text-content.ts';
-import { Limits, Probability } from '../config.ts';
-import { chance, intArrayOfRandomLength } from '../../utils.ts';
+import { Limit } from '../config/limit.ts';
+import { Probability } from '../config/probability.ts';
+import { chance, getContentCounts, intArrayOfRandomLength } from '../utils.ts';
 import {
     Article,
     ArticleParagraph,
     Content,
-    InBrief,
+    ContentBase,
     Paragraph,
     ParagraphGroup,
     Subarticle,
     TextContent,
-    TextKey,
 } from '../../../source/types/types.ts';
 
 export function buildArticle(articleNumber: number): Article {
+    const useArticleParagraphs = chance(Probability.article.useArticleParagraphs);
+
+    const openingContent = buildOpeningContent();
+    const mainContent = buildMainContent(openingContent, useArticleParagraphs);
+
+    // Articles with Article Paragraphs have no In Brief content or final content
+    const inBrief = useArticleParagraphs ? null : buildInBrief();
+    const finalContent = useArticleParagraphs ? [] : buildFinalContent([...openingContent, ...mainContent]);
+
     return {
         contentType: Content.ARTICLE,
         // This will be set later, after all content is created
         pathID: '0',
+        // This will be set later, after all content is created
+        semanticPath: '',
         articleNumber,
-        title: getTitleText(Content.ARTICLE, articleNumber) as TextKey,
-        openingContent: buildOpeningContent(),
-        mainContent: buildContent(),
-        finalContent: buildFinalContent(),
-        inBrief: buildInBriefHelper(),
+        title: getTitleText(Content.ARTICLE, articleNumber),
+        openingContent,
+        mainContent,
+        finalContent,
+        inBrief,
     };
 }
 
 function buildOpeningContent(): Array<TextContent> {
-    return intArrayOfRandomLength(Limits.article.textContent).map(() => buildTextContent(false));
+    return intArrayOfRandomLength(Limit.article.textContent).map(() => buildTextContent(false));
 }
 
-function buildContent(): Array<ArticleParagraph | Subarticle | ParagraphGroup | Paragraph> {
-    const content = [];
+function buildMainContent(
+    precedingContent: Array<ContentBase>,
+    useArticleParagraphs: boolean,
+): Array<ArticleParagraph> | Array<Subarticle> | Array<ParagraphGroup | Paragraph> {
+    const contentCounts = getContentCounts(precedingContent);
 
-    const useOnlyParagraphGroupsAndParagraphs = chance(Probability.article.useOnlyParagraphGroupsAndParagraphs);
-    if (useOnlyParagraphGroupsAndParagraphs) {
-        const paragraphs = intArrayOfRandomLength(Limits.article.paragraphs).map(() => buildParagraph());
-
-        const paragraphGroups = intArrayOfRandomLength(Limits.article.paragraphGroups).map((i) =>
-            buildParagraphGroup(i)
-        );
-
-        content.push(...paragraphs, ...paragraphGroups);
+    if (useArticleParagraphs) {
+        return intArrayOfRandomLength(Limit.article.articleParagraph).map((i) => {
+            const offset = contentCounts.get(Content.ARTICLE_PARAGRAPH) ?? 0;
+            return buildArticleParagraph(i + offset);
+        });
     } else {
-        const useArticleParagraphs = chance(Probability.article.useArticleParagraphs);
-        if (useArticleParagraphs) {
-            const articleParagraphs = intArrayOfRandomLength(Limits.article.articleParagraph).map((i) =>
-                buildArticleParagraph(i)
-            );
-            content.push(...articleParagraphs);
+        const useSubarticles = chance(Probability.article.useSubarticles);
+        if (useSubarticles) {
+            const offset = contentCounts.get(Content.SUB_ARTICLE) ?? 0;
+            return intArrayOfRandomLength(Limit.article.subarticle).map((i) => buildSubarticle(i + offset));
         } else {
-            content.push(...buildSubarticles());
+            const offset = contentCounts.get(Content.PARAGRAPH_GROUP) ?? 0;
+            const paragraphs = intArrayOfRandomLength(Limit.article.paragraph).map(() => buildParagraph());
+            const paragraphGroups = intArrayOfRandomLength(Limit.article.paragraphGroup).map((i) =>
+                buildParagraphGroup(i + offset)
+            );
+
+            return [...paragraphs, ...paragraphGroups];
         }
     }
-
-    return content;
 }
 
-function buildFinalContent(): Array<ParagraphGroup> {
-    return intArrayOfRandomLength(Limits.article.finalParagraphGroups).map((i) => buildParagraphGroup(i));
-}
-
-function buildSubarticles(): Array<Subarticle> {
-    return intArrayOfRandomLength(Limits.article.subarticle).map((i) => buildSubarticle(i));
-}
-
-function buildInBriefHelper(): InBrief | null {
-    return chance(Probability.article.hasInBrief) ? buildInBrief() : null;
+function buildFinalContent(precedingContent: Array<ContentBase>): Array<ParagraphGroup> {
+    const includeFinalContent = chance(Probability.article.includeFinalContent);
+    if (includeFinalContent) {
+        const offset = getContentCounts(precedingContent).get(Content.PARAGRAPH_GROUP) ?? 0;
+        return [buildParagraphGroup(1 + offset)];
+    } else {
+        return [];
+    }
 }

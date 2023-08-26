@@ -8,6 +8,6 @@ export type State = {
 
 const initialState: State = {
     showChangelog: false,
-    path: '0' as PathID,
+    path: '0',
 };
 export const state = signal<State>(initialState);

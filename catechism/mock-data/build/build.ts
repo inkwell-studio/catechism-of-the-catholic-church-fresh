@@ -1,24 +1,29 @@
 // deno-lint-ignore-file
-import { Limits, Probability } from './config.ts';
+import { Limit } from './config/limit.ts';
+import { Probability } from './config/probability.ts';
 import { buildPart } from './parts/part.ts';
 import { buildPrologue } from './parts/prologue.ts';
-import { chance, intArrayOfRandomLength, MinMax, randomInt } from '../utils.ts';
+import { chance, intArrayOfRandomLength, MinMax, randomInt } from './utils.ts';
 import {
     CatechismStructure,
+    Container,
     Content,
     ContentBase,
-    ContentContainer,
     NumberOrNumberRange,
     PathID,
+    SemanticPathSource,
 } from '../../source/types/types.ts';
 import {
     getAllChildContent,
+    getAllContent,
     getAllParagraphs,
     hasFinalContent,
     hasInBrief,
     hasMainContent,
     hasOpeningContent,
-} from '../../utils.ts';
+} from '../../source/utils/content.ts';
+import { getContainerDesignator } from '../../source/utils/path-id.ts';
+import { buildSemanticPath, getSemanticPathSource } from '../../source/utils/semantic-path.ts';
 
 //#region top-level functions
 export function buildMockData(): CatechismStructure {
@@ -35,6 +40,7 @@ export function buildMockData(): CatechismStructure {
 
     catechism = setPathIDs(catechism);
     catechism = setParagraphNumbers(catechism);
+    catechism = setSemanticPaths(catechism);
 
     console.log('Validating mock data...');
     const valid = validateCatechism(catechism);
@@ -55,75 +61,81 @@ export function buildMockData(): CatechismStructure {
 //#endregion
 
 //#region helper functions
-function setPathIDs(catechism: CatechismStructure): CatechismStructure {
+export function setPathIDs(catechism: CatechismStructure): CatechismStructure {
     catechism = structuredClone(catechism);
 
     const prologuePathID = '0';
     (catechism.prologue as any).pathID = prologuePathID;
 
-    const offset = catechism.prologue.openingContent.length;
-    (catechism.prologue as any).openingContent = setPathIDsHelper(catechism.prologue.openingContent, prologuePathID);
-    (catechism.prologue as any).mainContent = setPathIDsHelper(catechism.prologue.mainContent, prologuePathID, offset);
+    (catechism.prologue as any).openingContent = setPathIDsHelper(
+        Container.OPENING,
+        catechism.prologue.openingContent,
+        prologuePathID,
+    );
+    (catechism.prologue as any).mainContent = setPathIDsHelper(
+        Container.MAIN,
+        catechism.prologue.mainContent,
+        prologuePathID,
+    );
     (catechism.prologue as any).finalContent = setPathIDsHelper(
+        Container.FINAL,
         catechism.prologue.finalContent,
         prologuePathID,
-        offset,
     );
 
     catechism.parts.forEach((part, index) => {
         const pathID: PathID = `${index + 1}`;
         (part as any).pathID = pathID;
 
-        let contentOffset = 0;
-
-        (part as any).openingContent = setPathIDsHelper(part.openingContent, pathID, contentOffset);
-        contentOffset += part.openingContent.length;
-
-        (part as any).mainContent = setPathIDsHelper(part.mainContent, pathID, contentOffset);
-        contentOffset += part.mainContent.length;
-
-        (part as any).finalContent = setPathIDsHelper(part.finalContent, pathID, contentOffset);
+        (part as any).openingContent = setPathIDsHelper(Container.OPENING, part.openingContent, pathID);
+        (part as any).mainContent = setPathIDsHelper(Container.MAIN, part.mainContent, pathID);
+        (part as any).finalContent = setPathIDsHelper(Container.FINAL, part.finalContent, pathID);
     });
 
     return catechism;
 }
 
 function setPathIDsHelper<T extends ContentBase>(
+    container: Container,
     content: Array<T>,
     parentPathID: PathID,
-    offset: number = 0,
 ): Array<T> {
     content.forEach((c, index) => {
-        const pathID = getPathID(index + offset, parentPathID);
+        const pathID = getPathID(container, index, parentPathID);
         (c as any).pathID = pathID;
 
-        let contentOffset = 0;
-
         if (hasOpeningContent(c)) {
-            (c as any).openingContent = setPathIDsHelper((c as any).openingContent, pathID);
-            contentOffset += (c as any).openingContent.length;
+            (c as any).openingContent = setPathIDsHelper(Container.OPENING, (c as any).openingContent, pathID);
         }
 
         if (hasMainContent(c)) {
-            (c as any).mainContent = setPathIDsHelper((c as any).mainContent, pathID, contentOffset);
-            contentOffset += (c as any).mainContent.length;
+            (c as any).mainContent = setPathIDsHelper(Container.MAIN, (c as any).mainContent, pathID);
         }
 
         if (hasFinalContent(c)) {
-            (c as any).finalContent = setPathIDsHelper((c as any).finalContent, pathID, contentOffset);
-            contentOffset += (c as unknown as ContentContainer).finalContent.length;
+            (c as any).finalContent = setPathIDsHelper(Container.FINAL, (c as any).finalContent, pathID);
         }
 
         if (hasInBrief(c)) {
-            (c as any).inBrief = setPathIDsHelper([(c as any).inBrief], pathID, contentOffset)[0];
+            (c as any).inBrief = setPathIDsHelper(Container.IN_BRIEF, [(c as any).inBrief], pathID)[0];
         }
     });
 
     return content;
 }
 
-function getPathID(index: number, parentPathID: PathID): PathID {
-    return `${parentPathID}-${index}` as PathID;
+function getPathID(
+    container: Container,
+    index: number,
+    parentPathID: PathID,
+): PathID {
+    const containerDesignator = getContainerDesignator(container);
+
+    if (Container.IN_BRIEF === container) {
+        return parentPathID + '__' + containerDesignator as PathID;
+    } else {
+        return parentPathID + '__' + containerDesignator + '.' + index as PathID;
+    }
 }
 
 function setParagraphNumbers(catechism: CatechismStructure): CatechismStructure {
@@ -144,7 +156,7 @@ function setParagraphNumbersHelper(
 ): { content: Array<ContentBase>; nextParagraphNumber: number } {
     content.forEach((c) => {
         if (Content.PARAGRAPH === c.contentType) {
-            (c as any)['paragraphNumber'] = nextParagraphNumber++;
+            (c as any).paragraphNumber = nextParagraphNumber++;
         } else if (hasMainContent(c)) {
             const childContent = getAllChildContent(c);
             const results = setParagraphNumbersHelper(childContent, nextParagraphNumber);
@@ -158,6 +170,87 @@ function setParagraphNumbersHelper(
     });
 
     return { content, nextParagraphNumber };
+}
+
+/**
+ * This depends on all `Paragraph.paragraphNumber` values being properly set
+ */
+function setSemanticPaths(catechism: CatechismStructure): CatechismStructure {
+    catechism = structuredClone(catechism);
+
+    getAllContent(catechism).forEach((topLevelContent) => {
+        const semanticPathSource = getSemanticPathSource(topLevelContent, false);
+        (topLevelContent as any).semanticPath = buildSemanticPath(semanticPathSource, []);
+
+        (topLevelContent as any).openingContent = setSemanticPathsHelper(
+            topLevelContent.openingContent,
+            [semanticPathSource],
+            false,
+        );
+        (topLevelContent as any).mainContent = setSemanticPathsHelper(
+            topLevelContent.mainContent,
+            [semanticPathSource],
+            false,
+        );
+        (topLevelContent as any).finalContent = setSemanticPathsHelper(
+            topLevelContent.finalContent,
+            [semanticPathSource],
+            false,
+        );
+    });
+
+    return catechism;
+}
+
+function setSemanticPathsHelper(
+    content: Array<ContentBase>,
+    ancestors: Array<SemanticPathSource>,
+    isFinalContent: boolean,
+): Array<ContentBase> {
+    content.forEach((c) => {
+        const semanticPathSource = getSemanticPathSource(c, isFinalContent);
+        (c as any).semanticPath = buildSemanticPath(semanticPathSource, ancestors);
+        const childAncestors = [...ancestors, semanticPathSource];
+
+        if (hasOpeningContent(c)) {
+            (c as any).openingContent = setSemanticPathsHelper((c as any).openingContent, childAncestors, false);
+        }
+        if (hasMainContent(c)) {
+            (c as any).mainContent = setSemanticPathsHelper((c as any).mainContent, childAncestors, false);
+        }
+        if (hasFinalContent(c)) {
+            (c as any).finalContent = setSemanticPathsHelper((c as any).finalContent, childAncestors, true);
+        }
+
+        if (hasInBrief(c)) {
+            const inBriefSource = getSemanticPathSource((c as any).inBrief, isFinalContent);
+            (c as any).inBrief.semanticPath = buildSemanticPath(inBriefSource, childAncestors);
+
+            if (hasOpeningContent((c as any).inBrief)) {
+                (c as any).inBrief.openingContent = setSemanticPathsHelper(
+                    (c as any).inBrief.openingContent,
+                    [...childAncestors, inBriefSource],
+                    false,
+                );
+            }
+            if (hasMainContent((c as any).inBrief)) {
+                (c as any).inBrief.mainContent = setSemanticPathsHelper(
+                    (c as any).inBrief.mainContent,
+                    [...childAncestors, inBriefSource],
+                    false,
+                );
+            }
+            if (hasFinalContent((c as any).inBrief)) {
+                (c as any).inBrief.finalContent = setSemanticPathsHelper(
+                    (c as any).inBrief.finalContent,
+                    [...childAncestors, inBriefSource],
+                    true,
+                );
+            }
+        }
+    });
+
+    return content;
 }
 
 function validateCatechism(catechism: CatechismStructure): boolean {
@@ -242,7 +335,7 @@ function buildParagraphCrossReferences(
     }
 
     function buildMultipleReferences(maxParagraphNumber: number): Array<NumberOrNumberRange> {
-        return intArrayOfRandomLength(Limits.paragraph.crossReference.count).map((i) =>
+        return intArrayOfRandomLength(Limit.paragraph.crossReference.count).map((i) =>
             buildReference(maxParagraphNumber)
         );
     }
@@ -253,7 +346,7 @@ function buildParagraphCrossReferences(
 
         if (buildRange) {
             const num1 = randomInt(paragraphLimits);
-            const num2 = num1 + randomInt(Limits.paragraph.crossReference.range);
+            const num2 = num1 + randomInt(Limit.paragraph.crossReference.range);
             return `${num1}-${num2}`;
         } else {
             return randomInt(paragraphLimits);

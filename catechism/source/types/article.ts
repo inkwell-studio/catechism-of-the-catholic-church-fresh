@@ -6,14 +6,14 @@ import { Paragraph } from './paragraph.ts';
 import { ParagraphGroup } from './paragraph-group.ts';
 import { Subarticle } from './subarticle.ts';
 import { TextContent } from './text-content.ts';
-import { TextKey } from './text-key.ts';
 
 export interface Article extends InBriefContainer {
     readonly contentType: Content.ARTICLE;
     readonly articleNumber: number;
-    readonly title: TextKey;
+    readonly title: string;
     readonly openingContent: Array<ParagraphGroup | Paragraph | TextContent>;
-    readonly mainContent: Array<ArticleParagraph | Subarticle | ParagraphGroup | Paragraph>;
-    readonly finalContent: Array<ParagraphGroup>;
+    readonly mainContent: Array<ArticleParagraph> | Array<Subarticle> | Array<ParagraphGroup | Paragraph>;
     readonly inBrief: InBrief | null;
+    // e.g. §1061
+    readonly finalContent: Array<ParagraphGroup>;
 }

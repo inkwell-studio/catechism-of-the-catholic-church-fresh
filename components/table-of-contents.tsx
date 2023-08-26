@@ -1,7 +1,7 @@
 import { Fragment, JSX } from 'preact';
 
 import tableOfContents from '../catechism/artifacts/table-of-contents.json' assert { type: 'json' };
-import { Content, TableOfContentsEntry, TableOfContentsType } from '../catechism/source/types/types.ts';
+import { Content, SemanticPath, TableOfContentsEntry, TableOfContentsType } from '../catechism/source/types/types.ts';
 
 export function TableOfContents() {
     const toc = tableOfContents as TableOfContentsType;
@@ -21,12 +21,12 @@ export function TableOfContents() {
                 <nav class='mx-auto'>
                     <ol className='space-y-6'>
                         <li>
-                            {TopLevelEntry(toc.prologue)}
+                            {EntryContainer(toc.prologue)}
                         </li>
 
                         {toc.parts.map((part) => (
                             <li key={part}>
-                                {TopLevelEntry(part)}
+                                {EntryContainer(part)}
                             </li>
                         ))}
                     </ol>
@@ -36,17 +36,15 @@ export function TableOfContents() {
     );
 }
 
-function TopLevelEntry(entry: TableOfContentsEntry): JSX.Element {
+function EntryContainer(entry: TableOfContentsEntry): JSX.Element {
     return (
         <div>
-            <span class='text-3xl'>{entry.title}</span>
-            {ParagraphNumbers(entry, null, 'opacity-40 text-xl ml-3')}
+            <a href={entry.url} class='inline-block'>
+                <h3 class='text-3xl'>{entry.title}</h3>
+            </a>
+            {ParagraphNumbers(entry, null, 'opacity-40 font-sans text-xl ml-2')}
             <ol class='border rounded bg-tan-50 py-4 px-10 mt-2'>
-                {entry.children.map((child) => (
-                    <li>
-                        {ChildEntry(child, entry, 0)}
-                    </li>
-                ))}
+                {entry.children.map((child) => ChildEntry(child, entry, 0))}
             </ol>
         </div>
     );
@@ -60,9 +58,9 @@ function ChildEntry(
     const classes = entry.children.length === 0 ? 'list-disc list-inside marker:text-black/30' : '';
 
     return (
-        <li class={classes}>
-            <a href={'/read/' + entry.semanticPath} class={titleClasses(entry.contentType)}>{entry.title}</a>
-            {ParagraphNumbers(entry, parent, 'opacity-40 text-xs ml-2')}
+        <li class={classes + ' ml-4'}>
+            <a href={entry.url} class={titleClasses(entry.contentType)}>{entry.title}</a>
+            {ParagraphNumbers(entry, parent, 'opacity-40 font-sans text-xs ml-1')}
             {Children(entry.children, entry, indentationLevel + 1)}
         </li>
     );
@@ -138,6 +136,7 @@ function shouldRenderParagraphNumbers(
     parentEntry: TableOfContentsEntry | null = null,
 ): boolean {
     return null === parentEntry ||
+        entry.semanticPath.includes('final-content') ||
         Content.PROLOGUE === parentEntry.contentType ||
         Content.PART === parentEntry.contentType ||
         Content.SECTION === parentEntry.contentType ||

@@ -1,27 +1,20 @@
-import { CatechismStructure } from '../source/types/catechism-structure.ts';
 import {
-    Article,
-    ArticleParagraph,
-    buildSemanticPath,
-    Chapter,
+    CatechismStructure,
     Content,
     ContentBase,
     ContentContainer,
-    Paragraph,
-    ParagraphGroup,
-    Part,
-    Section,
     SemanticPathSource,
-    Subarticle,
     TableOfContentsEntry,
     TableOfContentsType,
 } from '../source/types/types.ts';
-import { getInBrief, getMainContent, getParagraphs } from '../utils.ts';
+import { getFinalContent, getInBrief, getMainContent, getParagraphs } from '../source/utils/content.ts';
+import { buildSemanticPath, getSemanticPathSource } from '../source/utils/semantic-path.ts';
+import { getUrl } from '../../web-utils/routing.ts';
 
 //#region builders
 export function build(catechism: CatechismStructure): TableOfContentsType {
     return {
-        prologue: buildEntry(catechism.prologue, [], true),
+        prologue: buildEntry(catechism.prologue, [], { forceIncludeChildren: true }),
         parts: catechism.parts.map((part) => buildEntry(part, [])),
     };
 }
@@ -29,26 +22,37 @@ export function build(catechism: CatechismStructure): TableOfContentsType {
 function buildEntry(
     content: ContentBase | ContentContainer,
     ancestors: Array<SemanticPathSource>,
-    forceIncludeChildren = false,
+    flags?: {
+        finalContent?: boolean;
+        forceIncludeChildren?: boolean;
+    },
 ): TableOfContentsEntry {
-    const semanticPathSource = getSemanticPathSource(content);
     const { firstParagraphNumber, lastParagraphNumber } = getTerminalParagraphNumbers(content);
+
+    const isFinalContent = !!flags?.finalContent;
+
+    const semanticPathSource = getSemanticPathSource(content, isFinalContent);
+    const semanticPath = buildSemanticPath(semanticPathSource, ancestors);
+    const children = isFinalContent
+        ? []
+        : buildChildEntries(content, [...ancestors, semanticPathSource], !!flags?.forceIncludeChildren);
 
     return {
         contentType: content.contentType,
-        title: getTitle(content),
+        title: getTitle(content, isFinalContent),
         pathID: content.pathID,
-        semanticPath: buildSemanticPath(semanticPathSource, ancestors),
+        semanticPath,
+        url: getUrl(semanticPath),
         firstParagraphNumber,
         lastParagraphNumber,
-        children: buildChildEntries(content, [...ancestors, semanticPathSource], forceIncludeChildren),
+        children,
     };
 }
 
 function buildChildEntries(
     parent: ContentBase | ContentContainer,
     ancestors: Array<SemanticPathSource>,
-    forceIncludeChildren = false,
+    forceIncludeChildren: boolean,
 ): Array<TableOfContentsEntry> {
     const childEntries = getMainContent(parent)
         .filter((child) => forceIncludeChildren || shouldGenerateChildEntry(parent, child))
@@ -57,6 +61,11 @@ function buildChildEntries(
     const inBrief = getInBrief(parent);
     if (inBrief) {
         childEntries.push(buildEntry(inBrief, ancestors));
+    }
+
+    const finalContent = getFinalContent(parent);
+    if (finalContent.length > 0) {
+        childEntries.push(buildEntry(finalContent[0], ancestors, { finalContent: true }));
     }
 
     return childEntries;
@@ -80,8 +89,8 @@ function shouldGenerateChildEntry(parent: ContentBase, child: ContentBase): bool
     ].some((validPairing) => parent.contentType === validPairing[0] && child.contentType === validPairing[1]);
 }
 
-function getTitle(content: ContentBase): string {
-    const number = getSemanticPathSource(content).number;
+function getTitle(content: ContentBase, isFinalContent: boolean): string {
+    const number = getSemanticPathSource(content, isFinalContent).number;
     const numberSuffix = number ? ` ${number}` : '';
 
     // Replace underscores with spaces and implement title-casing
@@ -91,35 +100,6 @@ function getTitle(content: ContentBase): string {
         .split('_')
         .map((part) => part.substring(0, 1).toUpperCase() + part.substring(1))
         .join(' ');
-}
-
-function getSemanticPathSource(content: ContentBase): SemanticPathSource {
-    return {
-        content: content.contentType,
-        number: getNumber(content),
-    };
-}
-
-function getNumber(content: ContentBase): number | null {
-    if (Content.PART === content.contentType) {
-        return (content as unknown as Part).partNumber;
-    } else if (Content.SECTION === content.contentType) {
-        return (content as unknown as Section).sectionNumber;
-    } else if (Content.CHAPTER === content.contentType) {
-        return (content as unknown as Chapter).chapterNumber;
-    } else if (Content.ARTICLE === content.contentType) {
-        return (content as unknown as Article).articleNumber;
-    } else if (Content.ARTICLE_PARAGRAPH === content.contentType) {
-        return (content as unknown as ArticleParagraph).articleParagraphNumber;
-    } else if (Content.SUB_ARTICLE === content.contentType) {
-        return (content as unknown as Subarticle).subarticleNumber;
-    } else if (Content.PARAGRAPH_GROUP === content.contentType) {
-        return (content as unknown as ParagraphGroup).paragraphGroupNumber;
-    } else if (Content.PARAGRAPH === content.contentType) {
-        return (content as unknown as Paragraph).paragraphNumber;
-    } else {
-        return null;
-    }
 }
 
 /**

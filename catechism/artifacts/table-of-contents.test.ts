@@ -1,19 +1,19 @@
-import { assert, assertExists, assertStrictEquals } from 'https://deno.land/std@0.166.0/testing/asserts.ts';
-
 import TableOfContents from './table-of-contents.json' assert { type: 'json' };
-import { Catechism } from '../source/catechism.ts';
-import { getAllParagraphs } from '../utils.ts';
-import { TableOfContentsEntry, TableOfContentsType } from '../source/types/types.ts';
+import Catechism from '../content/catechism.json' assert { type: 'json' };
+
+import { assert, assertExists, assertStrictEquals } from '$deno/testing/asserts.ts';
+import { getAllParagraphs } from '../source/utils/content.ts';
+import { CatechismStructure, TableOfContentsEntry, TableOfContentsType } from '../source/types/types.ts';
 
 //#region tests
 console.log('\nTable of Contents ...');
 
-Deno.test('all pathIDs are unique', () => {
+Deno.test('all PathIDs are unique', () => {
     const pathIDs = getAllEntries(TableOfContents as TableOfContentsType).map((entry) => entry.pathID);
     const numUniquePathIDs = new Set(pathIDs).size;
 
     const numPathIDs = pathIDs.length;
-    assertStrictEquals(numPathIDs, numUniquePathIDs, `${numPathIDs - numUniquePathIDs} duplicate pathIDs exist`);
+    assertStrictEquals(numPathIDs, numUniquePathIDs, `${numPathIDs - numUniquePathIDs} duplicate PathIDs exist`);
 });
 
 Deno.test('all semantic paths are unique', () => {
@@ -28,8 +28,9 @@ Deno.test('all semantic paths are unique', () => {
     );
 });
 
-Deno.test('the first and last paragraphs should be covered', () => {
-    const paragraphNumbers = getAllParagraphs(Catechism).map((p) => p.paragraphNumber);
+Deno.test('the first and last paragraphs should be covered by non-leaf nodes', () => {
+    const catechism = Catechism as CatechismStructure;
+    const paragraphNumbers = getAllParagraphs(catechism).map((p) => p.paragraphNumber);
 
     const firstParagraphNumber = paragraphNumbers.at(0) ?? null;
     const lastParagraphNumber = paragraphNumbers.at(-1) ?? null;
@@ -107,7 +108,7 @@ function testSiblingContinuity(siblings: Array<TableOfContentsEntry>): void {
 }
 
 /**
- * This pulls out all Table of Content entries into a single list, ordered by paragraph number
+ * This pulls out all Table of Content entries into a single list, ordered by starting paragraph number
  */
 function getAllEntries(tableOfContents: TableOfContentsType): Array<TableOfContentsEntry> {
     return [
@@ -130,4 +131,3 @@ function getAllEntries(tableOfContents: TableOfContentsType): Array<TableOfConte
         return entries;
     }
 }
-//#endregion

@@ -1,6 +1,7 @@
 import { buildTextWrapper } from './text-wrapper.ts';
-import { Limits, Probability } from '../config.ts';
-import { chance, intArrayOfRandomLength } from '../../utils.ts';
+import { Limit } from '../config/limit.ts';
+import { Probability } from '../config/probability.ts';
+import { chance, intArrayOfRandomLength } from '../utils.ts';
 import { Content, TextBlock, TextWrapper } from '../../../source/types/types.ts';
 
 export function buildTextBlock(): TextBlock {
@@ -10,6 +11,8 @@ export function buildTextBlock(): TextBlock {
         contentType: Content.TEXT_BLOCK,
         // This will be set later, after all content is created
         pathID: '0',
+        // This will be set later, after all content is created
+        semanticPath: '',
         supplementary,
         openingContent: [],
         mainContent: buildContent(),
@@ -18,5 +21,5 @@ export function buildTextBlock(): TextBlock {
 }
 
 function buildContent(): Array<TextWrapper> {
-    return intArrayOfRandomLength(Limits.textBlock.textWrappers).map(() => buildTextWrapper());
+    return intArrayOfRandomLength(Limit.textBlock.textWrapper).map(() => buildTextWrapper());
 }

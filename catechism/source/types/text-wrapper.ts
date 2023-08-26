@@ -10,6 +10,6 @@ export interface TextWrapper extends ContentContainer {
     readonly mainContent: Array<Text>;
     readonly finalContent: Array<never>;
     readonly references: Array<Reference>;
-    // Cross-references to other Catechism paragraphs
+    // Cross-references to Catechism paragraphs
     readonly paragraphReferences: Array<NumberOrNumberRange>;
 }

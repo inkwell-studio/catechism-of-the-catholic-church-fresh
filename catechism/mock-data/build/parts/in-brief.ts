@@ -1,13 +1,15 @@
 import { buildParagraph } from './paragraph.ts';
-import { intArrayOfRandomLength } from '../../utils.ts';
+import { intArrayOfRandomLength } from '../utils.ts';
 import { Content, InBrief, Paragraph } from '../../../source/types/types.ts';
-import { Limits } from '../config.ts';
+import { Limit } from '../config/limit.ts';
 
 export function buildInBrief(): InBrief {
     return {
         contentType: Content.IN_BRIEF,
         // This will be set later, after all content is created
         pathID: '0',
+        // This will be set later, after all content is created
+        semanticPath: '',
         openingContent: [],
         mainContent: buildContent(),
         finalContent: [],
@@ -15,5 +17,5 @@ export function buildInBrief(): InBrief {
 }
 
 function buildContent(): Array<Paragraph> {
-    return intArrayOfRandomLength(Limits.inBrief.paragraph).map(() => buildParagraph());
+    return intArrayOfRandomLength(Limit.inBrief.paragraph).map(() => buildParagraph());
 }

@@ -1,6 +1,6 @@
-import { defineConfig, Preset } from 'https://esm.sh/@twind/core@1.1.3';
-import presetAutoprefix from 'https://esm.sh/@twind/preset-autoprefix@1.0.7';
-import presetTailwind from 'https://esm.sh/@twind/preset-tailwind@1.1.4';
+import { defineConfig, Preset } from '@twind/core';
+import presetAutoprefix from '@twind/preset-autoprefix';
+import presetTailwind from '@twind/preset-tailwind';
 
 export default {
     ...defineConfig({

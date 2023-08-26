@@ -1,7 +1,7 @@
 import { buildReferences } from './general.ts';
 import { buildText } from './text.ts';
-import { Limits } from '../config.ts';
-import { intArrayOfRandomLength } from '../../utils.ts';
+import { Limit } from '../config/limit.ts';
+import { intArrayOfRandomLength } from '../utils.ts';
 import { Content, Text, TextWrapper } from '../../../source/types/types.ts';
 
 export function buildTextWrapper(): TextWrapper {
@@ -9,6 +9,8 @@ export function buildTextWrapper(): TextWrapper {
         contentType: Content.TEXT_WRAPPER,
         // This will be set later, after all content is created
         pathID: '0',
+        // This will be set later, after all content is created
+        semanticPath: '',
         openingContent: [],
         mainContent: buildContent(),
         finalContent: [],
@@ -19,5 +21,5 @@ export function buildTextWrapper(): TextWrapper {
 }
 
 function buildContent(): Array<Text> {
-    return intArrayOfRandomLength(Limits.textWrapper.parts).map(() => buildText());
+    return intArrayOfRandomLength(Limit.textWrapper.part).map(() => buildText());
 }

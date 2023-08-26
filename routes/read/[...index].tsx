@@ -1,10 +1,11 @@
 import { HandlerContext, PageProps } from '$fresh/server.ts';
 
+import { PathID } from '../../catechism/source/types/types.ts';
 import { ActionBar } from '../../components/action-bar.tsx';
 import { ContentContainer } from '../../components/content-container.tsx';
 import { TableOfContents } from '../../components/table-of-contents.tsx';
 
-import { Element, getElementAndPathID } from '../../utils/element.ts';
+import { Element, getElementAndPathID } from '../../web-utils/routing.ts';
 
 export function handler(request: Request, context: HandlerContext) {
     const contentPath = context.params.index;
@@ -20,7 +21,7 @@ export function handler(request: Request, context: HandlerContext) {
     }
 }
 
-export default function Home(props: PageProps) {
+export default function Home(props: PageProps<{ element: Element; pathID: PathID }>) {
     const { element, pathID } = props.data;
 
     let mainElement = <></>;
