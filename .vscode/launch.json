@@ -39,7 +39,7 @@
             "runtimeArgs": [
                 "test",
                 "--inspect-brk",
-                "web-utils/rendering.test.ts"
+                "web/rendering.test.ts"
             ],
             "attachSimplePort": 9229
         },

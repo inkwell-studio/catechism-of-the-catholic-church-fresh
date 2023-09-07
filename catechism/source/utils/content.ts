@@ -5,10 +5,17 @@ import {
     ContentContainer,
     InBrief,
     InBriefContainer,
+    Language,
     Paragraph,
     PathID,
     SemanticPath,
 } from '../types/types.ts';
+
+export async function getCatechism(language: Language): Promise<CatechismStructure> {
+    const file = `catechism-${language}.json`;
+    const catechism = await import(`../../content/${file}`, { assert: { type: 'json' } });
+    return catechism.default;
+}
 
 export function hasFinalContent(content: ContentBase): boolean {
     return 'finalContent' in content && Array.isArray(content.finalContent);

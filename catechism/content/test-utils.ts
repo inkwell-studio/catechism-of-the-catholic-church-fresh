@@ -46,3 +46,24 @@ function getTextTuple(content: ContentBase): TextTuple | null {
         }
     }
 }
+
+export function testLines(catechismText: CatechismText, func: (textParam: string, pathIDParam: PathID) => void): void {
+    for (const { pathID, text } of catechismText) {
+        func(text, pathID);
+    }
+}
+
+export function testCharacters(
+    catechismText: CatechismText,
+    func: (characterParam: string, pathIDParam: PathID) => void,
+): void {
+    for (const { pathID, text } of catechismText) {
+        for (const character of text) {
+            func(character, pathID);
+        }
+    }
+}
+
+export function errorMessage(pathID: PathID, message: string): string {
+    return `[${pathID}] ${message}`;
+}

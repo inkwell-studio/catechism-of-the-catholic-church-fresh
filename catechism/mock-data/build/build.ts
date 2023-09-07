@@ -4,6 +4,7 @@ import { Probability } from './config/probability.ts';
 import { buildPart } from './parts/part.ts';
 import { buildPrologue } from './parts/prologue.ts';
 import { chance, intArrayOfRandomLength, MinMax, randomInt } from './utils.ts';
+import { getLanguage } from '../language-state.ts';
 import {
     CatechismStructure,
     Container,
@@ -27,9 +28,8 @@ import { buildSemanticPath, getSemanticPathSource } from '../../source/utils/sem
 
 //#region top-level functions
 export function buildMockData(): CatechismStructure {
-    console.log('\nBuilding mock data...');
-
     let catechism = {
+        language: getLanguage(),
         prologue: buildPrologue('0'),
         parts: [
             buildPart(1),
@@ -54,7 +54,7 @@ export function buildMockData(): CatechismStructure {
     catechism = results.catechism;
 
     const paragraphCount = getAllParagraphs(catechism).length;
-    console.log(`\nFinished: built ${paragraphCount} paragraphs with ${results.crossReferenceCount} cross references`);
+    console.log(`Finished: built ${paragraphCount} paragraphs with ${results.crossReferenceCount} cross references`);
 
     return catechism;
 }
@@ -180,7 +180,7 @@ function setSemanticPaths(catechism: CatechismStructure): CatechismStructure {
 
     getAllContent(catechism).forEach((topLevelContent) => {
         const semanticPathSource = getSemanticPathSource(topLevelContent, false);
-        (topLevelContent as any).semanticPath = buildSemanticPath(semanticPathSource, []);
+        (topLevelContent as any).semanticPath = buildSemanticPath(catechism.language, semanticPathSource, []);
 
         (topLevelContent as any).openingContent = setSemanticPathsHelper(
             topLevelContent.openingContent,
@@ -207,9 +207,11 @@ function setSemanticPathsHelper(
     ancestors: Array<SemanticPathSource>,
     isFinalContent: boolean,
 ): Array<ContentBase> {
+    const language = getLanguage();
+
     content.forEach((c) => {
         const semanticPathSource = getSemanticPathSource(c, isFinalContent);
-        (c as any).semanticPath = buildSemanticPath(semanticPathSource, ancestors);
+        (c as any).semanticPath = buildSemanticPath(language, semanticPathSource, ancestors);
         const childAncestors = [...ancestors, semanticPathSource];
 
         if (hasOpeningContent(c)) {
@@ -224,7 +226,7 @@ function setSemanticPathsHelper(
 
         if (hasInBrief(c)) {
             const inBriefSource = getSemanticPathSource((c as any).inBrief, isFinalContent);
-            (c as any).inBrief.semanticPath = buildSemanticPath(inBriefSource, childAncestors);
+            (c as any).inBrief.semanticPath = buildSemanticPath(language, inBriefSource, childAncestors);
 
             if (hasOpeningContent((c as any).inBrief)) {
                 (c as any).inBrief.openingContent = setSemanticPathsHelper(

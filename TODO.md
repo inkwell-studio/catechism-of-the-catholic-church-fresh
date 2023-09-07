@@ -1,14 +1,24 @@
-# Tasks
+# Tasks to complete now
 
-## Ungrouped
+- [ ] add navigation:
+  - to TOC by language
+  - back to Intro
+  - back to TOC
+- [ ] add URL navigation by paragraph number
+- merge
+- [ ] add backend functionality for "next" and "previous" PathIDs
+- merge
+- [ ] add backend functionality for hierarchical navigation
+- merge
+- [ ] look into "ahead-of-time" builds: https://fresh.deno.dev/docs/concepts/ahead-of-time-builds
 
-- [ ] determine feasibility of different data storage and retrieval mechanisms
-- [ ] add e2e tests for URLs (headless, if possible)
-- [ ] add multi-language support
-  - [ ] rename `catechism.ts` as `catechism-en.ts`
-    - [ ] rename variables appropriately
-  - [ ] rename other JSON artifacts
-  - [ ] determine routing logic
+## Unprioritized
+
+- [ ] UI: style for LTR and RTL text
+- [ ] add dark-mode functionality
+- [ ] add e2e UI tests to validate links
+- [ ] add a UI language switcher
+  - [ ] update all user-facing text to be
 - [ ] add JSON validation for `catechism.json`
 - [ ] render all content
   - [ ] handle all TODO's in `content.tsx`
@@ -21,9 +31,6 @@
   - [ ] chapter > chapter navigation
   - [ ] routing
     - [ ] to in-page anchor tags
-
-## Unprioritized
-
 - UI:
   - consider using Twind presets:
     - https://twind.style/presets#official-presets
@@ -45,6 +52,14 @@
 - [ ] implement index
 - [ ] implement glossary
 - [ ] implement "copy" buttons (click a button to copy the entire text of a paragraph, quote, etc.)
+
+# Tasks to complete once it has been decided to release a production-ready version
+
+- [ ] investigate more efficient content-loading mechanisms, e.g.
+  - can pages for all renderable routes be statically generated and cached on the server?
+  - can all JSON content be loaded in-memory on the server?
+- [ ] verify the translations in `catechism/artifact-builders/utils.ts` and `catechism/source/utils/semantic-path.ts`
+      are correct
 
 # Possible features
 

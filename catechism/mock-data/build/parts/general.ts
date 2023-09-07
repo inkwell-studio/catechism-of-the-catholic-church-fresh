@@ -1,4 +1,8 @@
+import { Limit } from '../config/limit.ts';
+import { Probability } from '../config/probability.ts';
 import { chance, indexLimits, randomBoolean, randomInt } from '../utils.ts';
+import { getLanguage } from '../../language-state.ts';
+import { getContentTitle } from '../../../artifact-builders/utils.ts';
 import {
     BibleBook,
     BibleReference,
@@ -8,17 +12,10 @@ import {
     Reference,
     ReferenceEnum,
 } from '../../../source/types/types.ts';
-import { Limit } from '../config/limit.ts';
-import { Probability } from '../config/probability.ts';
 
 export function getTitleText(contentType: Content, num: number): string {
-    return contentType
-        .replaceAll('SUB_ARTICLE', 'SUBARTICLE')
-        .split('_')
-        // enforce title-case
-        .map((text) => text[0].toUpperCase() + text.slice(1).toLowerCase())
-        .join(' ') +
-        ' ' + num;
+    const language = getLanguage();
+    return getContentTitle(language, contentType) + ' ' + num;
 }
 
 export function buildReferences(): Array<Reference> {

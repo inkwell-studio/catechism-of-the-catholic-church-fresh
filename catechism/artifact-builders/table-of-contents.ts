@@ -1,25 +1,28 @@
+import { getContentTitle } from './utils.ts';
 import {
     CatechismStructure,
     Content,
     ContentBase,
     ContentContainer,
+    Language,
     SemanticPathSource,
     TableOfContentsEntry,
     TableOfContentsType,
 } from '../source/types/types.ts';
 import { getFinalContent, getInBrief, getMainContent, getParagraphs } from '../source/utils/content.ts';
 import { buildSemanticPath, getSemanticPathSource } from '../source/utils/semantic-path.ts';
-import { getUrl } from '../../web-utils/routing.ts';
+import { getUrl } from '../../web/routing.ts';
 
 //#region builders
 export function build(catechism: CatechismStructure): TableOfContentsType {
     return {
-        prologue: buildEntry(catechism.prologue, [], { forceIncludeChildren: true }),
-        parts: catechism.parts.map((part) => buildEntry(part, [])),
+        prologue: buildEntry(catechism.language, catechism.prologue, [], { forceIncludeChildren: true }),
+        parts: catechism.parts.map((part) => buildEntry(catechism.language, part, [])),
     };
 }
 
 function buildEntry(
+    language: Language,
     content: ContentBase | ContentContainer,
     ancestors: Array<SemanticPathSource>,
     flags?: {
@@ -32,17 +35,17 @@ function buildEntry(
     const isFinalContent = !!flags?.finalContent;
 
     const semanticPathSource = getSemanticPathSource(content, isFinalContent);
-    const semanticPath = buildSemanticPath(semanticPathSource, ancestors);
+    const semanticPath = buildSemanticPath(language, semanticPathSource, ancestors);
     const children = isFinalContent
         ? []
-        : buildChildEntries(content, [...ancestors, semanticPathSource], !!flags?.forceIncludeChildren);
+        : buildChildEntries(language, content, [...ancestors, semanticPathSource], !!flags?.forceIncludeChildren);
 
     return {
         contentType: content.contentType,
-        title: getTitle(content, isFinalContent),
+        title: getTitle(language, content, isFinalContent),
         pathID: content.pathID,
         semanticPath,
-        url: getUrl(semanticPath),
+        url: getUrl(language, semanticPath),
         firstParagraphNumber,
         lastParagraphNumber,
         children,
@@ -50,22 +53,23 @@ function buildEntry(
 }
 
 function buildChildEntries(
+    language: Language,
     parent: ContentBase | ContentContainer,
     ancestors: Array<SemanticPathSource>,
     forceIncludeChildren: boolean,
 ): Array<TableOfContentsEntry> {
     const childEntries = getMainContent(parent)
         .filter((child) => forceIncludeChildren || shouldGenerateChildEntry(parent, child))
-        .map((child) => buildEntry(child, ancestors));
+        .map((child) => buildEntry(language, child, ancestors));
 
     const inBrief = getInBrief(parent);
     if (inBrief) {
-        childEntries.push(buildEntry(inBrief, ancestors));
+        childEntries.push(buildEntry(language, inBrief, ancestors));
     }
 
     const finalContent = getFinalContent(parent);
     if (finalContent.length > 0) {
-        childEntries.push(buildEntry(finalContent[0], ancestors, { finalContent: true }));
+        childEntries.push(buildEntry(language, finalContent[0], ancestors, { finalContent: true }));
     }
 
     return childEntries;
@@ -89,17 +93,16 @@ function shouldGenerateChildEntry(parent: ContentBase, child: ContentBase): bool
     ].some((validPairing) => parent.contentType === validPairing[0] && child.contentType === validPairing[1]);
 }
 
-function getTitle(content: ContentBase, isFinalContent: boolean): string {
+function getTitle(language: Language, content: ContentBase, isFinalContent: boolean): string {
     const number = getSemanticPathSource(content, isFinalContent).number;
     const numberSuffix = number ? ` ${number}` : '';
 
-    // Replace underscores with spaces and implement title-casing
-    return `${Content[content.contentType]}${numberSuffix}`
-        .replaceAll('SUB_ARTICLE', 'SUBARTICLE')
-        .toLowerCase()
-        .split('_')
-        .map((part) => part.substring(0, 1).toUpperCase() + part.substring(1))
-        .join(' ');
+    const contentTitle = getContentTitle(language, content.contentType);
+    if (!contentTitle) {
+        throw new Error(`Unprepared to generate a title: ${language}, ${content.contentType}`);
+    }
+
+    return contentTitle + numberSuffix;
 }
 
 /**

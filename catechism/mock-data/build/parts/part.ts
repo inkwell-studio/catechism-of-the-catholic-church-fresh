@@ -21,7 +21,7 @@ export function buildPart(partNumber: number): Part {
         openingContent,
         mainContent,
         finalContent: [],
-        credo: null,
+        creed: null,
         tenCommandments: null,
     };
 }

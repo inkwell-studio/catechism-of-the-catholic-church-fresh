@@ -2,10 +2,10 @@ import { JSX } from 'preact';
 
 import { getLatestChanges } from '../project-data/changelog.ts';
 
-import Changelog from '../islands/changelog.tsx';
-import ChangelogTrigger from '../islands/changelog-trigger.tsx';
+import Changelog from './(_islands)/changelog.tsx';
+import ChangelogTrigger from './(_islands)/changelog-trigger.tsx';
 
-export default function Home() {
+export default function Home(): JSX.Element {
     return (
         <>
             <Changelog></Changelog>
@@ -105,16 +105,15 @@ export default function Home() {
                             </a>{' '}
                             from Ascension, which includes many of the features below. However, the app is available
                             only on particular devices and users must have an account with an app store, whereas a
-                            simple web site has the advantage of being immediately and directly accessible by all
-                            modern-web-capable devices.
+                            simple web site has the advantage of being immediately and directly accessible by all modern
+                            web-capable devices.
                         </>
                     </Paragraph>
                     <Paragraph>
                         <>
                             Also, the app has functionality not directly related to the{' '}
                             <span className='italic'>Catechism</span>, which may result in a less-intuitive experience
-                            for users who are interested in solely the <span className='italic'>Catechism's</span>{' '}
-                            content.
+                            for users who are interested in solely the <span className='italic'>Catechism</span>.
                         </>
                     </Paragraph>
 
@@ -189,7 +188,7 @@ export default function Home() {
                     </Paragraph>
                     <Paragraph>
                         <div className='mt-3 mx-4 flex'>
-                            <ButtonLink newTab={false} href='/read' text='Enter'></ButtonLink>
+                            <ButtonLink newTab={false} href='/en' text='Enter'></ButtonLink>
                         </div>
                     </Paragraph>
                 </div>
@@ -199,7 +198,7 @@ export default function Home() {
     );
 }
 
-function Title(props: { children: JSX.Element | string; highlight?: boolean }) {
+function Title(props: { children: JSX.Element | string; highlight?: boolean }): JSX.Element {
     return (
         <span class='relative'>
             {props.highlight ? <span class='block absolute -inset-1 rounded-sm bg-tan-50 opacity-30'></span> : ''}
@@ -210,11 +209,11 @@ function Title(props: { children: JSX.Element | string; highlight?: boolean }) {
     );
 }
 
-function Paragraph(props: { children: JSX.Element | string }) {
+function Paragraph(props: { children: JSX.Element | string }): JSX.Element {
     return <p class='px-4 mb-2'>{props.children}</p>;
 }
 
-function ButtonLink(props: { children?: JSX.Element; href: string; text: string; newTab: boolean }) {
+function ButtonLink(props: { children?: JSX.Element; href: string; text: string; newTab: boolean }): JSX.Element {
     const target = props.newTab ? '_blank' : '';
 
     return (

@@ -1,33 +1,45 @@
-import Catechism from '../content/catechism.json' assert { type: 'json' };
-import { CatechismStructure } from '../source/types/types.ts';
-
 import { build as buildContentMap } from './path-id-to-content-map.ts';
 import { build as buildSemanticMap } from './semantic-path-to-renderable-path-id-map.ts';
 import { build as buildTableOfContents } from './table-of-contents.ts';
-import { PathIdContentMap, SemanticPathPathIdMap, TableOfContentsType } from '../source/types/types.ts';
+import { Language } from '../source/types/types.ts';
+import { getCatechism } from '../source/utils/content.ts';
+import { getAllLanguages } from '../source/utils/language.ts';
+import {
+    CatechismStructure,
+    PathIdContentMap,
+    SemanticPathPathIdMap,
+    TableOfContentsType,
+} from '../source/types/types.ts';
 
-buildArtifacts();
+getAllLanguages().forEach(([languageKey, language]) => {
+    getCatechism(language)
+        .then((catechism) => buildArtifacts(catechism))
+        .catch((error) => console.error(`Could not retrieve the Catechism JSON for ${languageKey}`, error));
+});
 
-function buildArtifacts(): void {
-    console.log('\nBuilding artifacts ...');
+function buildArtifacts(catechism: CatechismStructure): void {
+    console.log(`\nBuilding artifacts (${catechism.language}) ...`);
 
     console.log('\ttable of contents ...');
-    const catechism = Catechism as CatechismStructure;
     const tableOfContents = buildTableOfContents(catechism);
-    writeJson(tableOfContents, 'table-of-contents');
+    writeJson(tableOfContents, 'table-of-contents', catechism.language);
 
     console.log('\tSemanticPath to PathID map ...');
     const renderablePathMap = buildSemanticMap(tableOfContents);
-    writeJson(renderablePathMap, 'semantic-path_to_renderable-path-id');
+    writeJson(renderablePathMap, 'semantic-path_to_renderable-path-id', catechism.language);
 
     console.log('\tPathID to renderable PathID map ...');
     const contentMap = buildContentMap(renderablePathMap, catechism);
-    writeJson(contentMap, 'renderable-path-id_to_content');
+    writeJson(contentMap, 'renderable-path-id_to_content', catechism.language);
 }
 
-function writeJson(object: PathIdContentMap | SemanticPathPathIdMap | TableOfContentsType, filename: string): void {
+function writeJson(
+    object: PathIdContentMap | SemanticPathPathIdMap | TableOfContentsType,
+    filename: string,
+    language: Language,
+): void {
     Deno.writeTextFileSync(
-        `catechism/artifacts/${filename}.json`,
+        `catechism/artifacts/${filename}-${language}.json`,
         JSON.stringify(object, undefined, '  ') + '\n',
     );
 }

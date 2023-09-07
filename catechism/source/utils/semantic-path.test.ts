@@ -1,7 +1,17 @@
 import { assertStrictEquals } from '$deno/testing/asserts.ts';
 
 import { buildSemanticPath, getSemanticPathSource } from './semantic-path.ts';
-import { Article, Chapter, Content, ContentBase, ParagraphGroup, Part, Prologue, Section } from '../types/types.ts';
+import {
+    Article,
+    Chapter,
+    Content,
+    ContentBase,
+    Language,
+    ParagraphGroup,
+    Part,
+    Prologue,
+    Section,
+} from '../types/types.ts';
 
 //#region tests
 console.log('\nsemantic paths ...');
@@ -83,7 +93,7 @@ Deno.test('getSemanticPathSource(): other content without number properties', ()
 Deno.test('buildSemanticPath(): no ancestors', () => {
     const part = buildPart(2);
     const source = getSemanticPathSource(part, false);
-    const result = buildSemanticPath(source, []);
+    const result = buildSemanticPath(Language.ENGLISH, source, []);
     assertStrictEquals(result, 'part-2');
 });
 
@@ -96,7 +106,7 @@ Deno.test('buildSemanticPath(): single ancestor', () => {
         getSemanticPathSource(part, false),
     ];
 
-    const result = buildSemanticPath(child, ancestors);
+    const result = buildSemanticPath(Language.ENGLISH, child, ancestors);
     assertStrictEquals(result, 'part-3/section-5');
 });
 
@@ -113,7 +123,7 @@ Deno.test('buildSemanticPath(): multiple ancestors', () => {
         getSemanticPathSource(chapter, false),
     ];
 
-    const result = buildSemanticPath(child, ancestors);
+    const result = buildSemanticPath(Language.ENGLISH, child, ancestors);
     assertStrictEquals(result, 'part-3/section-5/chapter-4/article-8');
 });
 
@@ -132,7 +142,7 @@ Deno.test('buildSemanticPath(): final content', () => {
         getSemanticPathSource(article, false),
     ];
 
-    const result = buildSemanticPath(child, ancestors);
+    const result = buildSemanticPath(Language.ENGLISH, child, ancestors);
     assertStrictEquals(result, 'part-3/section-5/chapter-4/article-8/final-content');
 });
 //#endregion
@@ -164,7 +174,7 @@ function buildPart(partNumber: number): Part {
         openingContent: [],
         mainContent: [],
         finalContent: [],
-        credo: null,
+        creed: null,
         tenCommandments: null,
     };
 }

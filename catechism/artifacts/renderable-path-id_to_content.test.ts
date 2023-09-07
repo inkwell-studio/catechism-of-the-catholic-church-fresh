@@ -1,38 +1,54 @@
-import Catechism from '../content/catechism.json' assert { type: 'json' };
-import ContentMap from './renderable-path-id_to_content.json' assert { type: 'json' };
-import RenderablePathMap from './semantic-path_to_renderable-path-id.json' assert { type: 'json' };
-
 import { assertStrictEquals, fail } from '$deno/testing/asserts.ts';
 
-import { getAllOfProperty, getAllPathIDs } from '../source/utils/content.ts';
-import { CatechismStructure, ContentContainer, PathID } from '../source/types/types.ts';
+import { getAllOfProperty, getAllPathIDs, getCatechism } from '../source/utils/content.ts';
+import { CatechismStructure, PathID, PathIdContentMap, SemanticPathPathIdMap } from '../source/types/types.ts';
+import { getContentMap, getRenderablePathMap } from '../source/utils/artifacts.ts';
+import { getAllLanguages } from '../source/utils/language.ts';
 
 console.log('\nPathID to content map ...');
+for await (const [key, language] of getAllLanguages()) {
+    const catechism = await getCatechism(language);
+    const contentMap = await getContentMap(language);
+    const renderablePathMap = await getRenderablePathMap(language);
 
-Deno.test('all PathID entries are unique', () => {
-    const pathIDs = Object.keys(ContentMap);
-    const numUniquePathIDs = new Set(pathIDs).size;
+    runTests(key, catechism, contentMap, renderablePathMap);
+}
 
-    const numPathIDs = pathIDs.length;
-    assertStrictEquals(numPathIDs, numUniquePathIDs, `${numPathIDs - numUniquePathIDs} duplicate entry PathIDs exist`);
-});
+function runTests(
+    languageKey: string,
+    catechism: CatechismStructure,
+    contentMap: PathIdContentMap,
+    renderablePathMap: SemanticPathPathIdMap,
+): void {
+    Deno.test(`[${languageKey}] all PathID entries are unique`, () => {
+        const pathIDs = Object.keys(contentMap);
+        const numUniquePathIDs = new Set(pathIDs).size;
 
-Deno.test('the number of entries is equal to the number of semantic-path-to-renderable-path entries', () => {
-    assertStrictEquals(
-        Object.keys(ContentMap).length,
-        Object.keys(RenderablePathMap).length,
-    );
-});
+        const numPathIDs = pathIDs.length;
+        assertStrictEquals(
+            numPathIDs,
+            numUniquePathIDs,
+            `${numPathIDs - numUniquePathIDs} duplicate entry PathIDs exist`,
+        );
+    });
 
-Deno.test('all content is included', () => {
-    const contentMapContent = Object.values(ContentMap) as Array<ContentContainer>;
-    const mapPathIDs = getAllOfProperty<PathID>('pathID', contentMapContent);
+    Deno.test(`[${languageKey}] the number of entries is equal to the number of semantic-path-to-renderable-path entries`, () => {
+        assertStrictEquals(
+            Object.keys(contentMap).length,
+            Object.keys(renderablePathMap).length,
+        );
+    });
 
-    const catechismPathIDs = getAllPathIDs(Catechism as CatechismStructure);
-    const missingPathIDs = catechismPathIDs.filter((catPathID) => !mapPathIDs.includes(catPathID));
+    Deno.test(`[${languageKey}] all content is included`, () => {
+        const contentMapContent = Object.values(contentMap);
+        const mapPathIDs = getAllOfProperty<PathID>('pathID', contentMapContent);
 
-    if (missingPathIDs.length > 0) {
-        const missingIDsText = '\n\t' + missingPathIDs.join('\n\t');
-        fail(`of ${catechismPathIDs.length} PathIDs, ${missingPathIDs.length} are missing: ${missingIDsText}`);
-    }
-});
+        const catechismPathIDs = getAllPathIDs(catechism);
+        const missingPathIDs = catechismPathIDs.filter((catPathID) => !mapPathIDs.includes(catPathID));
+
+        if (missingPathIDs.length > 0) {
+            const missingIDsText = '\n\t' + missingPathIDs.join('\n\t');
+            fail(`of ${catechismPathIDs.length} PathIDs, ${missingPathIDs.length} are missing: ${missingIDsText}`);
+        }
+    });
+}

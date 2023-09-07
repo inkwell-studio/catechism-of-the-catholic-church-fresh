@@ -1,21 +1,40 @@
+import { getLanguage } from '../../language-state.ts';
+import { Language } from '../../../source/types/types.ts';
+
+const sampleIndices = new Map<Language, number>();
+Object.values(Language).forEach((language) => sampleIndices.set(language, 0));
+
 export function getText(): string {
-    const sample = textSamples[sampleIndex];
+    const language = getLanguage();
 
-    incrementSampleIndex();
+    let index = sampleIndices.get(language) ?? 0;
 
-    return sample;
+    const textSamples = getTextSamples(language);
+    if (index >= textSamples.length) {
+        index = 0;
+    }
+    sampleIndices.set(language, index + 1);
+
+    return textSamples.at(index) ?? '';
 }
 
-function incrementSampleIndex() {
-    sampleIndex++;
-    if (sampleIndex >= textSamples.length) {
-        sampleIndex = 0;
+function getTextSamples(language: Language): Array<string> {
+    switch (language) {
+        case (Language.ENGLISH): {
+            return englishSamples;
+        }
+        case (Language.LATIN): {
+            return latinSamples;
+        }
+        case (Language.SPANISH): {
+            return spanishSamples;
+        }
     }
 }
 
-let sampleIndex = 0;
-
-const textSamples = [
+// source: Douay-Rheims 1899 American Edition
+// https://www.biblegateway.com/versions/Douay-Rheims-1899-American-Edition-DRA-Bible/
+const englishSamples = [
     `And in those days cometh John the Baptist preaching in the desert of Judea.`,
     `And saying: Do penance: for the kingdom of heaven is at hand.`,
     `For this is he that was spoken of by Isaias the prophet, saying: A voice of one crying in the desert, Prepare ye the way of the Lord, make straight his paths.`,
@@ -58,4 +77,64 @@ const textSamples = [
     `And Jesus went about all Galilee, teaching in their synagogues, and preaching the gospel of the kingdom: and healing all manner of sickness and every infirmity, among the people.`,
     `And his fame went throughout all Syria, and they presented to him all sick people that were taken with divers diseases and torments, and such as were possessed by devils, and lunatics, and those that had palsy, and he cured them:`,
     `And much people followed him from Galilee, and from Decapolis, and from Jerusalem, and from Judea, and from beyond the Jordan.`,
-] as const;
+];
+
+// Source: the Vulgate
+// https://www.biblegateway.com/passage/?search=Matthaeus%204&version=VULGATE
+const latinSamples = [
+    'Tunc Jesus ductus est in desertum a Spiritu, ut tentaretur a diabolo.',
+    'Et cum jejunasset quadraginta diebus, et quadraginta noctibus, postea esuriit.',
+    'Et accedens tentator dixit ei: Si Filius Dei es, dic ut lapides isti panes fiant.',
+    'Qui respondens dixit: Scriptum est: Non in solo pane vivit homo, sed in omni verbo, quod procedit de ore Dei.',
+    'Tunc assumpsit eum diabolus in sanctam civitatem, et statuit eum super pinnaculum templi,',
+    'et dixit ei: Si Filius Dei es, mitte te deorsum. Scriptum est enim: Quia angelis suis mandavit de te, et in manibus tollent te, ne forte offendas ad lapidem pedem tuum.',
+    'Ait illi Jesus: Rursum scriptum est: Non tentabis Dominum Deum tuum.',
+    'Iterum assumpsit eum diabolus in montem excelsum valde: et ostendit ei omnia regna mundi, et gloriam eorum,',
+    'et dixit ei: Haec omnia tibi dabo, si cadens adoraveris me.',
+    'Tunc dicit ei Jesus: Vade Satana: Scriptum est enim: Dominum Deum tuum adorabis, et illi soli servies.',
+    'Tunc reliquit eum diabolus: et ecce angeli accesserunt, et ministrabant ei.',
+    'Cum autem audisset Jesus quod Joannes traditus esset, secessit in Galilaeam:',
+    'et, relicta civitate Nazareth, venit, et habitavit in Capharnaum maritima, in finibus Zabulon et Nephthalim:',
+    'ut adimpleretur quod dictum est per Isaiam prophetam:',
+    'Terra Zabulon, et terra Nephthalim, via maris trans Jordanem, Galilaea gentium:',
+    'populus, qui sedebat in tenebris, vidit lucem magnam: et sedentibus in regione umbrae mortis, lux orta est eis.',
+    'Exinde coepit Jesus praedicare, et dicere: Poenitentiam agite: appropinquavit enim regnum caelorum.',
+    'Ambulans autem Jesus juxta mare Galilaeae, vidit duos fratres, Simonem, qui vocatur Petrus, et Andream fratrem ejus, mittentes rete in mare (erant enim piscatores),',
+    'et ait illis: Venite post me, et faciam vos fieri piscatores hominum.',
+    'At illi continuo relictis retibus secuti sunt eum.',
+    'Et procedens inde, vidit alios duos fratres, Jacobum Zebedaei, et Joannem fratrem ejus, in navi cum Zebedaeo patre eorum, reficientes retia sua: et vocavit eos.',
+    'Illi autem statim relictis retibus et patre, secuti sunt eum.',
+    'Et circuibat Jesus totam Galilaeam, docens in synagogis eorum, et praedicans Evangelium regni: et sanans omnem languorem, et omnem infirmitatem in populo.',
+    'Et abiit opinio ejus in totam Syriam, et obtulerunt ei omnes male habentes, variis languoribus, et tormentis comprehensos, et qui daemonia habebant, et lunaticos, et paralyticos, et curavit eos:',
+    'lilaea, et Decapoli, et de Jerosolymis, et de Judaea, et de trans Jordanem.',
+];
+
+// Source: Biblia Torres Amat
+// https://www.bibliatodo.com/la-biblia/Torres-amat/mateo-4
+const spanishSamples = [
+    'En aquella sazón, Jesús fue conducido del espíritu de Dios al desierto, para que fuese tentado allí por el diablo.',
+    'Y después de haber ayunado cuarenta días con cuarenta noches, tuvo hambre.',
+    'Entonces, acercándose el tentador, le dijo: Si eres el Hijo de Dios, di que esas piedras se conviertan en panes.',
+    'Mas Jesús le respondió: Escrito está: No sólo de pan vive el hombre, sino de toda palabra o disposición que sale de la boca de Dios.',
+    'Después de esto lo transportó el diablo a la santa ciudad de Jerusalén , y lo puso sobre lo alto del templo;',
+    'y le dijo: Si eres el Hijo de Dios, échate de aquí abajo; pues está escrito: Que te ha encomendado a sus ángeles, los cuales te tomarán en las palmas de sus manos para que tu pie no tropiece contra alguna piedra.',
+    'Le replicó Jesús : También está escrito: No tentarás al Señor tu Dios.',
+    'Todavía le subió el diablo a un monte muy encumbrado, y le mostró todos los reinos del mundo y la gloria de ellos.',
+    'Y le dijo: Todas estas cosas te daré si, postrándote delante de mí, me adorares.',
+    'Le respondió entonces Jesús : Apártate de ahí, Satanás; porque está escrito: Adorarás al Señor Dios tuyo, y a él solo servirás.',
+    'Y con esto le dejó el diablo; y he aquí que se acercaron los ángeles y le servían.',
+    'Oyendo después Jesús que Juan había sido encarcelado, se retiró a Galilea.',
+    'Y dejando la ciudad de Nazaret, fue a morar en Cafarnaúm, ciudad marítima en los confines de Zabulón y Neftalí;',
+    'con que vino a cumplirse lo que dijo el profeta Isaías:',
+    'El país de Zabulón y el país de Neftalí, por donde se va al mar de Tiberíades a la otra parte del Jordán, la Galilea de los gentiles,',
+    'este pueblo que yacía en las tinieblas, ha visto una luz grande: Luz que ha venido a iluminar a los que habitan en la región de las sombras de la muerte.',
+    'Desde entonces empezó Jesús a predicar y decir: Haced penitencia, porque está cerca el reino de los cielos.',
+    'Caminando un día Jesús por la ribera del mar de Galilea vio a dos hermanos, Simón, llamado Pedro, y Andrés su hermano, echando la red en el mar (pues eran pescadores)',
+    'y les dijo: Seguidme a mí, y yo os haré pescadores de hombres.',
+    'Al instante los dos, dejadas las redes, lo siguieron.',
+    'Pasando más adelante, vio a otros dos hermanos, Santiago, hijo de Zebedeo, y Juan su hermano, remendando sus redes en la barca con Zebedeo su padre, y los llamó;',
+    'Ellos también al punto, dejadas las redes y a su padre, lo siguieron.',
+    'E iba Jesús recorriendo toda la Galilea, enseñando en sus sinagogas y predicando la buena nueva del reino celestial, y sanando toda dolencia y toda enfermedad en los del pueblo;',
+    'con lo que corrió su fama por toda la Siria, y le presentaban todos los que estaban enfermos y acosados de varios males y dolores agudos, los endemoniados, los epilépticos, los paralíticos; y los curaba.',
+    'Y le iba siguiendo mucha gente de Galilea, y Decápolis, y Jerusalén , y Judea, y de la otra parte del Jordán.',
+];

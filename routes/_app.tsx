@@ -1,11 +1,16 @@
 import { Head } from '$fresh/runtime.ts';
 import { AppProps } from '$fresh/server.ts';
+import { JSX } from 'preact';
 
-export default function App({ Component }: AppProps) {
+import { getLanguageTag } from '../web/language-tag.ts';
+import { state } from '../web/state.ts';
+import { translate } from '../web/translation.ts';
+
+export default function App({ Component }: AppProps): JSX.Element {
     return (
-        <html>
+        <html lang={getLanguageTag(state.value.language)}>
             <Head>
-                <title>Catechism of the Catholic Church</title>
+                <title>{translate('Catechism of the Catholic Church', state.value.language)}</title>
             </Head>
             <body class='min-h-screen bg-tan-100'>
                 <Component />

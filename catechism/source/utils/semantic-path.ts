@@ -1,9 +1,11 @@
+import { getLeafPathIdNumber } from './path-id.ts';
 import {
     Article,
     ArticleParagraph,
     Chapter,
     Content,
     ContentBase,
+    Language,
     Paragraph,
     ParagraphGroup,
     Part,
@@ -12,14 +14,18 @@ import {
     SemanticPathSource,
     Subarticle,
 } from '../types/types.ts';
-import { getLeafPathIdNumber } from './path-id.ts';
+import { translate } from '../../../web/translation.ts';
 
 /**
  * @param ancestors a list of ancestors of `child`, in descending order (i.e. `ancestors[i]` is the parent of `ancestors[i+1]`)
  */
-export function buildSemanticPath(child: SemanticPathSource, ancestors: Array<SemanticPathSource>): SemanticPath {
+export function buildSemanticPath(
+    language: Language,
+    child: SemanticPathSource,
+    ancestors: Array<SemanticPathSource>,
+): SemanticPath {
     return [...ancestors, child]
-        .map((segment) => getSegmentString(segment))
+        .map((segment) => getSegmentString(language, segment))
         .join('/');
 }
 
@@ -64,39 +70,83 @@ function getContentNumber(content: ContentBase): number | null {
     }
 }
 
-function getSegmentString(segment: SemanticPathSource): string {
+function getSegmentString(language: Language, segment: SemanticPathSource): string {
     if (segment.isFinalContent) {
-        return 'final-content';
+        return translate('final-content', language);
     } else {
+        const words = getSegmentContentString(language, segment.content);
         if (null !== segment.number) {
-            return contentMap[segment.content] + `-${segment.number}`;
+            return words + `-${segment.number}`;
         } else {
-            return contentMap[segment.content];
+            return words;
         }
     }
 }
 
-const contentMap: { [key in Content]: string } = {
-    [Content.PROLOGUE]: 'prologue',
-    [Content.PART]: 'part',
-    [Content.SECTION]: 'section',
-    [Content.CHAPTER]: 'chapter',
-    [Content.CHAPTER_SECTION]: 'chapter-section',
-    [Content.ARTICLE]: 'article',
-    [Content.ARTICLE_PARAGRAPH]: 'article-paragraph',
-    [Content.SUB_ARTICLE]: 'subarticle',
-    [Content.IN_BRIEF]: 'in-brief',
-    [Content.PARAGRAPH_GROUP]: 'paragraph-group',
-    [Content.SPECIAL_1]: 'special-1',
-    [Content.SPECIAL_2]: 'special-2',
-    [Content.SPECIAL_3]: 'special-3',
-    [Content.GENERIC_CONTENT_CONTAINER]: 'generic-content-container',
-    [Content.BLOCK_QUOTE]: 'block-quote',
-    [Content.PARAGRAPH]: 'paragraph',
-    [Content.PARAGRAPH_SUB_ITEM_CONTAINER]: 'paragraph-sub-item-container',
-    [Content.PARAGRAPH_SUB_ITEM]: 'paragraph-sub-item',
-    [Content.TEXT_BLOCK]: 'text-block',
-    [Content.TEXT_HEADING]: 'text-heading',
-    [Content.TEXT_WRAPPER]: 'text-wrapper',
-    [Content.TEXT]: 'text',
-} as const;
+function getSegmentContentString(language: Language, contentType: Content): string {
+    switch (contentType) {
+        case (Content.PROLOGUE): {
+            return translate('prologue', language);
+        }
+        case (Content.PART): {
+            return translate('part', language);
+        }
+        case (Content.SECTION): {
+            return translate('section', language);
+        }
+        case (Content.CHAPTER): {
+            return translate('chapter', language);
+        }
+        case (Content.CHAPTER_SECTION): {
+            return translate('chapter-section', language);
+        }
+        case (Content.ARTICLE): {
+            return translate('article', language);
+        }
+        case (Content.ARTICLE_PARAGRAPH): {
+            return translate('article-paragraph', language);
+        }
+        case (Content.SUB_ARTICLE): {
+            return translate('subarticle', language);
+        }
+        case (Content.IN_BRIEF): {
+            return translate('in-brief', language);
+        }
+        case (Content.PARAGRAPH_GROUP): {
+            return translate('paragraph-group', language);
+        }
+        case (Content.GENERIC_CONTENT_CONTAINER): {
+            return translate('generic-content-container', language);
+        }
+        case (Content.BLOCK_QUOTE): {
+            return translate('block-quote', language);
+        }
+        case (Content.PARAGRAPH): {
+            return translate('paragraph', language);
+        }
+        case (Content.PARAGRAPH_SUB_ITEM_CONTAINER): {
+            return translate('paragraph-sub-item-container', language);
+        }
+        case (Content.PARAGRAPH_SUB_ITEM): {
+            return translate('paragraph-sub-item', language);
+        }
+        case (Content.TEXT_BLOCK): {
+            return translate('text-block', language);
+        }
+        case (Content.TEXT_HEADING): {
+            return translate('text-heading', language);
+        }
+        case (Content.TEXT_WRAPPER): {
+            return translate('text-wrapper', language);
+        }
+        case (Content.TEXT): {
+            return translate('text', language);
+        }
+        case (Content.CREED): {
+            return translate('creed', language);
+        }
+        case (Content.TEN_COMMANDMENTS): {
+            return translate('ten-commandments', language);
+        }
+    }
+}
