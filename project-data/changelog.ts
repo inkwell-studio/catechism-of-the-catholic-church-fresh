@@ -14,6 +14,15 @@ export type Commit = {
 
 export const changelog: Changelog = [
     {
+        date: new Date(2023, 8, 7),
+        commits: [
+            {
+                hash: '29ad54072c0885fee592c5bd65568ec0b491ea76',
+                message: 'add support for multiple languages',
+            },
+        ],
+    },
+    {
         date: new Date(2023, 7, 26),
         commits: [
             {
