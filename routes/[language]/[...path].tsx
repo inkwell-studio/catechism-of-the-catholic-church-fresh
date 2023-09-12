@@ -2,8 +2,8 @@ import { defineRoute } from '$fresh/server.ts';
 import { JSX } from 'preact';
 
 import { ActionBar } from '../(_components)/action-bar.tsx';
-import { ContentContainer } from '../(_components)/content-container.tsx';
 import { TableOfContents } from '../(_components)/table-of-contents.tsx';
+import ContentContainer from '../(_islands)/content-container.tsx';
 
 import { getTableOfContents } from '../../catechism/source/utils/artifacts.ts';
 import { getAllLanguages, getLanguageInfo, getNativeLanguageText } from '../../catechism/source/utils/language.ts';

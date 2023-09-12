@@ -1,3 +1,5 @@
+// deno-lint-ignore-file fresh-server-event-handlers
+
 import { Fragment, JSX } from 'preact';
 
 import {
@@ -30,9 +32,10 @@ import {
 } from '../../catechism/source/utils/content.ts';
 import { getUrlFragment } from '../../web/routing.ts';
 import { translate } from '../../web/translation.ts';
+import { NumberOrNumberRange } from '../../catechism/source/types/number-or-number-range.ts';
 
 // TODO: Consider all rendering function implementations to be incomplete
-//#region top-level components
+//#region top-level component
 export default function Content(props: { language: Language; content: ContentBase }): JSX.Element {
     return RenderContentBase(props.content, props.language);
 }
@@ -272,7 +275,19 @@ function TextWrapperContent(textWrapper: TextWrapper): JSX.Element {
     return (
         <span>
             <span class='absolute right-0 font-sans-caption text-xs text-left pt-1 w-6 sm:w-14 md:w-12 lg:w-20 xl:w-24'>
-                {textWrapper.paragraphReferences.map((ref) => ref.toString()).join(', ')}
+                {textWrapper.paragraphReferences
+                    // .map((ref) => ref.toString()
+                    // .map((ref) => <Fragment key={ref}>ref.toString()</Fragment>
+                    .map((reference, index, allReferences) => {
+                        const separator = index < allReferences.length - 1 ? ', ' : '';
+
+                        return (
+                            <Fragment key={reference}>
+                                <button onClick={() => openParagraphReference(reference)}>{reference.toString()}</button>
+                                {separator}
+                            </Fragment>
+                        );
+                    })}
             </span>
             <span>
                 {textWrapper.mainContent
@@ -331,5 +346,11 @@ function ContentBaseArray(content: Array<ContentBase>, language: Language): Arra
 function UnknownContent(content: ContentBase): JSX.Element {
     // TODO: Log a warning
     return <div>Unhandled content: {content.contentType}</div>;
+}
+//#endregion
+
+//#region helper functions
+function openParagraphReference(reference: NumberOrNumberRange): void {
+    console.log('opening: ' + reference.toString());
 }
 //#endregion

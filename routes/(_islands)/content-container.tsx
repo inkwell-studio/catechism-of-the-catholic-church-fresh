@@ -1,7 +1,7 @@
-import Content from '../(_islands)/content.tsx';
+import Content from './content.tsx';
 import { ContentContainer, Language } from '../../catechism/source/types/types.ts';
 
-export function ContentContainer(props: { language: Language; content: ContentContainer }) {
+export default function ContentContainer(props: { language: Language; content: ContentContainer }) {
     return (
         <div class='flex justify-center'>
             <main class='
