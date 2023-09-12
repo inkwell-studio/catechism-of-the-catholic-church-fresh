@@ -3,7 +3,7 @@ import { JSX } from 'preact';
 
 import { ActionBar } from '../(_components)/action-bar.tsx';
 import { TableOfContents } from '../(_components)/table-of-contents.tsx';
-import ContentContainer from '../(_islands)/content-container.tsx';
+import Content from '../(_islands)/content.tsx';
 
 import { getTableOfContents } from '../../catechism/source/utils/artifacts.ts';
 import { getAllLanguages, getLanguageInfo, getNativeLanguageText } from '../../catechism/source/utils/language.ts';
@@ -31,7 +31,7 @@ export default defineRoute(async (request, context) => {
         } else if (Element.CONTENT === element) {
             if (pathID) {
                 const content = await getContent(languageInfo.language, pathID);
-                mainElement = <ContentContainer language={languageInfo.language} content={content}></ContentContainer>;
+                mainElement = <Content content={content} language={languageInfo.language}></Content>;
             } else {
                 return context.renderNotFound();
             }

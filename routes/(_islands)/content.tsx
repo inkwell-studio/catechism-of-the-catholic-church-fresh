@@ -9,6 +9,7 @@ import {
     Chapter,
     Content as ContentEnum,
     ContentBase,
+    ContentContainer,
     InBrief,
     Language,
     Paragraph,
@@ -36,8 +37,20 @@ import { NumberOrNumberRange } from '../../catechism/source/types/number-or-numb
 
 // TODO: Consider all rendering function implementations to be incomplete
 //#region top-level component
-export default function Content(props: { language: Language; content: ContentBase }): JSX.Element {
-    return RenderContentBase(props.content, props.language);
+export default function Content(props: { content: ContentContainer, language: Language; }): JSX.Element {
+    return (
+        <div class='flex justify-center'>
+            <main class='
+                relative bg-tan-50 text-justify h-[min-content]
+                rounded-md shadow md:shadow-2xl
+                w-full md:max-w-2xl lg:max-w-3xl
+                px-6 xs:px-10 sm:px-20 lg:px-32
+                pb-4 pt-4 sm:pt-8 md:pt-14 md:my-8 lg:pt-16
+            '>
+                {RenderContentBase(props.content, props.language)}
+            </main>
+        </div>
+    );
 }
 
 function RenderContentBase(content: ContentBase, language: Language) {
@@ -283,7 +296,9 @@ function TextWrapperContent(textWrapper: TextWrapper): JSX.Element {
 
                         return (
                             <Fragment key={reference}>
-                                <button onClick={() => openParagraphReference(reference)}>{reference.toString()}</button>
+                                <button onClick={() => openParagraphReference(reference)}>
+                                    {reference.toString()}
+                                </button>
                                 {separator}
                             </Fragment>
                         );
@@ -351,6 +366,10 @@ function UnknownContent(content: ContentBase): JSX.Element {
 
 //#region helper functions
 function openParagraphReference(reference: NumberOrNumberRange): void {
+    // TODO: Remove
     console.log('opening: ' + reference.toString());
+
+    // TODO: Implement
+    const paragraph = null;
 }
 //#endregion
