@@ -1,5 +1,6 @@
 // deno-lint-ignore-file fresh-server-event-handlers
 
+import { signal } from '@preact/signals';
 import { Fragment, JSX } from 'preact';
 
 import {
@@ -35,21 +36,28 @@ import { getUrlFragment } from '../../web/routing.ts';
 import { translate } from '../../web/translation.ts';
 import { NumberOrNumberRange } from '../../catechism/source/types/number-or-number-range.ts';
 
+const selectedCrossReference = signal<NumberOrNumberRange | null>(null);
+
 // TODO: Consider all rendering function implementations to be incomplete
 //#region top-level component
-export default function Content(props: { content: ContentContainer, language: Language; }): JSX.Element {
+export default function Content(props: { content: ContentContainer; language: Language }): JSX.Element {
     return (
-        <div class='flex justify-center'>
-            <main class='
+        <>
+            <div class={`${selectedCrossReference.value ? '' : 'hidden'} fixed top-8 right-4 p-12 rounded-lg bg-white`}>
+                {CrossReference()}
+            </div>
+            <div class='flex justify-center'>
+                <main class='
                 relative bg-tan-50 text-justify h-[min-content]
                 rounded-md shadow md:shadow-2xl
                 w-full md:max-w-2xl lg:max-w-3xl
                 px-6 xs:px-10 sm:px-20 lg:px-32
                 pb-4 pt-4 sm:pt-8 md:pt-14 md:my-8 lg:pt-16
-            '>
-                {RenderContentBase(props.content, props.language)}
-            </main>
-        </div>
+                '>
+                    {RenderContentBase(props.content, props.language)}
+                </main>
+            </div>
+        </>
     );
 }
 
@@ -296,7 +304,7 @@ function TextWrapperContent(textWrapper: TextWrapper): JSX.Element {
 
                         return (
                             <Fragment key={reference}>
-                                <button onClick={() => openParagraphReference(reference)}>
+                                <button onClick={() => selectCrossReference(reference)}>
                                     {reference.toString()}
                                 </button>
                                 {separator}
@@ -362,14 +370,19 @@ function UnknownContent(content: ContentBase): JSX.Element {
     // TODO: Log a warning
     return <div>Unhandled content: {content.contentType}</div>;
 }
+
+function CrossReference(): JSX.Element {
+    return (
+        <div class="space-y-4">
+            <div>{selectedCrossReference.value}</div>
+            <button onClick={() => selectedCrossReference.value = null}>Close</button>
+        </div>
+    );
+}
 //#endregion
 
 //#region helper functions
-function openParagraphReference(reference: NumberOrNumberRange): void {
-    // TODO: Remove
-    console.log('opening: ' + reference.toString());
-
-    // TODO: Implement
-    const paragraph = null;
+function selectCrossReference(reference: NumberOrNumberRange): void {
+    selectedCrossReference.value = reference;
 }
 //#endregion
