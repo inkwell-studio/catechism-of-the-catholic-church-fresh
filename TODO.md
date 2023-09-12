@@ -1,9 +1,5 @@
 # Tasks to complete now
 
-- [ ] try implementing artifact caching
-  - test logic locally
-- merge
-
 - [ ] implement citations and cross-reference functionality
 - merge
 
@@ -31,6 +27,7 @@
 - merge
 
 - [ ] look into "ahead-of-time" builds: https://fresh.deno.dev/docs/concepts/ahead-of-time-builds
+- [ ] research artifact caching methods
 
 ## Unprioritized
 
