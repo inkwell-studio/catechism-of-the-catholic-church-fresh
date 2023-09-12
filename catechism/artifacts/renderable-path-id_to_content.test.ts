@@ -3,10 +3,10 @@ import { assertStrictEquals, fail } from '$deno/testing/asserts.ts';
 import { getAllOfProperty, getAllPathIDs, getCatechism } from '../source/utils/content.ts';
 import { CatechismStructure, PathID, PathIdContentMap, SemanticPathPathIdMap } from '../source/types/types.ts';
 import { getContentMap, getRenderablePathMap } from '../source/utils/artifacts.ts';
-import { getAllLanguages } from '../source/utils/language.ts';
+import { getSupportedLanguages } from '../source/utils/language.ts';
 
 console.log('\nPathID to content map ...');
-for await (const [key, language] of getAllLanguages()) {
+for await (const [key, language] of getSupportedLanguages()) {
     const catechism = await getCatechism(language);
     const contentMap = await getContentMap(language);
     const renderablePathMap = await getRenderablePathMap(language);

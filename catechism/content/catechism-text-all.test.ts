@@ -3,14 +3,14 @@ import { assertNotMatch, assertNotStrictEquals, assertStrictEquals, fail } from 
 import { CatechismText, getText } from './test-utils.ts';
 import { PathID } from '../source/types/types.ts';
 import { Language } from '../source/types/language.ts';
-import { getAllLanguages } from '../source/utils/language.ts';
+import { getSupportedLanguages } from '../source/utils/language.ts';
 import { getCatechism } from '../source/utils/content.ts';
 
 //#region tests
 console.log(`\nAll text fragments ...`);
 
 const allTexts = new Map<Language, CatechismText>();
-for await (const [key, language] of getAllLanguages()) {
+for await (const [key, language] of getSupportedLanguages()) {
     const catechism = await getCatechism(language);
     const text = getText(catechism);
 

@@ -11,6 +11,13 @@ const pathMaps = {
     [Language.SPANISH]: PathMapSpanish,
 } as const;
 
+export enum Element {
+    TABLE_OF_CONTENTS = 'TABLE_OF_CONTENTS',
+    CONTENT = 'CONTENT',
+    GLOSSARY = 'GLOSSARY',
+    INDEX = 'INDEX',
+}
+
 export function getElementAndPathID(
     language: Language,
     contentPath: string,
@@ -37,11 +44,12 @@ export function getElementAndPathID(
  * @returns the URL for viewing the content at the given path
  */
 export function getUrl(language: Language, semanticPath: SemanticPath): string {
-    const fragment = getUrlFragment(semanticPath, true, language);
-    // deno-fmt-ignore
-    return fragment
-        ? `/${language}/` + semanticPath.replace(`/${fragment}`, `#${fragment}`)
-        : `/${language}/${semanticPath}`;
+    const fragmentInfo = getUrlFragment(semanticPath, true, language);
+    if (fragmentInfo.portionToReplace) {
+        return `/${language}/` + semanticPath.replace(`/${fragmentInfo.portionToReplace}`, `#${fragmentInfo.fragment}`);
+    } else {
+        return `/${language}/${semanticPath}`;
+    }
 }
 
 /**
@@ -51,12 +59,27 @@ export function getUrlFragment(
     semanticPath: SemanticPath,
     acknowledgeFinalContent: boolean,
     language: Language,
-): string | undefined {
+): {
+    portionToReplace: string | undefined;
+    fragment: string | undefined;
+} {
+    const { isParagraph, paragraphNumber } = isParagraphSemanticPath(semanticPath, language);
+
     const highLevelFragment = getHighLevelUrlFragment(semanticPath, language);
     if (highLevelFragment) {
-        return highLevelFragment;
+        const fragment = isParagraph ? `${paragraphNumber}` : highLevelFragment;
+        return {
+            portionToReplace: highLevelFragment,
+            fragment,
+        };
     } else {
-        return getLowLevelUrlFragment(semanticPath, acknowledgeFinalContent, language);
+        const portionToReplace = getLowLevelUrlFragment(semanticPath, acknowledgeFinalContent, language);
+        const fragment = isParagraph ? `${paragraphNumber}` : portionToReplace;
+
+        return {
+            portionToReplace,
+            fragment,
+        };
     }
 }
 
@@ -115,18 +138,43 @@ function getLowLevelUrlFragment(
     return firstFragmentIndex ? semanticPath.slice(firstFragmentIndex + 1) : undefined;
 }
 
-export enum Element {
-    TABLE_OF_CONTENTS = 'TABLE_OF_CONTENTS',
-    CONTENT = 'CONTENT',
-    GLOSSARY = 'GLOSSARY',
-    INDEX = 'INDEX',
+function isParagraphSemanticPath(
+    semanticPath: SemanticPath,
+    language: Language,
+): { isParagraph: boolean; paragraphNumber: number | null } {
+    /*
+        These regular expressions are intended to determine if the given SemanticPath specifies a Paragraph
+    */
+    let regex = /\/paragraph-[0-9]+$/;
+
+    if (Language.LATIN === language) {
+        regex = /\/paragraphus-[0-9]+$/;
+    } else if (Language.SPANISH === language) {
+        regex = /\/parrafo-[0-9]+$/;
+    }
+
+    const match = semanticPath.match(regex);
+    if (match) {
+        const index = semanticPath.lastIndexOf('-');
+        const paragraphNumber = Number(semanticPath.slice(index + 1));
+
+        return {
+            isParagraph: true,
+            paragraphNumber,
+        };
+    } else {
+        return {
+            isParagraph: false,
+            paragraphNumber: null,
+        };
+    }
 }
 
 /**
  * @returns the renderable `PathID` corresponding to the given value, or `null` if no such `PathID` exists
  */
-function getRenderablePathID(language: Language, value: SemanticPath): PathID | null {
-    return getPathMap(language)[value] ?? null;
+function getRenderablePathID(language: Language, semanticPath: SemanticPath): PathID | null {
+    return getPathMap(language)[semanticPath] ?? null;
 }
 
 function getPathMap(language: Language): SemanticPathPathIdMap {

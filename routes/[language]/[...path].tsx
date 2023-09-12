@@ -6,10 +6,12 @@ import { ContentContainer } from '../(_components)/content-container.tsx';
 import { TableOfContents } from '../(_components)/table-of-contents.tsx';
 
 import { getTableOfContents } from '../../catechism/source/utils/artifacts.ts';
-import { getAllLanguages, getLanguageInfo } from '../../catechism/source/utils/language.ts';
+import { getAllLanguages, getLanguageInfo, getNativeLanguageText } from '../../catechism/source/utils/language.ts';
 
 import { getContent } from '../../web/rendering.ts';
 import { Element, getElementAndPathID } from '../../web/routing.ts';
+import { state } from '../../web/state.ts';
+import { translate } from '../../web/translation.ts';
 
 export default defineRoute(async (request, context) => {
     const languageInfo = getLanguageInfo(context.params.language);
@@ -49,25 +51,28 @@ export default defineRoute(async (request, context) => {
                 }
             </div>
         );
+    } else if (languageInfo.valid) {
+        return UnsupportedLanguage(context.params.language);
     } else {
-        return languageInfo.valid ? UnsupportedLanguage(context.params.language) : context.renderNotFound();
+        return context.renderNotFound();
     }
 });
 
-function UnsupportedLanguage(language: string): JSX.Element {
+function UnsupportedLanguage(unsupportedLanguageCode: string): JSX.Element {
     return (
         <div class='p-12'>
             <div>
-                Unsupported language: <span class='font-mono'>{language}</span>
+                {translate('Unsupported language', state.value.language)}:{' '}
+                <span class='font-mono'>{unsupportedLanguageCode}</span>
             </div>
             <div class='mt-4'>
                 <strong className='font-bold'>
-                    Available languages:
+                    {translate('Available languages', state.value.language)}:
                 </strong>
                 <ul class='list-disc mt-2'>
-                    {getAllLanguages().map(([key, language]) => (
+                    {getAllLanguages().map(([code, _language]) => (
                         <li>
-                            {key}: <span className='font-mono'>{language}</span>
+                            {getNativeLanguageText(code)}: <span className='font-mono'>{code}</span>
                         </li>
                     ))}
                 </ul>

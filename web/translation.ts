@@ -25,6 +25,14 @@ const translationMap: Record<string, Record<Exclude<Language, Language.ENGLISH>,
         [Language.LATIN]: 'Redira ad Initium',
         [Language.SPANISH]: 'Volver a Empezar',
     },
+    'Unsupported language': {
+        [Language.LATIN]: 'Sine lingua',
+        [Language.SPANISH]: 'Idioma no admitido',
+    },
+    'Available languages': {
+        [Language.LATIN]: 'Linguae Available',
+        [Language.SPANISH]: 'Idiomas Disponibles',
+    },
     'Catechism of the Catholic Church': {
         [Language.LATIN]: 'Catechismus Catholicae Ecclesiae',
         [Language.SPANISH]: 'Catecismo de la Iglesia Católica',
@@ -81,7 +89,7 @@ const translationMap: Record<string, Record<Exclude<Language, Language.ENGLISH>,
         [Language.LATIN]: 'paragraphus',
         [Language.SPANISH]: 'parrafo',
     },
-    // This is not merely "paragraph" with a hypen at the end, but rather the first part of "paragraph-group"
+    // This is not merely "paragraph" with a hypen at the end, but also the first part of "paragraph-group"
     'paragraph-': {
         [Language.LATIN]: 'paragraphus-',
         [Language.SPANISH]: 'parrafo-',

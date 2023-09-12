@@ -1,10 +1,10 @@
 import { assertStrictEquals } from '$deno/testing/asserts.ts';
 import { SemanticPathPathIdMap } from '../source/types/semantic-path-path-id-map.ts';
 import { getRenderablePathMap } from '../source/utils/artifacts.ts';
-import { getAllLanguages } from '../source/utils/language.ts';
+import { getSupportedLanguages } from '../source/utils/language.ts';
 
 console.log('\nSemanticPath to renderable PathID map ...');
-for await (const [key, language] of getAllLanguages()) {
+for await (const [key, language] of getSupportedLanguages()) {
     const renderablePathMap = await getRenderablePathMap(language);
     runTests(key, renderablePathMap);
 }

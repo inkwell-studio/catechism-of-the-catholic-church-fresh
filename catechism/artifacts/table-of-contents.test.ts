@@ -3,11 +3,11 @@ import { assert, assertExists, assertStrictEquals } from '$deno/testing/asserts.
 import { CatechismStructure, TableOfContentsEntry, TableOfContentsType } from '../source/types/types.ts';
 import { getTableOfContents } from '../source/utils/artifacts.ts';
 import { getAllParagraphs, getCatechism } from '../source/utils/content.ts';
-import { getAllLanguages } from '../source/utils/language.ts';
+import { getSupportedLanguages } from '../source/utils/language.ts';
 
 //#region tests
 console.log('\nTable of Contents ...');
-for await (const [key, language] of getAllLanguages()) {
+for await (const [key, language] of getSupportedLanguages()) {
     const catechism = await getCatechism(language);
     const tableOfContents = await getTableOfContents(language);
 

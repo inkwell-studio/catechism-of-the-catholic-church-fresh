@@ -74,11 +74,11 @@ Deno.test('getUrlFragment(): Prologue with low-level content', () => {
         ],
         [
             'prologue/subarticle-1/paragraph-group-1/paragraph-2',
-            'subarticle-1/paragraph-group-1/paragraph-2',
+            '2',
         ],
         [
             'prologue/subarticle-1/paragraph-2',
-            'subarticle-1/paragraph-2',
+            '2',
         ],
     ].forEach((testCase) => fragmentTest(testCase[0], testCase[1], 'both'));
 });
@@ -95,7 +95,7 @@ Deno.test('getUrlFragment(): initial Article Paragraphs', () => {
         ],
         [
             'part-1/section-3/chapter-2/article-4/article-paragraph-1/paragraph-group-5/paragraph-702',
-            'article-paragraph-1/paragraph-group-5/paragraph-702',
+            '702',
         ],
         [
             'part-1/section-3/chapter-2/article-4/article-paragraph-1/in-brief',
@@ -130,7 +130,7 @@ Deno.test('getUrlFragment(): Subarticles', () => {
         ],
         [
             'part-1/section-3/chapter-2/article-4/subarticle-7/paragraph-group-5/paragraph-702',
-            'subarticle-7/paragraph-group-5/paragraph-702',
+            '702',
         ],
     ].forEach((testCase) => fragmentTest(testCase[0], testCase[1], true));
 });
@@ -143,7 +143,7 @@ Deno.test('getUrlFragment(): Paragraph Groups', () => {
         ],
         [
             'part-1/section-3/chapter-2/article-4/paragraph-group-5/paragraph-702',
-            'paragraph-group-5/paragraph-702',
+            '702',
         ],
     ].forEach((testCase) => fragmentTest(testCase[0], testCase[1], true));
 });
@@ -152,7 +152,7 @@ Deno.test('getUrlFragment(): Paragraphs', () => {
     [
         [
             'part-1/section-3/chapter-2/article-4/paragraph-702',
-            'paragraph-702',
+            '702',
         ],
     ].forEach((testCase) => fragmentTest(testCase[0], testCase[1], true));
 });
@@ -180,7 +180,7 @@ function fragmentTest(
     function test(path: SemanticPath, expectedResult: string | undefined, acknowledgeFinalContentFlag: boolean): void {
         const fragment = getUrlFragment(path, acknowledgeFinalContentFlag, Language.ENGLISH);
         assertStrictEquals(
-            fragment,
+            fragment.fragment,
             expectedResult,
             `\nincorrect fragment determination:\n\n\tinput:\t\t${path}\n\n\tresults:\n\texpected\t${expectedResult}\n\tactual\t\t${fragment}\n`,
         );
@@ -250,7 +250,7 @@ Deno.test('getUrl(): low-level content within a Chapter', () => {
         ],
         [
             'part-1/section-3/chapter-2/paragraph-702',
-            '/en/part-1/section-3/chapter-2#paragraph-702',
+            '/en/part-1/section-3/chapter-2#702',
         ],
         [
             'part-1/section-3/chapter-2/subarticle-5',
@@ -262,11 +262,11 @@ Deno.test('getUrl(): low-level content within a Chapter', () => {
         ],
         [
             'part-1/section-3/chapter-2/subarticle-5/paragraph-group-6/paragraph-702',
-            '/en/part-1/section-3/chapter-2#subarticle-5/paragraph-group-6/paragraph-702',
+            '/en/part-1/section-3/chapter-2#702',
         ],
         [
             'part-1/section-3/chapter-2/subarticle-5/paragraph-702',
-            '/en/part-1/section-3/chapter-2#subarticle-5/paragraph-702',
+            '/en/part-1/section-3/chapter-2#702',
         ],
         [
             'part-1/section-3/chapter-2/paragraph-group-5',
@@ -274,11 +274,11 @@ Deno.test('getUrl(): low-level content within a Chapter', () => {
         ],
         [
             'part-1/section-3/chapter-2/paragraph-group-5/paragraph-702',
-            '/en/part-1/section-3/chapter-2#paragraph-group-5/paragraph-702',
+            '/en/part-1/section-3/chapter-2#702',
         ],
         [
             'part-1/section-3/chapter-2/paragraph-702',
-            '/en/part-1/section-3/chapter-2#paragraph-702',
+            '/en/part-1/section-3/chapter-2#702',
         ],
     ].forEach((testCase) => urlTest(testCase[0], testCase[1]));
 });
@@ -291,7 +291,7 @@ Deno.test('getUrl(): low-level content within a (Chapter > Article)', () => {
         ],
         [
             'part-1/section-3/chapter-2/article-4/paragraph-702',
-            '/en/part-1/section-3/chapter-2/article-4#paragraph-702',
+            '/en/part-1/section-3/chapter-2/article-4#702',
         ],
         [
             'part-1/section-3/chapter-2/article-4/subarticle-5',
@@ -303,11 +303,11 @@ Deno.test('getUrl(): low-level content within a (Chapter > Article)', () => {
         ],
         [
             'part-1/section-3/chapter-2/article-4/subarticle-5/paragraph-group-6/paragraph-702',
-            '/en/part-1/section-3/chapter-2/article-4#subarticle-5/paragraph-group-6/paragraph-702',
+            '/en/part-1/section-3/chapter-2/article-4#702',
         ],
         [
             'part-1/section-3/chapter-2/article-4/subarticle-5/paragraph-702',
-            '/en/part-1/section-3/chapter-2/article-4#subarticle-5/paragraph-702',
+            '/en/part-1/section-3/chapter-2/article-4#702',
         ],
         [
             'part-1/section-3/chapter-2/article-4/paragraph-group-5',
@@ -315,11 +315,11 @@ Deno.test('getUrl(): low-level content within a (Chapter > Article)', () => {
         ],
         [
             'part-1/section-3/chapter-2/article-4/paragraph-group-5/paragraph-702',
-            '/en/part-1/section-3/chapter-2/article-4#paragraph-group-5/paragraph-702',
+            '/en/part-1/section-3/chapter-2/article-4#702',
         ],
         [
             'part-1/section-3/chapter-2/article-4/paragraph-702',
-            '/en/part-1/section-3/chapter-2/article-4#paragraph-702',
+            '/en/part-1/section-3/chapter-2/article-4#702',
         ],
     ].forEach((testCase) => urlTest(testCase[0], testCase[1]));
 });
@@ -332,7 +332,7 @@ Deno.test('getUrl(): low-level content within a (Section > Article)', () => {
         ],
         [
             'part-1/section-3/article-4/paragraph-702',
-            '/en/part-1/section-3/article-4#paragraph-702',
+            '/en/part-1/section-3/article-4#702',
         ],
         [
             'part-1/section-3/article-4/subarticle-5',
@@ -344,11 +344,11 @@ Deno.test('getUrl(): low-level content within a (Section > Article)', () => {
         ],
         [
             'part-1/section-3/article-4/subarticle-5/paragraph-group-6/paragraph-702',
-            '/en/part-1/section-3/article-4#subarticle-5/paragraph-group-6/paragraph-702',
+            '/en/part-1/section-3/article-4#702',
         ],
         [
             'part-1/section-3/article-4/subarticle-5/paragraph-702',
-            '/en/part-1/section-3/article-4#subarticle-5/paragraph-702',
+            '/en/part-1/section-3/article-4#702',
         ],
         [
             'part-1/section-3/article-4/paragraph-group-5',
@@ -356,11 +356,11 @@ Deno.test('getUrl(): low-level content within a (Section > Article)', () => {
         ],
         [
             'part-1/section-3/article-4/paragraph-group-5/paragraph-702',
-            '/en/part-1/section-3/article-4#paragraph-group-5/paragraph-702',
+            '/en/part-1/section-3/article-4#702',
         ],
         [
             'part-1/section-3/article-4/paragraph-702',
-            '/en/part-1/section-3/article-4#paragraph-702',
+            '/en/part-1/section-3/article-4#702',
         ],
     ].forEach((testCase) => urlTest(testCase[0], testCase[1]));
 });
@@ -381,11 +381,11 @@ Deno.test('getUrl(): low-level content within an initial ArticleParagraph', () =
         ],
         [
             'part-1/section-3/chapter-2/article-4/article-paragraph-1/subarticle-5/paragraph-group-6/paragraph-702',
-            '/en/part-1/section-3/chapter-2/article-4#article-paragraph-1/subarticle-5/paragraph-group-6/paragraph-702',
+            '/en/part-1/section-3/chapter-2/article-4#702',
         ],
         [
             'part-1/section-3/chapter-2/article-4/article-paragraph-1/subarticle-5/paragraph-702',
-            '/en/part-1/section-3/chapter-2/article-4#article-paragraph-1/subarticle-5/paragraph-702',
+            '/en/part-1/section-3/chapter-2/article-4#702',
         ],
         [
             'part-1/section-3/chapter-2/article-4/article-paragraph-1/paragraph-group-5',
@@ -393,11 +393,11 @@ Deno.test('getUrl(): low-level content within an initial ArticleParagraph', () =
         ],
         [
             'part-1/section-3/chapter-2/article-4/article-paragraph-1/paragraph-group-5/paragraph-702',
-            '/en/part-1/section-3/chapter-2/article-4#article-paragraph-1/paragraph-group-5/paragraph-702',
+            '/en/part-1/section-3/chapter-2/article-4#702',
         ],
         [
             'part-1/section-3/chapter-2/article-4/article-paragraph-1/paragraph-702',
-            '/en/part-1/section-3/chapter-2/article-4#article-paragraph-1/paragraph-702',
+            '/en/part-1/section-3/chapter-2/article-4#702',
         ],
     ].forEach((testCase) => urlTest(testCase[0], testCase[1]));
 });
@@ -418,11 +418,11 @@ Deno.test('getUrl(): low-level content within a subsequent ArticleParagraph', ()
         ],
         [
             'part-1/section-3/chapter-2/article-4/article-paragraph-7/subarticle-5/paragraph-group-6/paragraph-702',
-            '/en/part-1/section-3/chapter-2/article-4/article-paragraph-7#subarticle-5/paragraph-group-6/paragraph-702',
+            '/en/part-1/section-3/chapter-2/article-4/article-paragraph-7#702',
         ],
         [
             'part-1/section-3/chapter-2/article-4/article-paragraph-7/subarticle-5/paragraph-702',
-            '/en/part-1/section-3/chapter-2/article-4/article-paragraph-7#subarticle-5/paragraph-702',
+            '/en/part-1/section-3/chapter-2/article-4/article-paragraph-7#702',
         ],
     ].forEach((testCase) => urlTest(testCase[0], testCase[1]));
 });

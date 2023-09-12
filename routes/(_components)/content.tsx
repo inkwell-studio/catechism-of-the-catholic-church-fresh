@@ -110,7 +110,9 @@ function ArticleContent(article: Article, language: Language): JSX.Element {
 
     return (
         <>
-            <h4 id={getUrlFragment(article.semanticPath, false, language)} class='text-3xl'>{article.title}</h4>
+            <h4 id={getUrlFragment(article.semanticPath, false, language).fragment} class='text-3xl'>
+                {article.title}
+            </h4>
             {ContentBaseArray(nonFinalChildContent, language)}
             {finalContentContainer}
         </>
@@ -120,7 +122,7 @@ function ArticleContent(article: Article, language: Language): JSX.Element {
 function ArticleParagraphContent(articleParagraph: ArticleParagraph, language: Language): JSX.Element {
     return (
         <>
-            <h5 id={getUrlFragment(articleParagraph.semanticPath, false, language)} class='text-2xl'>
+            <h5 id={getUrlFragment(articleParagraph.semanticPath, false, language).fragment} class='text-2xl'>
                 {articleParagraph.title}
             </h5>
             {ContentBaseArray(getAllChildContent(articleParagraph), language)}
@@ -139,7 +141,9 @@ function BlockQuoteContent(blockQuote: BlockQuote, language: Language): JSX.Elem
 function ChapterContent(chapter: Chapter, language: Language): JSX.Element {
     return (
         <>
-            <h3 id={getUrlFragment(chapter.semanticPath, false, language)} class='text-4xl'>{chapter.title}</h3>
+            <h3 id={getUrlFragment(chapter.semanticPath, false, language).fragment} class='text-4xl'>
+                {chapter.title}
+            </h3>
             {ContentBaseArray(getAllChildContent(chapter), language)}
         </>
     );
@@ -148,7 +152,7 @@ function ChapterContent(chapter: Chapter, language: Language): JSX.Element {
 function InBriefContent(inBrief: InBrief, language: Language): JSX.Element {
     return (
         <div
-            id={getUrlFragment(inBrief.semanticPath, false, language)}
+            id={getUrlFragment(inBrief.semanticPath, false, language).fragment}
             class='bg-white bg-opacity-20 border border-red-900/15 border-2 rounded p-3 my-4'
         >
             <strong class='font-sans text-lg text-purple-900 block mb-1'>{translate('In Brief', language)}</strong>
@@ -161,7 +165,7 @@ function InBriefContent(inBrief: InBrief, language: Language): JSX.Element {
 
 function ParagraphContent(paragraph: Paragraph, language: Language): JSX.Element {
     return (
-        <div id={`${paragraph.paragraphNumber}`}>
+        <div id={getUrlFragment(paragraph.semanticPath, false, language).fragment}>
             <div class='text-sm align-text-bottom font-bold inline mr-1 sm:mr-2 sm:text-lg sm:align-baseline'>
                 {paragraph.paragraphNumber}
             </div>
@@ -175,7 +179,7 @@ function ParagraphContent(paragraph: Paragraph, language: Language): JSX.Element
 function ParagraphGroupContent(paragraphGroup: ParagraphGroup, language: Language): JSX.Element {
     return (
         <>
-            <h6 id={getUrlFragment(paragraphGroup.semanticPath, false, language)} class='text-lg'>
+            <h6 id={getUrlFragment(paragraphGroup.semanticPath, false, language).fragment} class='text-lg'>
                 {paragraphGroup.title}
             </h6>
             {ContentBaseArray(getAllChildContent(paragraphGroup), language)}
@@ -222,7 +226,9 @@ function PrologueContent(prologue: Prologue, language: Language): JSX.Element {
 function SectionContent(section: Section, language: Language): JSX.Element {
     return (
         <>
-            <h2 id={getUrlFragment(section.semanticPath, false, language)} class='text-5xl'>{section.title}</h2>
+            <h2 id={getUrlFragment(section.semanticPath, false, language).fragment} class='text-5xl'>
+                {section.title}
+            </h2>
             {ContentBaseArray(getAllChildContent(section), language)}
         </>
     );
@@ -231,7 +237,9 @@ function SectionContent(section: Section, language: Language): JSX.Element {
 function SubarticleContent(subarticle: Subarticle, language: Language): JSX.Element {
     return (
         <>
-            <h6 id={getUrlFragment(subarticle.semanticPath, false, language)} class='text-xl'>{subarticle.title}</h6>
+            <h6 id={getUrlFragment(subarticle.semanticPath, false, language).fragment} class='text-xl'>
+                {subarticle.title}
+            </h6>
             {ContentBaseArray(getAllChildContent(subarticle), language)}
         </>
     );

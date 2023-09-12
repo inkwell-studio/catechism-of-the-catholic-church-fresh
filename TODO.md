@@ -1,19 +1,44 @@
 # Tasks to complete now
 
-- [ ] add navigation:
-  - to TOC by language
-  - back to Intro
-  - back to TOC
-- [ ] add URL navigation by paragraph number
+- [ ] try implementing artifact caching
+  - test logic locally
 - merge
-- [ ] add backend functionality for "next" and "previous" PathIDs
+
+- [ ] implement citations and cross-reference functionality
 - merge
-- [ ] add backend functionality for hierarchical navigation
+
+- [ ] implement Action bar
+  - "Home" (to a new "Dashboard" page (at `/en`): TOC with a link to the current "intro" page)
+  - Glossary
+  - Index
+  - language switcher
+    - mock data: use the same high-level structure for all languages
 - merge
+
+- [ ] implement hierarchical navigation
+- merge
+
+- [ ] add "next" and "previous" content
+  - "Next" algorithm:
+    - 2nd main-content child: `0__m.0` -> `0__m.0__m.1`
+    - next sibling: `0__m.0__m.1` -> `0__m.0__m.2`
+    - parent sibling, next (continue ascending as necessary)
+    - `null`
+  - "Previous" algorithm
+    - previous non-first main content sibling: `0__m.0__m.2` -> `0__m.0__m.1`
+    - parent sibling, previous (continue ascending as necessary)
+    - `null`
+- merge
+
 - [ ] look into "ahead-of-time" builds: https://fresh.deno.dev/docs/concepts/ahead-of-time-builds
 
 ## Unprioritized
 
+- [ ] determine the proper status code to use for the paragraph-number redirects
+- [ ] add helpful information and links to the 404 page
+- [ ] look into using Astral for e2e testing: https://astral.deno.dev/
+- [ ] consider improving artifact management
+  - should artifacts not be commited, and instead be built during deployment?
 - [ ] UI: style for LTR and RTL text
 - [ ] add dark-mode functionality
 - [ ] add e2e UI tests to validate links

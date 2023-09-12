@@ -1,9 +1,9 @@
 import { buildMockData } from './build/build.ts';
 import { setLanguage } from './language-state.ts';
-import { getAllLanguages } from '../source/utils/language.ts';
+import { getSupportedLanguages } from '../source/utils/language.ts';
 import { CatechismStructure } from '../source/types/types.ts';
 
-getAllLanguages().forEach(([_key, language]) => {
+getSupportedLanguages().forEach(([_key, language]) => {
     setLanguage(language);
 
     console.log(`\nBuilding mock data (${language})...`);
