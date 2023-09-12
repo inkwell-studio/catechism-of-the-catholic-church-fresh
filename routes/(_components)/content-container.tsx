@@ -1,4 +1,4 @@
-import Content from './content.tsx';
+import Content from '../(_islands)/content.tsx';
 import { ContentContainer, Language } from '../../catechism/source/types/types.ts';
 
 export function ContentContainer(props: { language: Language; content: ContentContainer }) {
