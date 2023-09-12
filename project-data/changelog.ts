@@ -14,6 +14,15 @@ export type Commit = {
 
 export const changelog: Changelog = [
     {
+        date: new Date(2023, 8, 12),
+        commits: [
+            {
+                hash: 'c69dc73dd52419e11e2311e0f27d541c265b7626',
+                message: 'add URL navigation by paragraph number',
+            },
+        ],
+    },
+    {
         date: new Date(2023, 8, 7),
         commits: [
             {
