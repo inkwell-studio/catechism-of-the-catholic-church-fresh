@@ -30,6 +30,7 @@ export * from './prologue.ts';
 export * from './reference-enum.ts';
 export * from './reference.ts';
 export * from './reference-base.ts';
+export * from './renderable-content.ts';
 export * from './section.ts';
 export * from './semantic-path.ts';
 export * from './semantic-path-path-id-map.ts';

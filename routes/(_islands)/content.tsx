@@ -373,7 +373,7 @@ function UnknownContent(content: ContentBase): JSX.Element {
 
 function CrossReference(): JSX.Element {
     return (
-        <div class="space-y-4">
+        <div class='space-y-4'>
             <div>{selectedCrossReference.value}</div>
             <button onClick={() => selectedCrossReference.value = null}>Close</button>
         </div>

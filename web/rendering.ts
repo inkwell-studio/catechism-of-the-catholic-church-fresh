@@ -6,7 +6,9 @@ import {
     ContentContainer,
     InBriefContainer,
     Language,
+    Paragraph,
     PathID,
+    RenderableContent,
 } from '../catechism/source/types/types.ts';
 import { getContentMap } from '../catechism/source/utils/artifacts.ts';
 import { hasInBrief } from '../catechism/source/utils/content.ts';
@@ -19,7 +21,7 @@ import {
     isPrologueContent,
 } from '../catechism/source/utils/path-id.ts';
 
-export async function getContent(language: Language, pathID: PathID): Promise<ContentContainer> {
+export async function getContent(language: Language, pathID: PathID): Promise<RenderableContent> {
     try {
         const contentMap = await getContentMap(language);
         return contentMap[pathID];
@@ -28,7 +30,16 @@ export async function getContent(language: Language, pathID: PathID): Promise<Co
     }
 }
 
-export function getContentForRendering(pathID: PathID, catechism: CatechismStructure): ContentContainer {
+export function getContentForRendering(pathID: PathID, catechism: CatechismStructure): RenderableContent {
+    const content = getContentForRenderingHelper(pathID, catechism);
+    const crossReferences = getParagraphCrossReferences(content);
+    return {
+        content,
+        crossReferences,
+    };
+}
+
+function getContentForRenderingHelper(pathID: PathID, catechism: CatechismStructure): ContentContainer {
     // If anything in the Prologue is requested, return the entire Prologue
     const isInPrologue = isPrologueContent(pathID);
     if (isInPrologue) {
@@ -321,4 +332,9 @@ function is(contentType: Content, content: ContentBase): boolean {
 
 function childIs(contentType: Content, content: ContentContainer): boolean {
     return content.mainContent[0].contentType === contentType;
+}
+
+function getParagraphCrossReferences(content: ContentContainer): Array<Paragraph> {
+    // TODO: Implement
+    return [];
 }
