@@ -10,7 +10,6 @@ import {
     Chapter,
     Content as ContentEnum,
     ContentBase,
-    ContentContainer,
     InBrief,
     Language,
     Paragraph,
@@ -19,6 +18,7 @@ import {
     ParagraphSubitemContainer,
     Part,
     Prologue,
+    RenderableContent,
     Section,
     Subarticle,
     Text,
@@ -31,6 +31,7 @@ import {
     getInBrief,
     getMainContent,
     getOpeningContent,
+    getParagraphNumbers,
 } from '../../catechism/source/utils/content.ts';
 import { getUrlFragment } from '../../web/routing.ts';
 import { translate } from '../../web/translation.ts';
@@ -40,12 +41,10 @@ const selectedCrossReference = signal<NumberOrNumberRange | null>(null);
 
 // TODO: Consider all rendering function implementations to be incomplete
 //#region top-level component
-export default function Content(props: { content: ContentContainer; language: Language }): JSX.Element {
+export default function Content(props: { renderableContent: RenderableContent; language: Language }): JSX.Element {
     return (
         <>
-            <div class={`${selectedCrossReference.value ? '' : 'hidden'} fixed top-8 right-4 p-12 rounded-lg bg-white`}>
-                {CrossReference()}
-            </div>
+            {selectedCrossReference.value ? CrossReference(props.renderableContent.crossReferences) : <></>}
             <div class='flex justify-center'>
                 <main class='
                 relative bg-tan-50 text-justify h-[min-content]
@@ -54,7 +53,7 @@ export default function Content(props: { content: ContentContainer; language: La
                 px-6 xs:px-10 sm:px-20 lg:px-32
                 pb-4 pt-4 sm:pt-8 md:pt-14 md:my-8 lg:pt-16
                 '>
-                    {RenderContentBase(props.content, props.language)}
+                    {RenderContentBase(props.renderableContent.content, props.language)}
                 </main>
             </div>
         </>
@@ -371,13 +370,23 @@ function UnknownContent(content: ContentBase): JSX.Element {
     return <div>Unhandled content: {content.contentType}</div>;
 }
 
-function CrossReference(): JSX.Element {
-    return (
-        <div class='space-y-4'>
-            <div>{selectedCrossReference.value}</div>
-            <button onClick={() => selectedCrossReference.value = null}>Close</button>
-        </div>
-    );
+function CrossReference(allCrossReferences: Array<Paragraph>): JSX.Element {
+    if (selectedCrossReference.value) {
+        const paragraphNumbers = getParagraphNumbers([selectedCrossReference.value]);
+        const crossReferences = allCrossReferences.filter(p => paragraphNumbers.includes(p.paragraphNumber));
+
+        return (
+            <div class='fixed top-8 right-4 p-12 rounded-lg bg-white'>
+                <div class='space-y-4'>
+                    <div>{selectedCrossReference.value}</div>
+                    <div>{crossReferences.length}</div>
+                    <button onClick={() => selectedCrossReference.value = null}>Close</button>
+                </div>
+            </div>
+        );
+    } else {
+        return <></>;
+    }
 }
 //#endregion
 

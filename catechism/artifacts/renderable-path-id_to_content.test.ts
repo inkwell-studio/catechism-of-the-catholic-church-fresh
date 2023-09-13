@@ -40,7 +40,7 @@ function runTests(
     });
 
     Deno.test(`[${languageKey}] all content is included`, () => {
-        const contentMapContent = Object.values(contentMap).map(c => c.content);
+        const contentMapContent = Object.values(contentMap).map((c) => c.content);
         const mapPathIDs = getAllOfProperty<PathID>('pathID', contentMapContent);
 
         const catechismPathIDs = getAllPathIDs(catechism);
@@ -53,12 +53,16 @@ function runTests(
     });
 
     Deno.test(`[${languageKey}] no paragraph cross references are duplicated per content item`, () => {
-        const crossReferenceArrays = Object.values(contentMap).map(c => c.crossReferences);
+        const crossReferenceArrays = Object.values(contentMap).map((c) => c.crossReferences);
 
         for (const crossReferences of crossReferenceArrays) {
             const numCrossReferences = crossReferences.length;
             const numUniqueCrossReferences = new Set(crossReferences).size;
-            assertStrictEquals(numCrossReferences, numUniqueCrossReferences, `${numCrossReferences - numUniqueCrossReferences} duplicate cross references exist`);
+            assertStrictEquals(
+                numCrossReferences,
+                numUniqueCrossReferences,
+                `${numCrossReferences - numUniqueCrossReferences} duplicate cross references exist`,
+            );
         }
     });
 }

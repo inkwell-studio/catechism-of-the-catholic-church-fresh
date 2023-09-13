@@ -26,12 +26,12 @@ import {
     isPrologueContent,
 } from '../catechism/source/utils/path-id.ts';
 
-export async function getContent(language: Language, pathID: PathID): Promise<RenderableContent> {
+export async function loadRenderableContent(language: Language, pathID: PathID): Promise<RenderableContent> {
     try {
         const contentMap = await getContentMap(language);
         return contentMap[pathID];
     } catch (error) {
-        throw new Error(`Failed to load content (${language}: ${pathID})`, error);
+        throw new Error(`Failed to load renderable content (${language}: ${pathID})`, error);
     }
 }
 
@@ -341,7 +341,9 @@ function childIs(contentType: Content, content: ContentContainer): boolean {
     return content.mainContent[0].contentType === contentType;
 }
 
-// TODO: Add documentation
+/**
+ * @returns all the paragraph objects from `allParagraphs` that are listed as cross-references by the descendents of `content`
+ */
 function getParagraphCrossReferences(content: ContentContainer, allParagraphs: Array<Paragraph>): Array<Paragraph> {
     const referencedParagraphNumbers = getTextWrappers(content)
         .flatMap((textWrapper) => getParagraphNumbers(textWrapper.paragraphReferences));

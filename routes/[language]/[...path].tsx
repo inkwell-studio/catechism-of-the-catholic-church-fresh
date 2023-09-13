@@ -8,7 +8,7 @@ import Content from '../(_islands)/content.tsx';
 import { getTableOfContents } from '../../catechism/source/utils/artifacts.ts';
 import { getAllLanguages, getLanguageInfo, getNativeLanguageText } from '../../catechism/source/utils/language.ts';
 
-import { getContent } from '../../web/rendering.ts';
+import { loadRenderableContent } from '../../web/rendering.ts';
 import { Element, getElementAndPathID } from '../../web/routing.ts';
 import { state } from '../../web/state.ts';
 import { translate } from '../../web/translation.ts';
@@ -30,8 +30,10 @@ export default defineRoute(async (request, context) => {
             );
         } else if (Element.CONTENT === element) {
             if (pathID) {
-                const content = await getContent(languageInfo.language, pathID);
-                mainElement = <Content content={content} language={languageInfo.language}></Content>;
+                const renderableContent = await loadRenderableContent(languageInfo.language, pathID);
+                mainElement = (
+                    <Content renderableContent={renderableContent} language={languageInfo.language}></Content>
+                );
             } else {
                 return context.renderNotFound();
             }

@@ -95,8 +95,6 @@ export function getParagraphs(content: Array<ContentBase>): Array<Paragraph> {
     return getAll(content, Content.PARAGRAPH);
 }
 
-// TODO: Relocate (`utils/content.ts`?)
-// TODO: Remove any imports made unnecessary after the function is moved
 /**
  * @returns an array of paragraph numbers for all the paragraphs specified by `references`.
  * Paragraph ranges are split up into individual numbers; e.g. `'12-15'` becomes `[12, 13, 14, 15]`.
