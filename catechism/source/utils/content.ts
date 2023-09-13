@@ -93,24 +93,33 @@ export function getAllParagraphs(catechism: CatechismStructure): Array<Paragraph
  * @returns the `Paragraph`s of the given content in the order that they are listed
  */
 export function getParagraphs(allContent: Array<ContentBase>): Array<Paragraph> {
-    return helper([], allContent);
+    return getAll<Paragraph>(allContent, Content.PARAGRAPH);
+}
+
+/**
+//  * TODO: Fix doc
+ * @returns the `Paragraph`s of the given content in the order that they are listed
+ */
+export function getAll(allContent: Array<ContentBase>, contentType: Content): Array<Extract<ContentBase, { contentType: Content.PARAGRAPH }>> {
+    return helper([], allContent, contentType);
 
     function helper(
-        paragraphs: Array<Paragraph>,
+        items: Array<T>,
         content: Array<ContentBase>,
-    ): Array<Paragraph> {
+        contentType: Content,
+    ): Array<T> {
         content.forEach((c) => {
-            if (Content.PARAGRAPH === c.contentType) {
-                paragraphs.push(c as unknown as Paragraph);
+            if (c.contentType === contentType) {
+                items.push(c as unknown as T);
             } else {
                 const childContent = getAllChildContent(c);
                 if (childContent.length > 0) {
-                    helper(paragraphs, childContent);
+                    helper(items, childContent, contentType);
                 }
             }
         });
 
-        return paragraphs;
+        return items;
     }
 }
 
