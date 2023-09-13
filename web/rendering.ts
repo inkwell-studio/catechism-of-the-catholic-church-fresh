@@ -1,4 +1,3 @@
-import { assert, assertEquals, assertStrictEquals } from '$deno/testing/asserts.ts';
 import {
     CatechismStructure,
     Container,
@@ -7,14 +6,17 @@ import {
     ContentContainer,
     InBriefContainer,
     Language,
-    NumberOrNumberRange,
     Paragraph,
     PathID,
     RenderableContent,
-    TextWrapper,
 } from '../catechism/source/types/types.ts';
 import { getContentMap } from '../catechism/source/utils/artifacts.ts';
-import { getAllParagraphs, hasInBrief } from '../catechism/source/utils/content.ts';
+import {
+    getAllParagraphs,
+    getParagraphNumbers,
+    getTextWrappers,
+    hasInBrief,
+} from '../catechism/source/utils/content.ts';
 import {
     getContainerInfo,
     getPartialDescendentPathID,
@@ -341,55 +343,8 @@ function childIs(contentType: Content, content: ContentContainer): boolean {
 
 // TODO: Add documentation
 function getParagraphCrossReferences(content: ContentContainer, allParagraphs: Array<Paragraph>): Array<Paragraph> {
-    const referencedParagraphNumbers = getAllTextWrappers(content)
+    const referencedParagraphNumbers = getTextWrappers(content)
         .flatMap((textWrapper) => getParagraphNumbers(textWrapper.paragraphReferences));
 
     return allParagraphs.filter((paragraph) => referencedParagraphNumbers.includes(paragraph.paragraphNumber));
 }
-
-
-
-
-
-
-
-
-// TODO: Relocate (`utils/content.ts`?)
-// TODO: Remove any imports made unnecessary after the function is moved
-function getAllTextWrappers(content: ContentContainer): Array<TextWrapper> {
-    // TODO: Implement
-    return [];
-}
-
-// TODO: Relocate (`utils/content.ts`?)
-// TODO: Remove any imports made unnecessary after the function is moved
-// TODO: Add documentation
-function getParagraphNumbers(references: Array<NumberOrNumberRange>): Array<number> {
-    return references.flatMap((reference) => {
-        if ('number' === typeof reference) {
-            return reference;
-        } else {
-            const numbers: Array<number> = [];
-            const [low, high] = reference.split('-').map((v) => Number(v));
-
-            if ('number' === typeof low && 'number' === typeof high) {
-                for (let i = low; i <= high; i++) {
-                    numbers.push(i);
-                }
-                return numbers;
-            } else {
-                throw new Error(`Failed to parse a paragraph cross-reference value: ${reference}`);
-            }
-        }
-    });
-}
-
-
-// TODO: Relocate tests
-// TODO: Remove any imports made unnecessary after the function is moved
-Deno.test('getParagraphNumbers()', () => {
-    const input: Array<NumberOrNumberRange> = [7, 3, '10-11', 5, '20-23'];
-    const expectedOutput = [7, 3, 10, 11, 5, 20, 21, 22, 23];
-    const result = getParagraphNumbers(input);
-    assertEquals(result, expectedOutput);
-});

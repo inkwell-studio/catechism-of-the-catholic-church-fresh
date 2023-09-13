@@ -6,9 +6,11 @@ import {
     InBrief,
     InBriefContainer,
     Language,
+    NumberOrNumberRange,
     Paragraph,
     PathID,
     SemanticPath,
+    TextWrapper,
 } from '../types/types.ts';
 
 export async function getCatechism(language: Language): Promise<CatechismStructure> {
@@ -89,18 +91,44 @@ export function getAllParagraphs(catechism: CatechismStructure): Array<Paragraph
     return getParagraphs(allContent);
 }
 
+export function getParagraphs(content: Array<ContentBase>): Array<Paragraph> {
+    return getAll(content, Content.PARAGRAPH);
+}
+
+// TODO: Relocate (`utils/content.ts`?)
+// TODO: Remove any imports made unnecessary after the function is moved
 /**
- * @returns the `Paragraph`s of the given content in the order that they are listed
+ * @returns an array of paragraph numbers for all the paragraphs specified by `references`.
+ * Paragraph ranges are split up into individual numbers; e.g. `'12-15'` becomes `[12, 13, 14, 15]`.
  */
-export function getParagraphs(allContent: Array<ContentBase>): Array<Paragraph> {
-    return getAll<Paragraph>(allContent, Content.PARAGRAPH);
+export function getParagraphNumbers(references: Array<NumberOrNumberRange>): Array<number> {
+    return references.flatMap((reference) => {
+        if ('number' === typeof reference) {
+            return reference;
+        } else {
+            const numbers: Array<number> = [];
+            const [low, high] = reference.split('-').map((v) => Number(v));
+
+            if ('number' === typeof low && 'number' === typeof high) {
+                for (let i = low; i <= high; i++) {
+                    numbers.push(i);
+                }
+                return numbers;
+            } else {
+                throw new Error(`Failed to parse a paragraph cross-reference value: ${reference}`);
+            }
+        }
+    });
+}
+
+export function getTextWrappers(content: ContentContainer): Array<TextWrapper> {
+    return getAll([content], Content.TEXT_WRAPPER);
 }
 
 /**
-//  * TODO: Fix doc
- * @returns the `Paragraph`s of the given content in the order that they are listed
+ * @returns all items of the given content type, in the order that they are listed
  */
-export function getAll(allContent: Array<ContentBase>, contentType: Content): Array<Extract<ContentBase, { contentType: Content.PARAGRAPH }>> {
+function getAll<T extends ContentBase>(allContent: Array<ContentBase>, contentType: Content): Array<T> {
     return helper([], allContent, contentType);
 
     function helper(
