@@ -44,7 +44,7 @@ const selectedCrossReference = signal<NumberOrNumberRange | null>(null);
 export default function Content(props: { renderableContent: RenderableContent; language: Language }): JSX.Element {
     return (
         <>
-            {selectedCrossReference.value ? CrossReference(props.renderableContent.crossReferences) : <></>}
+            {selectedCrossReference.value ? CrossReferences(props.renderableContent.crossReferences, props.language) : <></>}
             <div class='flex justify-center'>
                 <main class='
                 relative bg-tan-50 text-justify h-[min-content]
@@ -370,7 +370,7 @@ function UnknownContent(content: ContentBase): JSX.Element {
     return <div>Unhandled content: {content.contentType}</div>;
 }
 
-function CrossReference(allCrossReferences: Array<Paragraph>): JSX.Element {
+function CrossReferences(allCrossReferences: Array<Paragraph>, language: Language): JSX.Element {
     if (selectedCrossReference.value) {
         const paragraphNumbers = getParagraphNumbers([selectedCrossReference.value]);
         const crossReferences = allCrossReferences.filter(p => paragraphNumbers.includes(p.paragraphNumber));
@@ -381,6 +381,9 @@ function CrossReference(allCrossReferences: Array<Paragraph>): JSX.Element {
                     <div>{selectedCrossReference.value}</div>
                     <div>{crossReferences.length}</div>
                     <button onClick={() => selectedCrossReference.value = null}>Close</button>
+                </div>
+                <div className="border border-black border-2">
+                    {ContentBaseArray(crossReferences, language)}
                 </div>
             </div>
         );
