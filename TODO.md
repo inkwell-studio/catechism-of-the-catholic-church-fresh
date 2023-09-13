@@ -1,6 +1,10 @@
 # Tasks to complete now
 
 - [ ] implement citations and cross-reference functionality
+  - [ ] determine what should happen when a user selects a paragraph or another cross-reference in the cross-reference
+        window (Should the next-layer cross-references even be shown?) (e.g. Should the app navigate to the page with
+        the cross reference?)
+    - [ ] implement
 - merge
 
 - [ ] implement Action bar
