@@ -1,17 +1,32 @@
 # Tasks to complete now
 
 - [ ] implement citations and cross-reference functionality
-  - [ ] determine what should happen when a user selects a paragraph or another cross-reference in the cross-reference
-        window (Should the next-layer cross-references even be shown?) (e.g. Should the app navigate to the page with
-        the cross reference?)
-    - [ ] implement
+  - [ ] cross-reference opens in a new component that is placed as a sibling to `<Content>`
+    - [ ] can continue navigating through cross-references
+    - [ ] history of cross-reference navigation shows on the top of the new component (resets when the component is closed)
 - merge
 
 - [ ] implement Action bar
-  - "Home" (to a new "Dashboard" page (at `/en`): TOC with a link to the current "intro" page)
+  - Table of Contents
+    - "Home" (to a new "Dashboard" page (at `/en`): TOC with a link to the current "intro" page)
+      - introductory paragraphs, e.g.: 
+        - what the CCC is
+        - how the Search may be used (e.g. keywords, phrases, content titles, paragraph numbers)
+        - how the JSON API may be used
+    - introductory Apostolic Letter
+    - Prologue
+    - Parts 1-X
+    - Glossary
+    - Topical Index
+    - Citation Index
+  - Search
+  - Settings
+    - UI: light/dark/system
+    - text size
+    - "About" (general info)
+    - language switcher
   - Glossary
   - Index
-  - language switcher
     - mock data: use the same high-level structure for all languages
 - merge
 
