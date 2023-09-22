@@ -51,13 +51,13 @@ function RenderApp(mainElement: JSX.Element): JSX.Element {
             <Head>
                 <title>{translate('Catechism of the Catholic Church', state.value.language)}</title>
             </Head>
-            <body class='min-h-screen max-h-screen bg-tan-100 flex flex-col justify-stretch'>
-                    <div class="overflow-y-auto">
-                        {mainElement}
-                    </div>
-                    <div>
-                        <ActionBar></ActionBar>
-                    </div>
+            <body class='grid grid-rows-content-with-action-bar h-screen bg-tan-100'>
+                <div class='overflow-y-auto'>
+                    {mainElement}
+                </div>
+                <div>
+                    <ActionBar></ActionBar>
+                </div>
             </body>
         </>
     );

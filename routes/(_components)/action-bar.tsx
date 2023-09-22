@@ -5,7 +5,7 @@ import TrailHistorical from '../(_islands)/trail-historical.tsx';
 
 export function ActionBar() {
     return (
-        <div class="flex justify-center gap-8 bg-tan-100 border py-4">
+        <div class='flex justify-center gap-8 bg-tan-100 border py-4'>
             <TrailHierarchical></TrailHierarchical>
             <TrailHistorical></TrailHistorical>
             <Search></Search>
