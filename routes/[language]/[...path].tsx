@@ -4,7 +4,9 @@ import { JSX } from 'preact';
 
 import { ActionBar } from '../(_components)/action-bar.tsx';
 import { TableOfContents } from '../(_components)/table-of-contents.tsx';
+import Citations from '../(_islands)/citations.tsx';
 import Content from '../(_islands)/content.tsx';
+import CrossReferences from '../(_islands)/cross-references.tsx';
 
 import { getTableOfContents } from '../../catechism/source/utils/artifacts.ts';
 import { getAllLanguages, getLanguageInfo, getNativeLanguageText } from '../../catechism/source/utils/language.ts';
@@ -32,7 +34,15 @@ export default defineRoute(async (request, context) => {
             if (pathID) {
                 const renderableContent = await loadRenderableContent(languageInfo.language, pathID);
                 return RenderApp(
-                    <Content renderableContent={renderableContent} language={languageInfo.language}></Content>,
+                    <>
+                        <div class="grid grid-rows-content-with-permanent-footer h-full">
+                            <div class='flex justify-center overflow-y-auto'>
+                                <Content renderableContent={renderableContent} language={languageInfo.language}></Content>,
+                            </div>
+                            <Citations></Citations>
+                        </div>
+                        {/* <CrossReferences></CrossReferences> */}
+                    </>,
                 );
             } else {
                 return context.renderNotFound();
@@ -51,7 +61,7 @@ function RenderApp(mainElement: JSX.Element): JSX.Element {
             <Head>
                 <title>{translate('Catechism of the Catholic Church', state.value.language)}</title>
             </Head>
-            <body class='grid grid-rows-content-with-action-bar h-screen bg-tan-100'>
+            <body class='grid grid-rows-content-with-permanent-footer h-screen bg-tan-100'>
                 <div class='overflow-y-auto'>
                     {mainElement}
                 </div>

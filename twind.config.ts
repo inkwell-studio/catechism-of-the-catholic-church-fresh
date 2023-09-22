@@ -77,7 +77,7 @@ export default {
         },
         extend: {
             gridTemplateRows: {
-                'content-with-action-bar': '1fr max-content',
+                'content-with-permanent-footer': '1fr max-content',
             },
             screens: {
                 xs: '320px',

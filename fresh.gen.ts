@@ -10,11 +10,13 @@ import * as $4 from './routes/_middleware.ts';
 import * as $5 from './routes/index.tsx';
 import * as $$0 from './routes/(_islands)/changelog-trigger.tsx';
 import * as $$1 from './routes/(_islands)/changelog.tsx';
-import * as $$2 from './routes/(_islands)/content.tsx';
-import * as $$3 from './routes/(_islands)/menu.tsx';
-import * as $$4 from './routes/(_islands)/search.tsx';
-import * as $$5 from './routes/(_islands)/trail-hierarchical.tsx';
-import * as $$6 from './routes/(_islands)/trail-historical.tsx';
+import * as $$2 from './routes/(_islands)/citations.tsx';
+import * as $$3 from './routes/(_islands)/content.tsx';
+import * as $$4 from './routes/(_islands)/cross-references.tsx';
+import * as $$5 from './routes/(_islands)/menu.tsx';
+import * as $$6 from './routes/(_islands)/search.tsx';
+import * as $$7 from './routes/(_islands)/trail-hierarchical.tsx';
+import * as $$8 from './routes/(_islands)/trail-historical.tsx';
 
 const manifest = {
     routes: {
@@ -28,11 +30,13 @@ const manifest = {
     islands: {
         './routes/(_islands)/changelog-trigger.tsx': $$0,
         './routes/(_islands)/changelog.tsx': $$1,
-        './routes/(_islands)/content.tsx': $$2,
-        './routes/(_islands)/menu.tsx': $$3,
-        './routes/(_islands)/search.tsx': $$4,
-        './routes/(_islands)/trail-hierarchical.tsx': $$5,
-        './routes/(_islands)/trail-historical.tsx': $$6,
+        './routes/(_islands)/citations.tsx': $$2,
+        './routes/(_islands)/content.tsx': $$3,
+        './routes/(_islands)/cross-references.tsx': $$4,
+        './routes/(_islands)/menu.tsx': $$5,
+        './routes/(_islands)/search.tsx': $$6,
+        './routes/(_islands)/trail-hierarchical.tsx': $$7,
+        './routes/(_islands)/trail-historical.tsx': $$8,
     },
     baseUrl: import.meta.url,
 };

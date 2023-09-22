@@ -44,12 +44,16 @@ const selectedCrossReference = signal<NumberOrNumberRange | null>(null);
 export default function Content(props: { renderableContent: RenderableContent; language: Language }): JSX.Element {
     return (
         <>
+        {/* // TODO: Remove and relocate the cross-references logic */}
+                {/*
             {selectedCrossReference.value
                 ? CrossReferences(props.renderableContent.crossReferences, props.language)
                 : <></>}
-            <div class='flex justify-center'>
+                */}
+
                 <main class='
-                relative bg-tan-50 text-justify h-[min-content]
+                h-[fit-content]
+                relative bg-tan-50 text-justify
                 rounded-md shadow md:shadow-2xl
                 w-full md:max-w-2xl lg:max-w-3xl
                 px-6 xs:px-10 sm:px-20 lg:px-32
@@ -57,7 +61,6 @@ export default function Content(props: { renderableContent: RenderableContent; l
                 '>
                     {RenderContentBase(props.renderableContent.content, props.language)}
                 </main>
-            </div>
         </>
     );
 }
