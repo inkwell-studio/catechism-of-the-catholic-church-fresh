@@ -13,7 +13,9 @@ export default function CrossReferences(props: { paragraphs: Array<Paragraph>; l
     if (latestSelectedReference) {
         return (
             <div className='flex flex-col gap-2'>
-                {Trail(refs.slice(0, 1))}
+                <div>
+                    {Trail(refs.slice(0, 1))}
+                </div>
                 {Content(latestSelectedReference, props.paragraphs, props.language)}
             </div>
         );
@@ -43,7 +45,14 @@ function Content(
     );
 }
 
-function Trail(references: Array<NumberOrNumberRange>): JSX.Element {
-    // TODO: Implement
-    return <div>Trail</div>;
+function Trail(references: Array<NumberOrNumberRange>): Array<JSX.Element> {
+    return references.map((ref, index) => {
+        const finalReference = index === references.length - 1;
+        return (
+            <>
+                <span key={ref}>ref{finalReference ? ', ' : ''}</span>
+                {finalReference ? <>' '</> : <></>};
+            </>
+        );
+    });
 }

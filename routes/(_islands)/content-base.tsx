@@ -91,7 +91,10 @@ export default function ContentBase(content: ContentBase, language: Language): J
         }
     }
 }
-//#endregion
+
+function ContentBaseArray(content: Array<ContentBase>, language: Language): Array<JSX.Element> {
+    return content.map((c) => <Fragment key={c}>{ContentBase(c, language)}</Fragment>);
+}
 
 //#region helper components
 function ArticleContent(article: Article, language: Language): JSX.Element {
@@ -323,30 +326,32 @@ function PlainText(text: Text, lastFragment: boolean): JSX.Element {
 
     if (text.strong) {
         return (
-            <strong class={classText}>
-                {text.content}
+            <>
+                <strong class={classText}>
+                    {text.content}
+                </strong>
                 {spacer}
-            </strong>
+            </>
         );
     } else if (text.emphasis) {
         return (
-            <em class={classText}>
-                {text.content}
+            <>
+                <em class={classText}>
+                    {text.content}
+                </em>
                 {spacer}
-            </em>
+            </>
         );
     } else {
         return (
-            <span class={classText}>
-                {text.content}
+            <>
+                <span class={classText}>
+                    {text.content}
+                </span>
                 {spacer}
-            </span>
+            </>
         );
     }
-}
-
-function ContentBaseArray(content: Array<ContentBase>, language: Language): Array<JSX.Element> {
-    return content.map((c) => <Fragment key={c}>{ContentBase(c, language)}</Fragment>);
 }
 
 function UnknownContent(content: ContentBase): JSX.Element {
