@@ -1,6 +1,5 @@
 // deno-lint-ignore-file fresh-server-event-handlers
 
-import { signal } from '@preact/signals';
 import { Fragment, JSX } from 'preact';
 
 import {
@@ -10,6 +9,7 @@ import {
     Chapter,
     Content as ContentEnum,
     ContentBase,
+    ContentContainer,
     InBrief,
     Language,
     Paragraph,
@@ -18,11 +18,11 @@ import {
     ParagraphSubitemContainer,
     Part,
     Prologue,
-    RenderableContent,
     Section,
     Subarticle,
     Text,
     TextBlock,
+    TextHeading,
     TextWrapper,
 } from '../../catechism/source/types/types.ts';
 import {
@@ -31,27 +31,16 @@ import {
     getInBrief,
     getMainContent,
     getOpeningContent,
-    getParagraphNumbers,
 } from '../../catechism/source/utils/content.ts';
 import { getUrlFragment } from '../../web/routing.ts';
+import { selectCrossReference } from '../../web/state.ts';
 import { translate } from '../../web/translation.ts';
-import { NumberOrNumberRange } from '../../catechism/source/types/number-or-number-range.ts';
-
-const selectedCrossReference = signal<NumberOrNumberRange | null>(null);
 
 // TODO: Consider all rendering function implementations to be incomplete
 //#region top-level component
-export default function Content(props: { renderableContent: RenderableContent; language: Language }): JSX.Element {
+export default function Content(props: { content: ContentContainer; language: Language }): JSX.Element {
     return (
-        <>
-        {/* // TODO: Remove and relocate the cross-references logic */}
-                {/*
-            {selectedCrossReference.value
-                ? CrossReferences(props.renderableContent.crossReferences, props.language)
-                : <></>}
-                */}
-
-                <main class='
+        <main class='
                 h-[fit-content]
                 relative bg-tan-50 text-justify
                 rounded-md shadow md:shadow-2xl
@@ -59,9 +48,8 @@ export default function Content(props: { renderableContent: RenderableContent; l
                 px-6 xs:px-10 sm:px-20 lg:px-32
                 pb-4 pt-4 sm:pt-8 md:pt-14 md:my-8 lg:pt-16
                 '>
-                    {RenderContentBase(props.renderableContent.content, props.language)}
-                </main>
-        </>
+            {RenderContentBase(props.content, props.language)}
+        </main>
     );
 }
 
@@ -108,6 +96,9 @@ function RenderContentBase(content: ContentBase, language: Language) {
         }
         case ContentEnum.TEXT_BLOCK: {
             return TextBlockContent(content as TextBlock, language);
+        }
+        case ContentEnum.TEXT_HEADING: {
+            return TextHeadingContent(content as TextHeading);
         }
         case ContentEnum.TEXT_WRAPPER: {
             return TextWrapperContent(content as TextWrapper);
@@ -273,6 +264,18 @@ function SubarticleContent(subarticle: Subarticle, language: Language): JSX.Elem
     );
 }
 
+function TextBlockContent(textBlock: TextBlock, language: Language): JSX.Element {
+    return (
+        <div>
+            {TextWrapperArray(getAllChildContent(textBlock), language)}
+        </div>
+    );
+}
+
+function TextHeadingContent(textHeading: TextHeading): JSX.Element {
+    return <>textHeading.content</>;
+}
+
 function TextWrapperArray(array: Array<ContentBase | TextWrapper>, language: Language): Array<JSX.Element> {
     return array.map((c, index) => {
         const isTextWrapper = ContentEnum.TEXT_WRAPPER === c.contentType;
@@ -288,19 +291,12 @@ function TextWrapperArray(array: Array<ContentBase | TextWrapper>, language: Lan
     });
 }
 
-function TextBlockContent(textBlock: TextBlock, language: Language): JSX.Element {
-    return (
-        <div>
-            {TextWrapperArray(getAllChildContent(textBlock), language)}
-        </div>
-    );
-}
-
 function TextWrapperContent(textWrapper: TextWrapper): JSX.Element {
     return (
         <span>
             <span class='absolute right-0 font-sans-caption text-xs text-left pt-1 w-6 sm:w-14 md:w-12 lg:w-20 xl:w-24'>
                 {textWrapper.paragraphReferences
+                    // TODO: Determine if anything should be done with these two lines (were they meant to be a more readable implementation?)
                     // .map((ref) => ref.toString()
                     // .map((ref) => <Fragment key={ref}>ref.toString()</Fragment>
                     .map((reference, index, allReferences) => {
@@ -373,33 +369,5 @@ function ContentBaseArray(content: Array<ContentBase>, language: Language): Arra
 function UnknownContent(content: ContentBase): JSX.Element {
     // TODO: Log a warning
     return <div>Unhandled content: {content.contentType}</div>;
-}
-
-function CrossReferences(allCrossReferences: Array<Paragraph>, language: Language): JSX.Element {
-    if (selectedCrossReference.value) {
-        const paragraphNumbers = getParagraphNumbers([selectedCrossReference.value]);
-        const crossReferences = allCrossReferences.filter((p) => paragraphNumbers.includes(p.paragraphNumber));
-
-        return (
-            <div class='fixed top-8 right-4 p-12 rounded-lg bg-white'>
-                <div class='space-y-4'>
-                    <div>{selectedCrossReference.value}</div>
-                    <div>{crossReferences.length}</div>
-                    <button onClick={() => selectedCrossReference.value = null}>Close</button>
-                </div>
-                <div className='border border-black border-2'>
-                    {ContentBaseArray(crossReferences, language)}
-                </div>
-            </div>
-        );
-    } else {
-        return <></>;
-    }
-}
-//#endregion
-
-//#region helper functions
-function selectCrossReference(reference: NumberOrNumberRange): void {
-    selectedCrossReference.value = reference;
 }
 //#endregion

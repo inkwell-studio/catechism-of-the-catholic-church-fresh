@@ -35,13 +35,17 @@ export default defineRoute(async (request, context) => {
                 const renderableContent = await loadRenderableContent(languageInfo.language, pathID);
                 return RenderApp(
                     <>
-                        <div class="grid grid-rows-content-with-permanent-footer h-full">
+                        <div class='grid grid-rows-content-with-permanent-footer h-full'>
                             <div class='flex justify-center overflow-y-auto'>
-                                <Content renderableContent={renderableContent} language={languageInfo.language}></Content>,
+                                <Content content={renderableContent.content} language={languageInfo.language}></Content>
                             </div>
                             <Citations></Citations>
                         </div>
-                        {/* <CrossReferences></CrossReferences> */}
+                        <CrossReferences
+                            paragraphs={renderableContent.crossReferences}
+                            language={languageInfo.language}
+                        >
+                        </CrossReferences>
                     </>,
                 );
             } else {

@@ -7,6 +7,7 @@
           closed)
 - merge
 
+- [ ] UI changes: handle RTL languages
 - [ ] implement Action bar
   - Table of Contents
     - "Home" (to a new "Dashboard" page (at `/en`): TOC with a link to the current "intro" page)
