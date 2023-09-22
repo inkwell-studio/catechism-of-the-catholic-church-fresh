@@ -3,9 +3,9 @@ import { defineRoute } from '$fresh/server.ts';
 import { JSX } from 'preact';
 
 import { ActionBar } from '../(_components)/action-bar.tsx';
+import { Content } from '../(_components)/content.tsx';
 import { TableOfContents } from '../(_components)/table-of-contents.tsx';
 import Citations from '../(_islands)/citations.tsx';
-import Content from '../(_islands)/content.tsx';
 import CrossReferences from '../(_islands)/cross-references.tsx';
 
 import { getTableOfContents } from '../../catechism/source/utils/artifacts.ts';

@@ -27,7 +27,5 @@ export function selectCrossReference(reference: NumberOrNumberRange): void {
 }
 
 export function clearCrossReferenceSelection(): void {
-    // TODO: Remove
-    console.log('::clearCrossReferenceSelection');
     state.value = { ...state.value, selectedCrossReferences: [] };
 }

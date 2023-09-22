@@ -1,5 +1,4 @@
 // deno-lint-ignore-file fresh-server-event-handlers
-
 import { Fragment, JSX } from 'preact';
 
 import {
@@ -9,7 +8,6 @@ import {
     Chapter,
     Content as ContentEnum,
     ContentBase,
-    ContentContainer,
     InBrief,
     Language,
     Paragraph,
@@ -37,23 +35,8 @@ import { selectCrossReference } from '../../web/state.ts';
 import { translate } from '../../web/translation.ts';
 
 // TODO: Consider all rendering function implementations to be incomplete
-//#region top-level component
-export default function Content(props: { content: ContentContainer; language: Language }): JSX.Element {
-    return (
-        <main class='
-                h-[fit-content]
-                relative bg-tan-50 text-justify
-                rounded-md shadow md:shadow-2xl
-                w-full md:max-w-2xl lg:max-w-3xl
-                px-6 xs:px-10 sm:px-20 lg:px-32
-                pb-4 pt-4 sm:pt-8 md:pt-14 md:my-8 lg:pt-16
-                '>
-            {RenderContentBase(props.content, props.language)}
-        </main>
-    );
-}
 
-function RenderContentBase(content: ContentBase, language: Language) {
+export default function ContentBase(content: ContentBase, language: Language): JSX.Element {
     switch (content.contentType) {
         case ContentEnum.PART: {
             return PartContent(content as Part, language);
@@ -176,7 +159,7 @@ function InBriefContent(inBrief: InBrief, language: Language): JSX.Element {
         >
             <strong class='font-sans text-lg text-purple-900 block mb-1'>{translate('In Brief', language)}</strong>
             <ol>
-                {getAllChildContent(inBrief).map((c) => <li key={c} class='mb-2'>{RenderContentBase(c, language)}</li>)}
+                {getAllChildContent(inBrief).map((c) => <li key={c} class='mb-2'>{ContentBase(c, language)}</li>)}
             </ol>
         </div>
     );
@@ -286,7 +269,7 @@ function TextWrapperArray(array: Array<ContentBase | TextWrapper>, language: Lan
 
             return <Fragment key={c}>{spacer}{TextWrapperContent(c as TextWrapper)}</Fragment>;
         } else {
-            return <Fragment key={c}>{RenderContentBase(c, language)}</Fragment>;
+            return <Fragment key={c}>{ContentBase(c, language)}</Fragment>;
         }
     });
 }
@@ -363,7 +346,7 @@ function PlainText(text: Text, lastFragment: boolean): JSX.Element {
 }
 
 function ContentBaseArray(content: Array<ContentBase>, language: Language): Array<JSX.Element> {
-    return content.map((c) => <Fragment key={c}>{RenderContentBase(c, language)}</Fragment>);
+    return content.map((c) => <Fragment key={c}>{ContentBase(c, language)}</Fragment>);
 }
 
 function UnknownContent(content: ContentBase): JSX.Element {
