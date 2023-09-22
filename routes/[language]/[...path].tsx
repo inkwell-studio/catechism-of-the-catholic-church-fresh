@@ -12,6 +12,7 @@ import { loadRenderableContent } from '../../web/rendering.ts';
 import { Element, getElementAndPathID } from '../../web/routing.ts';
 import { state } from '../../web/state.ts';
 import { translate } from '../../web/translation.ts';
+import { Head } from '$fresh/runtime.ts';
 
 export default defineRoute(async (request, context) => {
     const languageInfo = getLanguageInfo(context.params.language);
@@ -22,43 +23,51 @@ export default defineRoute(async (request, context) => {
         }
         const { element, pathID } = elementAndPathID;
 
-        let mainElement = <></>;
         if (Element.TABLE_OF_CONTENTS === element) {
             const tableOfContents = await getTableOfContents(languageInfo.language);
-            mainElement = (
-                <TableOfContents language={languageInfo.language} tableOfContents={tableOfContents}></TableOfContents>
+            return RenderApp(
+                <TableOfContents language={languageInfo.language} tableOfContents={tableOfContents}></TableOfContents>,
             );
         } else if (Element.CONTENT === element) {
             if (pathID) {
                 const renderableContent = await loadRenderableContent(languageInfo.language, pathID);
-                mainElement = (
-                    <Content renderableContent={renderableContent} language={languageInfo.language}></Content>
+                return RenderApp(
+                    <Content renderableContent={renderableContent} language={languageInfo.language}></Content>,
                 );
             } else {
                 return context.renderNotFound();
             }
         }
-
-        return (
-            <div class='flex flex-col'>
-                {mainElement}
-                {
-                    /*
-                {
-                <div>
-                    <ActionBar></ActionBar>
-                </div>
-                }
-                */
-                }
-            </div>
-        );
     } else if (languageInfo.valid) {
         return UnsupportedLanguage(context.params.language);
     } else {
         return context.renderNotFound();
     }
 });
+
+function RenderApp(mainElement: JSX.Element): JSX.Element {
+    return (
+        <>
+            <Head>
+                <title>{translate('Catechism of the Catholic Church', state.value.language)}</title>
+            </Head>
+            <body class='min-h-screen bg-tan-100'>
+                <div class='flex flex-col'>
+                    {mainElement}
+                    {
+                        /*
+                {
+                <div>
+                    <ActionBar></ActionBar>
+                </div>
+                }
+                */
+                    }
+                </div>
+            </body>
+        </>
+    );
+}
 
 function UnsupportedLanguage(unsupportedLanguageCode: string): JSX.Element {
     return (

@@ -3,13 +3,14 @@
 - [ ] implement citations and cross-reference functionality
   - [ ] cross-reference opens in a new component that is placed as a sibling to `<Content>`
     - [ ] can continue navigating through cross-references
-    - [ ] history of cross-reference navigation shows on the top of the new component (resets when the component is closed)
+    - [ ] history of cross-reference navigation shows on the top of the new component (resets when the component is
+          closed)
 - merge
 
 - [ ] implement Action bar
   - Table of Contents
     - "Home" (to a new "Dashboard" page (at `/en`): TOC with a link to the current "intro" page)
-      - introductory paragraphs, e.g.: 
+      - introductory paragraphs, e.g.:
         - what the CCC is
         - how the Search may be used (e.g. keywords, phrases, content titles, paragraph numbers)
         - how the JSON API may be used
