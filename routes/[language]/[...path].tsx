@@ -1,3 +1,4 @@
+import { Head } from '$fresh/runtime.ts';
 import { defineRoute } from '$fresh/server.ts';
 import { JSX } from 'preact';
 
@@ -12,7 +13,6 @@ import { loadRenderableContent } from '../../web/rendering.ts';
 import { Element, getElementAndPathID } from '../../web/routing.ts';
 import { state } from '../../web/state.ts';
 import { translate } from '../../web/translation.ts';
-import { Head } from '$fresh/runtime.ts';
 
 export default defineRoute(async (request, context) => {
     const languageInfo = getLanguageInfo(context.params.language);
@@ -51,19 +51,13 @@ function RenderApp(mainElement: JSX.Element): JSX.Element {
             <Head>
                 <title>{translate('Catechism of the Catholic Church', state.value.language)}</title>
             </Head>
-            <body class='min-h-screen bg-tan-100'>
-                <div class='flex flex-col'>
-                    {mainElement}
-                    {
-                        /*
-                {
-                <div>
-                    <ActionBar></ActionBar>
-                </div>
-                }
-                */
-                    }
-                </div>
+            <body class='min-h-screen max-h-screen bg-tan-100 flex flex-col justify-stretch'>
+                    <div class="overflow-y-auto">
+                        {mainElement}
+                    </div>
+                    <div>
+                        <ActionBar></ActionBar>
+                    </div>
             </body>
         </>
     );
