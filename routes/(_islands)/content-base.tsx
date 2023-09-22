@@ -7,7 +7,7 @@ import {
     BlockQuote,
     Chapter,
     Content as ContentEnum,
-    ContentBase,
+    ContentBase as ContentBaseType,
     InBrief,
     Language,
     Paragraph,
@@ -36,7 +36,10 @@ import { translate } from '../../web/translation.ts';
 
 // TODO: Consider all rendering function implementations to be incomplete
 
-export default function ContentBase(content: ContentBase, language: Language): JSX.Element {
+export default function ContentBase(props: { content: ContentBaseType; language: Language }): JSX.Element {
+    const content = props.content;
+    const language = props.language;
+
     switch (content.contentType) {
         case ContentEnum.PART: {
             return PartContent(content as Part, language);
@@ -92,8 +95,8 @@ export default function ContentBase(content: ContentBase, language: Language): J
     }
 }
 
-function ContentBaseArray(content: Array<ContentBase>, language: Language): Array<JSX.Element> {
-    return content.map((c) => <Fragment key={c}>{ContentBase(c, language)}</Fragment>);
+function ContentBaseArray(content: Array<ContentBaseType>, language: Language): Array<JSX.Element> {
+    return content.map((c) => <ContentBase key={c} content={c} language={language}></ContentBase>);
 }
 
 //#region helper components
@@ -162,7 +165,11 @@ function InBriefContent(inBrief: InBrief, language: Language): JSX.Element {
         >
             <strong class='font-sans text-lg text-purple-900 block mb-1'>{translate('In Brief', language)}</strong>
             <ol>
-                {getAllChildContent(inBrief).map((c) => <li key={c} class='mb-2'>{ContentBase(c, language)}</li>)}
+                {getAllChildContent(inBrief).map((c) => (
+                    <li key={c} class='mb-2'>
+                        <ContentBase content={c} language={language}></ContentBase>
+                    </li>
+                ))}
             </ol>
         </div>
     );
@@ -262,7 +269,7 @@ function TextHeadingContent(textHeading: TextHeading): JSX.Element {
     return <>textHeading.content</>;
 }
 
-function TextWrapperArray(array: Array<ContentBase | TextWrapper>, language: Language): Array<JSX.Element> {
+function TextWrapperArray(array: Array<ContentBaseType | TextWrapper>, language: Language): Array<JSX.Element> {
     return array.map((c, index) => {
         const isTextWrapper = ContentEnum.TEXT_WRAPPER === c.contentType;
         if (isTextWrapper) {
@@ -272,7 +279,7 @@ function TextWrapperArray(array: Array<ContentBase | TextWrapper>, language: Lan
 
             return <Fragment key={c}>{spacer}{TextWrapperContent(c as TextWrapper)}</Fragment>;
         } else {
-            return <Fragment key={c}>{ContentBase(c, language)}</Fragment>;
+            return <ContentBase key={c} content={c} language={language}></ContentBase>;
         }
     });
 }
@@ -354,7 +361,7 @@ function PlainText(text: Text, lastFragment: boolean): JSX.Element {
     }
 }
 
-function UnknownContent(content: ContentBase): JSX.Element {
+function UnknownContent(content: ContentBaseType): JSX.Element {
     // TODO: Log a warning
     return <div>Unhandled content: {content.contentType}</div>;
 }

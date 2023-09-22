@@ -1,9 +1,9 @@
 import { JSX } from 'preact';
 
 import ContentBase from '../(_islands)/content-base.tsx';
-import { ContentContainer, Language } from '../../catechism/source/types/types.ts';
+import { ContentBase as ContentBaseType, Language } from '../../catechism/source/types/types.ts';
 
-export function Content(props: { content: ContentContainer; language: Language }): JSX.Element {
+export function Content(props: { content: ContentBaseType; language: Language }): JSX.Element {
     return (
         <main class='
                 h-[fit-content]
@@ -13,7 +13,7 @@ export function Content(props: { content: ContentContainer; language: Language }
                 px-6 xs:px-10 sm:px-20 lg:px-32
                 pb-4 pt-4 sm:pt-8 md:pt-14 md:my-8 lg:pt-16
                 '>
-            {ContentBase(props.content, props.language)}
+            <ContentBase content={props.content} language={props.language}></ContentBase>
         </main>
     );
 }

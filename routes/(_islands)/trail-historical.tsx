@@ -1,3 +1,5 @@
-export default function TrailHistorical() {
+import { JSX } from 'preact';
+
+export default function TrailHistorical(): JSX.Element {
     return <>(history)</>;
 }

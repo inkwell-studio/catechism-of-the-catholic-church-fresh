@@ -39,7 +39,7 @@ function Content(
                 <button onClick={clearCrossReferenceSelection}>Close</button>
             </div>
             <div className='border border-black border-2'>
-                {crossReferences.map((ref) => <Fragment key={ref}>{ContentBase(ref, language)}</Fragment>)}
+                {crossReferences.map((ref) => <ContentBase key={ref} content={ref} language={language}></ContentBase>)}
             </div>
         </div>
     );
