@@ -1,6 +1,13 @@
 import { computed, signal } from '@preact/signals';
 import { Language, NumberOrNumberRange } from '../catechism/source/types/types.ts';
 
+/*
+    The state is contained in the `state` constant below.
+    This constant is not exposed to any part of the app. Instead,
+    values are subscribed to through the `Selectors` constant, and
+    the state management logic is notified of the need for updating through the `Actions` constant.
+*/
+
 //#region state setup
 type State = {
     language: Language;

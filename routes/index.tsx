@@ -112,8 +112,8 @@ export default function Home(): JSX.Element {
                     <Paragraph>
                         <>
                             Also, the app has functionality not directly related to the{' '}
-                            <span class='italic'>Catechism</span>, which may result in a less-intuitive experience
-                            for users who are interested in solely the <span class='italic'>Catechism</span>.
+                            <span class='italic'>Catechism</span>, which may result in a less-intuitive experience for
+                            users who are interested in solely the <span class='italic'>Catechism</span>.
                         </>
                     </Paragraph>
 

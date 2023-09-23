@@ -13,7 +13,12 @@ export default function Changelog(): JSX.Element {
             } fixed inset-0 z-50 justify-center items-stretch sm:items-center`}
         >
             <div class='relative bg-tan-50 flex flex-col gap-8 items-start rounded-md shadow-2xl w-full sm:w-auto p-4 xs:p-6 sm:p-10'>
-                <button onClick={Actions.changelog.close} class='absolute top-2 right-2 rounded-md p-1 hover:bg-red-900/10'>Close</button>
+                <button
+                    onClick={Actions.changelog.close}
+                    class='absolute top-2 right-2 rounded-md p-1 hover:bg-red-900/10'
+                >
+                    Close
+                </button>
                 <strong class='text-xl font-bold'>Notable updates</strong>
                 <ol class='space-y-6'>
                     {changelog.map((changes) => <Fragment key={changes}>{Changes(changes)}</Fragment>)}

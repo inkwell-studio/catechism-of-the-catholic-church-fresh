@@ -8,7 +8,7 @@ import { Actions, Selectors } from '../../web/state.ts';
 import { loadParagraphs } from '../../web/rendering.ts';
 
 export default function CrossReferences(
-    props: { selectedCrossReference: NumberOrNumberRange, paragraphs: Array<Paragraph>; language: Language },
+    props: { selectedCrossReference: NumberOrNumberRange; paragraphs: Array<Paragraph>; language: Language },
 ): JSX.Element {
     const refs = Selectors.crossReference.selected.value;
     const latestSelectedReference = refs.at(-1);
@@ -49,9 +49,7 @@ function Content(
 
     const crossReferences = [...cachedParagraphs, ...loadedParagraphs].filter((p) =>
     /*/
-    const crossReferences = cachedParagraphs.filter((p) =>
-        paragraphNumbers.includes(p.paragraphNumber)
-    );
+    const crossReferences = cachedParagraphs.filter((p) => paragraphNumbers.includes(p.paragraphNumber));
 
     return crossReferences.map((ref) => <ContentBase key={ref} content={ref} language={language}></ContentBase>);
 }
