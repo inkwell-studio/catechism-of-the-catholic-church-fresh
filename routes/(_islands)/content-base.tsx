@@ -31,7 +31,7 @@ import {
     getOpeningContent,
 } from '../../catechism/source/utils/content.ts';
 import { getUrlFragment } from '../../web/routing.ts';
-import { selectCrossReference } from '../../web/state.ts';
+import { Actions } from '../../web/state.ts';
 import { translate } from '../../web/translation.ts';
 
 // TODO: Consider all rendering function implementations to be incomplete
@@ -297,7 +297,7 @@ function TextWrapperContent(textWrapper: TextWrapper): JSX.Element {
 
                         return (
                             <Fragment key={reference}>
-                                <button onClick={() => selectCrossReference(reference)}>
+                                <button onClick={() => Actions.crossReference.select(reference)}>
                                     {reference.toString()}
                                 </button>
                                 {separator}

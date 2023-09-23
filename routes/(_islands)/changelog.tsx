@@ -3,17 +3,17 @@
 import { Fragment, JSX } from 'preact';
 
 import { changelog, CodeChanges, Commit } from '../../project-data/changelog.ts';
-import { state } from '../../web/state.ts';
+import { Actions, Selectors } from '../../web/state.ts';
 
 export default function Changelog(): JSX.Element {
     return (
         <div
             class={`${
-                state.value.showChangelog ? 'flex' : 'hidden'
+                Selectors.changelog.show.value ? 'flex' : 'hidden'
             } fixed inset-0 z-50 justify-center items-stretch sm:items-center`}
         >
             <div class='relative bg-tan-50 flex flex-col gap-8 items-start rounded-md shadow-2xl w-full sm:w-auto p-4 xs:p-6 sm:p-10'>
-                <button onClick={close} class='absolute top-2 right-2 rounded-md p-1 hover:bg-red-900/10'>Close</button>
+                <button onClick={Actions.changelog.close} class='absolute top-2 right-2 rounded-md p-1 hover:bg-red-900/10'>Close</button>
                 <strong class='text-xl font-bold'>Notable updates</strong>
                 <ol class='space-y-6'>
                     {changelog.map((changes) => <Fragment key={changes}>{Changes(changes)}</Fragment>)}
@@ -33,7 +33,7 @@ export default function Changelog(): JSX.Element {
 function Changes(changes: CodeChanges) {
     return (
         <div>
-            <strong className='font-bold'>{changes.date.toLocaleDateString()}</strong>
+            <strong class='font-bold'>{changes.date.toLocaleDateString()}</strong>
             <ol class='list-disc list-inside font-sans mt-1'>
                 {changes.commits.map((c) => <li key={c}>{Commit(c)}</li>)}
             </ol>
@@ -51,11 +51,4 @@ function Commit(commit: Commit) {
             {commit.message}
         </a>
     );
-}
-
-function close(): void {
-    state.value = {
-        ...state.value,
-        showChangelog: false,
-    };
 }

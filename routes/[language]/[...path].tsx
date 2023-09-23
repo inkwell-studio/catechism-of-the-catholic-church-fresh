@@ -13,7 +13,7 @@ import { getAllLanguages, getLanguageInfo, getNativeLanguageText } from '../../c
 
 import { loadRenderableContent } from '../../web/rendering.ts';
 import { Element, getElementAndPathID } from '../../web/routing.ts';
-import { state } from '../../web/state.ts';
+import { Selectors } from '../../web/state.ts';
 import { translate } from '../../web/translation.ts';
 
 export default defineRoute(async (request, context) => {
@@ -61,7 +61,7 @@ function RenderApp(mainElement: JSX.Element): JSX.Element {
     return (
         <>
             <Head>
-                <title>{translate('Catechism of the Catholic Church', state.value.language)}</title>
+                <title>{translate('Catechism of the Catholic Church', Selectors.language.value)}</title>
             </Head>
             <body class='grid grid-rows-content-with-permanent-footer h-screen bg-tan-100'>
                 <div class='overflow-y-auto'>
@@ -79,17 +79,17 @@ function UnsupportedLanguage(unsupportedLanguageCode: string): JSX.Element {
     return (
         <div class='p-12'>
             <div>
-                {translate('Unsupported language', state.value.language)}:{' '}
+                {translate('Unsupported language', Selectors.language.value)}:{' '}
                 <span class='font-mono'>{unsupportedLanguageCode}</span>
             </div>
             <div class='mt-4'>
-                <strong className='font-bold'>
-                    {translate('Available languages', state.value.language)}:
+                <strong class='font-bold'>
+                    {translate('Available languages', Selectors.language.value)}:
                 </strong>
                 <ul class='list-disc mt-2'>
                     {getAllLanguages().map(([code, _language]) => (
                         <li>
-                            {getNativeLanguageText(code)}: <span className='font-mono'>{code}</span>
+                            {getNativeLanguageText(code)}: <span class='font-mono'>{code}</span>
                         </li>
                     ))}
                 </ul>

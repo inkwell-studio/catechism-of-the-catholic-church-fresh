@@ -4,18 +4,18 @@ import { Language } from '../catechism/source/types/types.ts';
 import { getParagraphNumberUrlMap } from '../catechism/source/utils/artifacts.ts';
 import { getLanguageInfo } from '../catechism/source/utils/language.ts';
 import { getLanguageTag } from '../web/language-tag.ts';
-import { state, updateLanguage } from '../web/state.ts';
+import { Actions, Selectors } from '../web/state.ts';
 
 export async function handler(request: Request, context: MiddlewareHandlerContext): Promise<Response> {
     if ('route' === context.destination) {
         // Use the root route param to conditionally update the language or navigate by paragraph number
         const languageInfo = getLanguageInfo(context.params.language);
         if (languageInfo.language && languageInfo.supported) {
-            updateLanguage(languageInfo.language);
+            Actions.language.update(languageInfo.language);
         } else if (!context.params.path) {
             const paragraphNumberNavigationUrl = await getParagraphNumberNavigationUrl(
                 context.params.language,
-                state.value.language,
+                Selectors.language.value,
                 request,
             );
             if (paragraphNumberNavigationUrl) {
@@ -27,12 +27,12 @@ export async function handler(request: Request, context: MiddlewareHandlerContex
     const response = await context.next();
 
     if ('route' === context.destination) {
-        response.headers.set('Content-Language', getLanguageTag(state.value.language));
+        response.headers.set('Content-Language', getLanguageTag(Selectors.language.value));
 
         // Use the non-root route params to conditionally navigate by paragraph number
         const paragraphNumberNavigationUrl = await getParagraphNumberNavigationUrl(
             context.params.path,
-            state.value.language,
+            Selectors.language.value,
             request,
         );
         if (paragraphNumberNavigationUrl) {
