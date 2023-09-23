@@ -44,7 +44,12 @@ function buildArtifacts(catechism: CatechismStructure): void {
 }
 
 function writeJson(
-    object: ParagraphNumberContentMap | ParagraphNumberUrlMap | PathIdContentMap | SemanticPathPathIdMap | TableOfContentsType,
+    object:
+        | ParagraphNumberContentMap
+        | ParagraphNumberUrlMap
+        | PathIdContentMap
+        | SemanticPathPathIdMap
+        | TableOfContentsType,
     filename: string,
     language: Language,
 ): void {

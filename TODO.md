@@ -5,6 +5,7 @@
     - [ ] can continue navigating through cross-references
     - [ ] history of cross-reference navigation shows on the top of the new component (resets when the component is
           closed)
+  - [ ] implement tests for the new artifact
 - merge
 
 - [ ] UI changes: handle RTL languages

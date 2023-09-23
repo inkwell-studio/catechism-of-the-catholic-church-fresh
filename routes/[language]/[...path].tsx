@@ -33,6 +33,7 @@ export default defineRoute(async (request, context) => {
         } else if (Element.CONTENT === element) {
             if (pathID) {
                 const renderableContent = await loadRenderableContent(languageInfo.language, pathID);
+
                 return RenderApp(
                     <>
                         <div class='grid grid-rows-content-with-permanent-footer h-full'>
@@ -42,7 +43,7 @@ export default defineRoute(async (request, context) => {
                             <Citations></Citations>
                         </div>
                         {/* deno-fmt-ignore */}
-                        <CrossReferences cachedParagraphs={renderableContent.crossReferences} language={languageInfo.language}></CrossReferences>
+                        <CrossReferences paragraphs={renderableContent.crossReferences} language={languageInfo.language}></CrossReferences>
                     </>,
                 );
             } else {

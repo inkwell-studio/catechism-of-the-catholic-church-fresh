@@ -2,6 +2,7 @@ import { signal } from '@preact/signals';
 import { Language, NumberOrNumberRange } from '../catechism/source/types/types.ts';
 
 export type State = {
+    testValue: string;
     language: Language;
     // This is a stack of the cross-references selected by the user. The most recent selection is at the end of the array.
     selectedCrossReferences: Array<NumberOrNumberRange>;
@@ -9,6 +10,7 @@ export type State = {
 };
 
 const initialState: State = {
+    testValue: 'initial',
     language: Language.ENGLISH,
     selectedCrossReferences: [],
     showChangelog: false,
@@ -28,4 +30,25 @@ export function selectCrossReference(reference: NumberOrNumberRange): void {
 
 export function clearCrossReferenceSelection(): void {
     state.value = { ...state.value, selectedCrossReferences: [] };
+}
+
+
+
+export function invokeTest(): void {
+    updateTest();
+}
+
+async function updateTest(): Promise<void> {
+    const nextValue = await test();
+    const testValue = state.value.testValue + nextValue;
+
+    state.value = { ...state.value, testValue };
+}
+
+function test(): Promise<string> {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve(' | ' + new Date().getTime());
+        }, 2000);
+    })
 }
