@@ -13,7 +13,7 @@ import { getAllLanguages, getLanguageInfo, getNativeLanguageText } from '../../c
 
 import { loadRenderableContent } from '../../web/rendering.ts';
 import { Element, getElementAndPathID } from '../../web/routing.ts';
-import { Selectors } from '../../web/state.ts';
+import { Actions, Selectors } from '../../web/state.ts';
 import { translate } from '../../web/translation.ts';
 
 export default defineRoute(async (request, context) => {
@@ -34,18 +34,24 @@ export default defineRoute(async (request, context) => {
             if (pathID) {
                 const renderableContent = await loadRenderableContent(languageInfo.language, pathID);
 
-                return RenderApp(
-                    <>
-                        <div class='grid grid-rows-content-with-permanent-footer h-full'>
-                            <div class='flex justify-center overflow-y-auto'>
-                                <Content content={renderableContent.content} language={languageInfo.language}></Content>
+                if (renderableContent.content) {
+                    Actions.content.updateActive(renderableContent.content);
+                    Actions.crossReference.updateParagraphCache(renderableContent.crossReferences);
+
+                    return RenderApp(
+                        <>
+                            <div class='grid grid-rows-content-with-permanent-footer h-full'>
+                                <div class='flex justify-center overflow-y-auto'>
+                                    <Content></Content>
+                                </div>
+                                <Citations></Citations>
                             </div>
-                            <Citations></Citations>
-                        </div>
-                        {/* deno-fmt-ignore */}
-                        <CrossReferences paragraphs={renderableContent.crossReferences} language={languageInfo.language}></CrossReferences>
-                    </>,
-                );
+                            <CrossReferences></CrossReferences>
+                        </>,
+                    );
+                } else {
+                    return context.renderNotFound();
+                }
             } else {
                 return context.renderNotFound();
             }

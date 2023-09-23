@@ -7,10 +7,8 @@ import { getParagraphNumbers } from '../../catechism/source/utils/content.ts';
 import { Actions, Selectors } from '../../web/state.ts';
 import { loadParagraphs } from '../../web/rendering.ts';
 
-export default function CrossReferences(
-    props: { selectedCrossReference: NumberOrNumberRange; paragraphs: Array<Paragraph>; language: Language },
-): JSX.Element {
-    const refs = Selectors.crossReference.selected.value;
+export default function CrossReferences(): JSX.Element {
+    const refs = Selectors.crossReference.selections.value;
     const latestSelectedReference = refs.at(-1);
 
     if (latestSelectedReference) {
@@ -42,6 +40,7 @@ function Content(
 
     /*/
     // TODO: Move this into the state (into `selectCrossReference`), using the pattern of `invokeTest()`
+    // TODO: Use `effect()` to load new paragraphs when the selected cross-reference changes
     const loadedParagraphs: Array<Paragraph> = missingParagraphNumbers.length > 0
         // TODO: Handle asynchronity
         ? loadParagraphs(language, missingParagraphNumbers)

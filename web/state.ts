@@ -1,5 +1,5 @@
 import { computed, signal } from '@preact/signals';
-import { Language, NumberOrNumberRange } from '../catechism/source/types/types.ts';
+import { ContentContainer, Language, NumberOrNumberRange, Paragraph } from '../catechism/source/types/types.ts';
 
 /*
     The state is contained in the `state` constant below.
@@ -12,14 +12,27 @@ import { Language, NumberOrNumberRange } from '../catechism/source/types/types.t
 type State = {
     language: Language;
     showChangelog: boolean;
-    // This is a stack of the cross-references selected by the user. The most recent selection is at the end of the array.
-    selectedCrossReferences: Array<NumberOrNumberRange>;
+    content: {
+        active: ContentContainer | null;
+    };
+    crossReference: {
+        // A stack of the cross-references selected by the user. The most recent selection is at the end of the array.
+        selections: Array<NumberOrNumberRange>;
+        // A list of `Paragraph` objects for the cross-references of the latest selected cross-reference
+        paragraphCache: Array<Paragraph>;
+    };
 };
 
 const state = signal<State>({
     language: Language.ENGLISH,
     showChangelog: false,
-    selectedCrossReferences: [],
+    content: {
+        active: null,
+    },
+    crossReference: {
+        selections: [],
+        paragraphCache: [],
+    },
 });
 //#endregion
 
@@ -33,13 +46,18 @@ export const Actions = {
     language: {
         update: updateLanguage,
     },
+    content: {
+        updateActive: updateActiveContent,
+    },
     crossReference: {
         select: selectCrossReference,
         clearSelection: clearCrossReferenceSelection,
+        updateParagraphCache: updateCrossReferenceParagraphCache,
     },
 } as const;
 
-//#region helper functions
+//#region state-modifying functions
+//#region changelog
 function openChangelog(): void {
     state.value = {
         ...state.value,
@@ -53,21 +71,58 @@ function closeChangelog(): void {
         showChangelog: false,
     };
 }
+//#endregion
 
+//#region language
 function updateLanguage(language: Language): void {
     state.value = { ...state.value, language };
 }
+//#endregion
 
+//#region content
+function updateActiveContent(content: ContentContainer): void {
+    state.value = {
+        ...state.value,
+        content: {
+            ...state.value.content,
+            active: content,
+        },
+    };
+}
+//#endregion
+
+//#region cross-references
 function selectCrossReference(reference: NumberOrNumberRange): void {
-    if (state.value.selectedCrossReferences.at(-1) !== reference) {
-        const selectedCrossReferences = state.value.selectedCrossReferences.concat(reference);
-        state.value = { ...state.value, selectedCrossReferences };
+    if (state.value.crossReference.selections.at(-1) !== reference) {
+        const selections = state.value.crossReference.selections.concat(reference);
+        updateCrossReferenceSelections(selections);
     }
 }
 
 function clearCrossReferenceSelection(): void {
-    state.value = { ...state.value, selectedCrossReferences: [] };
+    updateCrossReferenceSelections([]);
 }
+
+function updateCrossReferenceSelections(selections: Array<NumberOrNumberRange>): void {
+    state.value = {
+        ...state.value,
+        crossReference: {
+            ...state.value.crossReference,
+            selections,
+        },
+    };
+}
+
+function updateCrossReferenceParagraphCache(paragraphs: Array<Paragraph>): void {
+    state.value = {
+        ...state.value,
+        crossReference: {
+            ...state.value.crossReference,
+            paragraphCache: paragraphs,
+        },
+    };
+}
+//#endregion
 //#endregion
 //#endregion
 
@@ -78,8 +133,11 @@ export const Selectors = {
     changelog: {
         show: computed(() => state.value.showChangelog),
     },
+    content: {
+        active: computed(() => state.value.content.active),
+    },
     crossReference: {
-        selected: computed(() => state.value.selectedCrossReferences),
+        selections: computed(() => state.value.crossReference.selections),
     },
 } as const;
 //#endregion
