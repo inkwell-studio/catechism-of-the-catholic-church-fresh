@@ -20,8 +20,6 @@ export default function CrossReferences(
                 <div class='border-b'>
                     {Trail(refs)}
                 </div>
-                <div class="p-8 text-xl">{Selectors.testValue}</div>
-                <button onClick={Actions.test.invoke} class="p-8 text-xl border bg-red-50">Test</button>
                 <div>
                     {Content(latestSelectedReference, props.paragraphs, props.language)}
                 </div>

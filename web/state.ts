@@ -7,16 +7,12 @@ type State = {
     showChangelog: boolean;
     // This is a stack of the cross-references selected by the user. The most recent selection is at the end of the array.
     selectedCrossReferences: Array<NumberOrNumberRange>;
-    // TODO: Remove
-    testValue: string;
 };
 
 const state = signal<State>({
     language: Language.ENGLISH,
     showChangelog: false,
     selectedCrossReferences: [],
-    // TODO: Remove
-    testValue: 'initial',
 });
 //#endregion
 
@@ -34,12 +30,6 @@ export const Actions = {
         select: selectCrossReference,
         clearSelection: clearCrossReferenceSelection,
     },
-
-
-    // TODO: Remove
-    test: {
-        invoke: invokeTest,
-    }
 } as const;
 
 //#region helper functions
@@ -84,36 +74,5 @@ export const Selectors = {
     crossReference: {
         selected: computed(() => state.value.selectedCrossReferences),
     },
-    // TODO: Remove
-    testValue: computed(() => state.value.testValue),
 } as const;
-//#endregion
-
-
-
-
-
-
-
-
-// TODO: Remove all of the following
-//#region scratch
-export function invokeTest(): void {
-    updateTest();
-}
-
-async function updateTest(): Promise<void> {
-    const nextValue = await test();
-    const testValue = state.value.testValue + nextValue;
-
-    state.value = { ...state.value, testValue };
-}
-
-function test(): Promise<string> {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            resolve(' | ' + new Date().getTime());
-        }, 2000);
-    })
-}
 //#endregion
