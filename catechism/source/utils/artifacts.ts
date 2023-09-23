@@ -1,10 +1,13 @@
 import {
     Language,
+    ParagraphNumberContentMap,
     ParagraphNumberUrlMap,
     PathIdContentMap,
     SemanticPathPathIdMap,
     TableOfContentsType,
 } from '../../source/types/types.ts';
+
+// TODO: Reorder functions alphabetically
 
 export function getContentMap(language: Language): Promise<PathIdContentMap> {
     return getArtifact('renderable-path-id_to_content', language);
@@ -16,6 +19,10 @@ export function getRenderablePathMap(language: Language): Promise<SemanticPathPa
 
 export function getTableOfContents(language: Language): Promise<TableOfContentsType> {
     return getArtifact('table-of-contents', language);
+}
+
+export function getParagraphNumberMap(language: Language): Promise<ParagraphNumberContentMap> {
+    return getArtifact('paragraph-number_to_content', language);
 }
 
 export function getParagraphNumberUrlMap(language: Language): Promise<ParagraphNumberUrlMap> {

@@ -10,7 +10,7 @@ import {
     PathID,
     RenderableContent,
 } from '../catechism/source/types/types.ts';
-import { getContentMap } from '../catechism/source/utils/artifacts.ts';
+import { getContentMap, getParagraphNumberMap } from '../catechism/source/utils/artifacts.ts';
 import {
     getAllParagraphs,
     getParagraphNumbers,
@@ -44,6 +44,15 @@ export function getContentForRendering(pathID: PathID, catechism: CatechismStruc
         content,
         crossReferences,
     };
+}
+
+export async function loadParagraphs(language: Language, paragraphNumbers: Array<number>): Promise<Array<Paragraph>> {
+    try {
+        const paragraphMap = await getParagraphNumberMap(language);
+        return paragraphNumbers.map((num) => paragraphMap[num]);
+    } catch (error) {
+        throw new Error(`Failed to load paragraphs (${language}: ${paragraphNumbers.join(', ')})`, error);
+    }
 }
 
 function getContentForRenderingHelper(pathID: PathID, catechism: CatechismStructure): ContentContainer {

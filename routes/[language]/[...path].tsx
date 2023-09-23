@@ -41,11 +41,8 @@ export default defineRoute(async (request, context) => {
                             </div>
                             <Citations></Citations>
                         </div>
-                        <CrossReferences
-                            paragraphs={renderableContent.crossReferences}
-                            language={languageInfo.language}
-                        >
-                        </CrossReferences>
+                        {/* deno-fmt-ignore */}
+                        <CrossReferences cachedParagraphs={renderableContent.crossReferences} language={languageInfo.language}></CrossReferences>
                     </>,
                 );
             } else {
