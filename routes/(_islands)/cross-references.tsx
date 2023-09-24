@@ -19,7 +19,7 @@ export default function CrossReferences(): JSX.Element {
                     {Trail(refs)}
                 </div>
                 <div>
-                    {Content(latestSelectedReference, props.paragraphs, props.language)}
+                    {/* {Content(latestSelectedReference, props.paragraphs, props.language)} */}
                 </div>
             </div>
         );

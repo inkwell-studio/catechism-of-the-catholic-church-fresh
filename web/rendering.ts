@@ -8,15 +8,9 @@ import {
     Language,
     Paragraph,
     PathID,
-    RenderableContent,
 } from '../catechism/source/types/types.ts';
 import { getContentMap, getParagraphNumberMap } from '../catechism/source/utils/artifacts.ts';
-import {
-    getAllParagraphs,
-    getParagraphNumbers,
-    getTextWrappers,
-    hasInBrief,
-} from '../catechism/source/utils/content.ts';
+import { hasInBrief } from '../catechism/source/utils/content.ts';
 import {
     getContainerInfo,
     getPartialDescendentPathID,
@@ -26,36 +20,16 @@ import {
     isPrologueContent,
 } from '../catechism/source/utils/path-id.ts';
 
-export async function loadRenderableContent(language: Language, pathID: PathID): Promise<RenderableContent> {
+export async function loadContent(language: Language, pathID: PathID): Promise<ContentContainer> {
     try {
         const contentMap = await getContentMap(language);
         return contentMap[pathID];
     } catch (error) {
-        throw new Error(`Failed to load renderable content (${language}: ${pathID})`, error);
+        throw new Error(`Failed to load content (${language}: ${pathID})`, error);
     }
 }
 
-export function getContentForRendering(pathID: PathID, catechism: CatechismStructure): RenderableContent {
-    const content = getContentForRenderingHelper(pathID, catechism);
-    const paragraphs = getAllParagraphs(catechism);
-
-    const crossReferences = getParagraphCrossReferences(content, paragraphs);
-    return {
-        content,
-        crossReferences,
-    };
-}
-
-export async function loadParagraphs(language: Language, paragraphNumbers: Array<number>): Promise<Array<Paragraph>> {
-    try {
-        const paragraphMap = await getParagraphNumberMap(language);
-        return paragraphNumbers.map((num) => paragraphMap[num]);
-    } catch (error) {
-        throw new Error(`Failed to load paragraphs (${language}: ${paragraphNumbers.join(', ')})`, error);
-    }
-}
-
-function getContentForRenderingHelper(pathID: PathID, catechism: CatechismStructure): ContentContainer {
+export function getContentForRendering(pathID: PathID, catechism: CatechismStructure): ContentContainer {
     // If anything in the Prologue is requested, return the entire Prologue
     const isInPrologue = isPrologueContent(pathID);
     if (isInPrologue) {
@@ -69,6 +43,15 @@ function getContentForRenderingHelper(pathID: PathID, catechism: CatechismStruct
         } else {
             return getDescendentForRendering(part, pathID);
         }
+    }
+}
+
+export async function loadParagraphs(language: Language, paragraphNumbers: Array<number>): Promise<Array<Paragraph>> {
+    try {
+        const paragraphMap = await getParagraphNumberMap(language);
+        return paragraphNumbers.map((num) => paragraphMap[num]);
+    } catch (error) {
+        throw new Error(`Failed to load paragraphs (${language}: ${paragraphNumbers.join(', ')})`, error);
     }
 }
 
@@ -348,14 +331,4 @@ function is(contentType: Content, content: ContentBase): boolean {
 
 function childIs(contentType: Content, content: ContentContainer): boolean {
     return content.mainContent[0].contentType === contentType;
-}
-
-/**
- * @returns all the paragraph objects from `allParagraphs` that are listed as cross-references by the descendents of `content`
- */
-function getParagraphCrossReferences(content: ContentContainer, allParagraphs: Array<Paragraph>): Array<Paragraph> {
-    const referencedParagraphNumbers = getTextWrappers(content)
-        .flatMap((textWrapper) => getParagraphNumbers(textWrapper.paragraphReferences));
-
-    return allParagraphs.filter((paragraph) => referencedParagraphNumbers.includes(paragraph.paragraphNumber));
 }

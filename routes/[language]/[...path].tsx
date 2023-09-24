@@ -11,7 +11,7 @@ import CrossReferences from '../(_islands)/cross-references.tsx';
 import { getTableOfContents } from '../../catechism/source/utils/artifacts.ts';
 import { getAllLanguages, getLanguageInfo, getNativeLanguageText } from '../../catechism/source/utils/language.ts';
 
-import { loadRenderableContent } from '../../web/rendering.ts';
+import { loadContent } from '../../web/rendering.ts';
 import { Element, getElementAndPathID } from '../../web/routing.ts';
 import { Actions, Selectors } from '../../web/state.ts';
 import { translate } from '../../web/translation.ts';
@@ -32,12 +32,9 @@ export default defineRoute(async (request, context) => {
             );
         } else if (Element.CONTENT === element) {
             if (pathID) {
-                const renderableContent = await loadRenderableContent(languageInfo.language, pathID);
-
-                if (renderableContent.content) {
-                    Actions.content.updateActive(renderableContent.content);
-                    Actions.crossReference.updateParagraphCache(renderableContent.crossReferences);
-
+                const content = await loadContent(languageInfo.language, pathID);
+                if (content) {
+                    Actions.content.updateActive(content);
                     return RenderApp(
                         <>
                             <div class='grid grid-rows-content-with-permanent-footer h-full'>

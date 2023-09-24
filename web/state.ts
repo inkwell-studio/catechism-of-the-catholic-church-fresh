@@ -8,7 +8,7 @@ import { ContentContainer, Language, NumberOrNumberRange, Paragraph } from '../c
     the state management logic is notified of the need for updating through the `Actions` constant.
 */
 
-//#region state setup
+//#region state
 type State = {
     language: Language;
     showChangelog: boolean;
@@ -18,8 +18,6 @@ type State = {
     crossReference: {
         // A stack of the cross-references selected by the user. The most recent selection is at the end of the array.
         selections: Array<NumberOrNumberRange>;
-        // A list of `Paragraph` objects for the cross-references of the latest selected cross-reference
-        paragraphCache: Array<Paragraph>;
     };
 };
 
@@ -31,7 +29,6 @@ const state = signal<State>({
     },
     crossReference: {
         selections: [],
-        paragraphCache: [],
     },
 });
 //#endregion
@@ -52,7 +49,6 @@ export const Actions = {
     crossReference: {
         select: selectCrossReference,
         clearSelection: clearCrossReferenceSelection,
-        updateParagraphCache: updateCrossReferenceParagraphCache,
     },
 } as const;
 
@@ -93,6 +89,7 @@ function updateActiveContent(content: ContentContainer): void {
 
 //#region cross-references
 function selectCrossReference(reference: NumberOrNumberRange): void {
+    // TODO: Enforce a limit on the maximum number of selections (once exceeded, remove the oldest reference and add the new one)
     if (state.value.crossReference.selections.at(-1) !== reference) {
         const selections = state.value.crossReference.selections.concat(reference);
         updateCrossReferenceSelections(selections);
@@ -109,16 +106,6 @@ function updateCrossReferenceSelections(selections: Array<NumberOrNumberRange>):
         crossReference: {
             ...state.value.crossReference,
             selections,
-        },
-    };
-}
-
-function updateCrossReferenceParagraphCache(paragraphs: Array<Paragraph>): void {
-    state.value = {
-        ...state.value,
-        crossReference: {
-            ...state.value.crossReference,
-            paragraphCache: paragraphs,
         },
     };
 }
