@@ -80,15 +80,7 @@ async function selectCrossReference(reference: NumberOrNumberRange): Promise<voi
 }
 
 async function loadCrossReferenceSelectedContent(s: State, selection: NumberOrNumberRange): Promise<State> {
-    const contentMap = await getParagraphCrossReferenceContentMap(state.value.language);
-    const selectedContent = contentMap[selection];
-    return {
-        ...s,
-        crossReference: {
-            ...s.crossReference,
-            selectedContent,
-        },
-    };
+    // TODO: Implement
 }
 
 function clearCrossReferenceSelection(s: State): State {
