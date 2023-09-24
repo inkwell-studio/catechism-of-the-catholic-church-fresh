@@ -1,5 +1,6 @@
 import { computed, effect, signal } from '@preact/signals';
 import { ContentContainer, Language, NumberOrNumberRange, Paragraph } from '../catechism/source/types/types.ts';
+import { getParagraphCrossReferenceContentMap } from "../catechism/source/utils/artifacts.ts";
 
 /*
     The state is contained in the `state` constant below.
@@ -90,6 +91,16 @@ function updateActiveContent(content: ContentContainer): void {
 //#endregion
 
 //#region cross-references
+function updateCrossReferenceSelectedContent(selectedContent: Array<Paragraph>): void {
+    state.value = {
+        ...state.value,
+        crossReference: {
+            ...state.value.crossReference,
+            selectedContent,
+        }
+    };
+}
+
 function selectCrossReference(reference: NumberOrNumberRange): void {
     // TODO: Enforce a limit on the maximum number of selections (once exceeded, remove the oldest reference and add the new one)
     if (state.value.crossReference.selectionHistory.at(-1) !== reference) {
@@ -135,8 +146,15 @@ export const Selectors = {
 effect(() => {
     const latestSelection = state.value.crossReference.selectionHistory.at(-1);
     if (latestSelection) {
-        loadCrossReferences;
-        // TODO: Dispatch an action to update the state after the data has been loaded
+        loadCrossReferenceSelectedContent(latestSelection)
     }
 });
+
+//#region Effect helpers
+async function loadCrossReferenceSelectedContent(selection: NumberOrNumberRange): Promise<void> {
+    const contentMap = await getParagraphCrossReferenceContentMap(state.value.language);
+    const content = contentMap[selection];
+    updateCrossReferenceSelectedContent(content);
+}
+//#endregion
 //#endregion
