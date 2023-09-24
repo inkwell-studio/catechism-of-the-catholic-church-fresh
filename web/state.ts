@@ -91,6 +91,21 @@ function updateActiveContent(content: ContentContainer): void {
 //#endregion
 
 //#region cross-references
+function selectCrossReference(reference: NumberOrNumberRange): void {
+    // TODO: Enforce a limit on the maximum number of selections (once exceeded, remove the oldest reference and add the new one)
+    if (state.value.crossReference.selectionHistory.at(-1) !== reference) {
+        const selectionHistory = state.value.crossReference.selectionHistory.concat(reference);
+        updateCrossReferenceSelections(selectionHistory);
+        loadCrossReferenceSelectedContent(reference);
+    }
+}
+
+async function loadCrossReferenceSelectedContent(selection: NumberOrNumberRange): Promise<void> {
+    const contentMap = await getParagraphCrossReferenceContentMap(state.value.language);
+    const content = contentMap[selection];
+    updateCrossReferenceSelectedContent(content);
+}
+
 function updateCrossReferenceSelectedContent(selectedContent: Array<Paragraph>): void {
     state.value = {
         ...state.value,
@@ -99,14 +114,6 @@ function updateCrossReferenceSelectedContent(selectedContent: Array<Paragraph>):
             selectedContent,
         }
     };
-}
-
-function selectCrossReference(reference: NumberOrNumberRange): void {
-    // TODO: Enforce a limit on the maximum number of selections (once exceeded, remove the oldest reference and add the new one)
-    if (state.value.crossReference.selectionHistory.at(-1) !== reference) {
-        const selectionHistory = state.value.crossReference.selectionHistory.concat(reference);
-        updateCrossReferenceSelections(selectionHistory);
-    }
 }
 
 function clearCrossReferenceSelection(): void {
@@ -140,21 +147,4 @@ export const Selectors = {
         selectionHistory: computed(() => state.value.crossReference.selectionHistory),
     },
 } as const;
-//#endregion
-
-//#region Effects
-effect(() => {
-    const latestSelection = state.value.crossReference.selectionHistory.at(-1);
-    if (latestSelection) {
-        loadCrossReferenceSelectedContent(latestSelection)
-    }
-});
-
-//#region Effect helpers
-async function loadCrossReferenceSelectedContent(selection: NumberOrNumberRange): Promise<void> {
-    const contentMap = await getParagraphCrossReferenceContentMap(state.value.language);
-    const content = contentMap[selection];
-    updateCrossReferenceSelectedContent(content);
-}
-//#endregion
 //#endregion
