@@ -70,40 +70,36 @@ function updateLanguage(language: Language): void {
 //#endregion
 
 //#region cross-references
-function selectCrossReference(reference: NumberOrNumberRange): void {
+async function selectCrossReference(reference: NumberOrNumberRange): Promise<void> {
     // TODO: Enforce a limit on the maximum number of selections (once exceeded, remove the oldest reference and add the new one)
     if (state.value.crossReference.selectionHistory.at(-1) !== reference) {
         const selectionHistory = state.value.crossReference.selectionHistory.concat(reference);
-        updateCrossReferenceSelections(selectionHistory);
-        loadCrossReferenceSelectedContent(reference);
+        const s = updateCrossReferenceSelections(state.value, selectionHistory);
+        state.value = await loadCrossReferenceSelectedContent(s, reference);
     }
 }
 
-async function loadCrossReferenceSelectedContent(selection: NumberOrNumberRange): Promise<void> {
+async function loadCrossReferenceSelectedContent(s: State, selection: NumberOrNumberRange): Promise<State> {
     const contentMap = await getParagraphCrossReferenceContentMap(state.value.language);
-    const content = contentMap[selection];
-    updateCrossReferenceSelectedContent(content);
-}
-
-function updateCrossReferenceSelectedContent(selectedContent: Array<Paragraph>): void {
-    state.value = {
-        ...state.value,
+    const selectedContent = contentMap[selection];
+    return {
+        ...s,
         crossReference: {
-            ...state.value.crossReference,
+            ...s.crossReference,
             selectedContent,
         },
     };
 }
 
-function clearCrossReferenceSelection(): void {
-    updateCrossReferenceSelections([]);
+function clearCrossReferenceSelection(s: State): State {
+    return updateCrossReferenceSelections(s, []);
 }
 
-function updateCrossReferenceSelections(selectionHistory: Array<NumberOrNumberRange>): void {
-    state.value = {
-        ...state.value,
+function updateCrossReferenceSelections(s: State, selectionHistory: Array<NumberOrNumberRange>): State {
+    return {
+        ...s,
         crossReference: {
-            ...state.value.crossReference,
+            ...s.crossReference,
             selectionHistory,
         },
     };
