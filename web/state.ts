@@ -1,6 +1,6 @@
-import { computed, effect, signal } from '@preact/signals';
+import { computed, signal } from '@preact/signals';
 import { ContentContainer, Language, NumberOrNumberRange, Paragraph } from '../catechism/source/types/types.ts';
-import { getParagraphCrossReferenceContentMap } from "../catechism/source/utils/artifacts.ts";
+import { getParagraphCrossReferenceContentMap } from '../catechism/source/utils/artifacts.ts';
 
 /*
     The state is contained in the `state` constant below.
@@ -112,7 +112,7 @@ function updateCrossReferenceSelectedContent(selectedContent: Array<Paragraph>):
         crossReference: {
             ...state.value.crossReference,
             selectedContent,
-        }
+        },
     };
 }
 

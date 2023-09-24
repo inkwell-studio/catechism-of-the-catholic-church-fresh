@@ -1,7 +1,6 @@
 import {
     Language,
     ParagraphCrossReferenceContentMap,
-    ParagraphNumberContentMap,
     ParagraphNumberUrlMap,
     PathIdContentMap,
     SemanticPathPathIdMap,
@@ -14,10 +13,6 @@ export function getContentMap(language: Language): Promise<PathIdContentMap> {
 
 export function getRenderablePathMap(language: Language): Promise<SemanticPathPathIdMap> {
     return getArtifact('semantic-path_to_renderable-path-id', language);
-}
-
-export function getParagraphNumberContentMap(language: Language): Promise<ParagraphNumberContentMap> {
-    return getArtifact('paragraph-number_to_content', language);
 }
 
 export function getParagraphCrossReferenceContentMap(language: Language): Promise<ParagraphCrossReferenceContentMap> {
