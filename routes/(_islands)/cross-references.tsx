@@ -8,7 +8,7 @@ import { Actions, Selectors } from '../../web/state.ts';
 import { loadParagraphs } from '../../web/rendering.ts';
 
 export default function CrossReferences(): JSX.Element {
-    const refs = Selectors.crossReference.selections.value;
+    const refs = Selectors.crossReference.selectionHistory.value;
     const latestSelectedReference = refs.at(-1);
 
     if (latestSelectedReference) {

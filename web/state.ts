@@ -1,4 +1,4 @@
-import { computed, signal } from '@preact/signals';
+import { computed, effect, signal } from '@preact/signals';
 import { ContentContainer, Language, NumberOrNumberRange, Paragraph } from '../catechism/source/types/types.ts';
 
 /*
@@ -16,8 +16,9 @@ type State = {
         active: ContentContainer | null;
     };
     crossReference: {
+        selectedContent: Array<Paragraph>;
         // A stack of the cross-references selected by the user. The most recent selection is at the end of the array.
-        selections: Array<NumberOrNumberRange>;
+        selectionHistory: Array<NumberOrNumberRange>;
     };
 };
 
@@ -28,7 +29,8 @@ const state = signal<State>({
         active: null,
     },
     crossReference: {
-        selections: [],
+        selectedContent: [],
+        selectionHistory: [],
     },
 });
 //#endregion
@@ -90,9 +92,9 @@ function updateActiveContent(content: ContentContainer): void {
 //#region cross-references
 function selectCrossReference(reference: NumberOrNumberRange): void {
     // TODO: Enforce a limit on the maximum number of selections (once exceeded, remove the oldest reference and add the new one)
-    if (state.value.crossReference.selections.at(-1) !== reference) {
-        const selections = state.value.crossReference.selections.concat(reference);
-        updateCrossReferenceSelections(selections);
+    if (state.value.crossReference.selectionHistory.at(-1) !== reference) {
+        const selectionHistory = state.value.crossReference.selectionHistory.concat(reference);
+        updateCrossReferenceSelections(selectionHistory);
     }
 }
 
@@ -100,12 +102,12 @@ function clearCrossReferenceSelection(): void {
     updateCrossReferenceSelections([]);
 }
 
-function updateCrossReferenceSelections(selections: Array<NumberOrNumberRange>): void {
+function updateCrossReferenceSelections(selectionHistory: Array<NumberOrNumberRange>): void {
     state.value = {
         ...state.value,
         crossReference: {
             ...state.value.crossReference,
-            selections,
+            selectionHistory,
         },
     };
 }
@@ -124,7 +126,17 @@ export const Selectors = {
         active: computed(() => state.value.content.active),
     },
     crossReference: {
-        selections: computed(() => state.value.crossReference.selections),
+        selectionHistory: computed(() => state.value.crossReference.selectionHistory),
     },
 } as const;
+//#endregion
+
+//#region Effects
+effect(() => {
+    const latestSelection = state.value.crossReference.selectionHistory.at(-1);
+    if (latestSelection) {
+        loadCrossReferences;
+        // TODO: Dispatch an action to update the state after the data has been loaded
+    }
+});
 //#endregion

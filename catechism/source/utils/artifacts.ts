@@ -1,13 +1,12 @@
 import {
     Language,
+    ParagraphCrossReferenceContentMap,
     ParagraphNumberContentMap,
     ParagraphNumberUrlMap,
     PathIdContentMap,
     SemanticPathPathIdMap,
     TableOfContentsType,
 } from '../../source/types/types.ts';
-
-// TODO: Reorder functions alphabetically
 
 export function getContentMap(language: Language): Promise<PathIdContentMap> {
     return getArtifact('renderable-path-id_to_content', language);
@@ -17,16 +16,20 @@ export function getRenderablePathMap(language: Language): Promise<SemanticPathPa
     return getArtifact('semantic-path_to_renderable-path-id', language);
 }
 
-export function getTableOfContents(language: Language): Promise<TableOfContentsType> {
-    return getArtifact('table-of-contents', language);
+export function getParagraphNumberContentMap(language: Language): Promise<ParagraphNumberContentMap> {
+    return getArtifact('paragraph-number_to_content', language);
 }
 
-export function getParagraphNumberMap(language: Language): Promise<ParagraphNumberContentMap> {
-    return getArtifact('paragraph-number_to_content', language);
+export function getParagraphCrossReferenceContentMap(language: Language): Promise<ParagraphCrossReferenceContentMap> {
+    return getArtifact('paragraph-cross-reference_to_content', language);
 }
 
 export function getParagraphNumberUrlMap(language: Language): Promise<ParagraphNumberUrlMap> {
     return getArtifact('paragraph-number_to_url', language);
+}
+
+export function getTableOfContents(language: Language): Promise<TableOfContentsType> {
+    return getArtifact('table-of-contents', language);
 }
 
 // deno-lint-ignore no-explicit-any
