@@ -1,5 +1,5 @@
 import { computed, signal } from '@preact/signals';
-import { ContentContainer, Language, NumberOrNumberRange, Paragraph } from '../catechism/source/types/types.ts';
+import { Language, NumberOrNumberRange, Paragraph } from '../catechism/source/types/types.ts';
 import { getParagraphCrossReferenceContentMap } from '../catechism/source/utils/artifacts.ts';
 
 /*
@@ -13,9 +13,6 @@ import { getParagraphCrossReferenceContentMap } from '../catechism/source/utils/
 type State = {
     language: Language;
     showChangelog: boolean;
-    content: {
-        active: ContentContainer | null;
-    };
     crossReference: {
         selectedContent: Array<Paragraph>;
         // A stack of the cross-references selected by the user. The most recent selection is at the end of the array.
@@ -26,9 +23,6 @@ type State = {
 const state = signal<State>({
     language: Language.ENGLISH,
     showChangelog: false,
-    content: {
-        active: null,
-    },
     crossReference: {
         selectedContent: [],
         selectionHistory: [],
@@ -45,9 +39,6 @@ export const Actions = {
     },
     language: {
         update: updateLanguage,
-    },
-    content: {
-        updateActive: updateActiveContent,
     },
     crossReference: {
         select: selectCrossReference,
@@ -75,18 +66,6 @@ function closeChangelog(): void {
 //#region language
 function updateLanguage(language: Language): void {
     state.value = { ...state.value, language };
-}
-//#endregion
-
-//#region content
-function updateActiveContent(content: ContentContainer): void {
-    state.value = {
-        ...state.value,
-        content: {
-            ...state.value.content,
-            active: content,
-        },
-    };
 }
 //#endregion
 
@@ -139,9 +118,6 @@ export const Selectors = {
     language: computed(() => state.value.language),
     changelog: {
         show: computed(() => state.value.showChangelog),
-    },
-    content: {
-        active: computed(() => state.value.content.active),
     },
     crossReference: {
         selectionHistory: computed(() => state.value.crossReference.selectionHistory),

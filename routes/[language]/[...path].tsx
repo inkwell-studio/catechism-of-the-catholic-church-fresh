@@ -34,12 +34,11 @@ export default defineRoute(async (request, context) => {
             if (pathID) {
                 const content = await loadContent(languageInfo.language, pathID);
                 if (content) {
-                    Actions.content.updateActive(content);
                     return RenderApp(
                         <>
                             <div class='grid grid-rows-content-with-permanent-footer h-full'>
                                 <div class='flex justify-center overflow-y-auto'>
-                                    <Content></Content>
+                                    <Content content={content} language={languageInfo.language}></Content>
                                 </div>
                                 <Citations></Citations>
                             </div>
