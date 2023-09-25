@@ -1,6 +1,11 @@
 # Tasks to complete now
 
 - [ ] implement citations and cross-reference functionality
+  - IN-PROGRESS WORK:
+    - `[paragraph_number_range].ts`: Use the simpler `paragraph-number_to_content-en.json` content map instead, and remove all logic and data of this ~`paragraph-cross-reference-to-content` content map
+    - clear the selected cross-reference data when the cross-reference component loads (or ensure the data is appropriately cleared in some other way)
+
+  
   - [ ] cross-reference opens in a new component that is placed as a sibling to `<Content>`
     - [ ] can continue navigating through cross-references
     - [ ] history of cross-reference navigation shows on the top of the new component (resets when the component is
