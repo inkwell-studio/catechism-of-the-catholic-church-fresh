@@ -6,18 +6,20 @@ import { Language, NumberOrNumberRange, Paragraph } from '../../catechism/source
 import { Actions, Selectors } from '../../web/state.ts';
 
 export default function CrossReferences(): JSX.Element {
-    const refs = Selectors.crossReference.selectionHistory.value;
-    const latestSelectedReference = refs.at(-1);
+    const content = Selectors.crossReference.selectedContent.value;
+    const selectionHistory = Selectors.crossReference.selectionHistory.value;
+    const language = Selectors.language.value;
 
+    const latestSelectedReference = selectionHistory.at(-1);
     if (latestSelectedReference) {
         return (
             <div class='fixed top-8 right-4 flex flex-col items-start gap-2 p-12 rounded-lg bg-white'>
-                <button onClick={Actions.crossReference.clearSelection} class='self-end'>Close</button>
+                <button onClick={() => Actions.crossReference.clearSelection()} class='self-end'>Close</button>
                 <div class='border-b'>
-                    {Trail(refs)}
+                    {Trail(selectionHistory)}
                 </div>
                 <div>
-                    {/* {Content(props.paragraphs, props.language)} */}
+                    {Content(content, language)}
                 </div>
             </div>
         );

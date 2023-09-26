@@ -92,8 +92,8 @@ async function loadCrossReferenceSelectedContent(s: State, paragraphNumbers: Num
     };
 }
 
-function clearCrossReferenceSelection(s: State): State {
-    return updateCrossReferenceSelections(s, []);
+function clearCrossReferenceSelection(): State {
+    return updateCrossReferenceSelections(state.value, []);
 }
 
 function updateCrossReferenceSelections(s: State, selectionHistory: Array<NumberOrNumberRange>): State {
@@ -117,6 +117,7 @@ export const Selectors = {
         show: computed(() => state.value.showChangelog),
     },
     crossReference: {
+        selectedContent: computed(() => state.value.crossReference.selectedContent),
         selectionHistory: computed(() => state.value.crossReference.selectionHistory),
     },
 } as const;
