@@ -45,6 +45,7 @@ export const Actions = {
     },
     crossReference: {
         select: selectCrossReference,
+        selectFromHistory: selectCrossReferenceFromHistory,
         clearSelection: clearCrossReferenceSelection,
     },
 } as const;
@@ -82,6 +83,12 @@ async function selectCrossReference(reference: NumberOrNumberRange): Promise<voi
         const s = updateCrossReferenceSelectionHistory(state.value, selectionHistory);
         state.value = await loadCrossReferenceSelectedContent(s, reference);
     }
+}
+
+async function selectCrossReferenceFromHistory(index: number): Promise<void> {
+    const selectionHistory = state.value.crossReference.selectionHistory.slice(0, index + 1);
+    const s = updateCrossReferenceSelectionHistory(state.value, selectionHistory);
+    state.value = await loadCrossReferenceSelectedContent(s, selectionHistory.at(-1) as NumberOrNumberRange);
 }
 
 async function loadCrossReferenceSelectedContent(s: State, paragraphNumbers: NumberOrNumberRange): Promise<State> {

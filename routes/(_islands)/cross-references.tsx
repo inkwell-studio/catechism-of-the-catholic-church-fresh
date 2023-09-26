@@ -15,7 +15,7 @@ export default function CrossReferences(): JSX.Element {
         return (
             <div class='fixed top-8 inset-x-4 flex flex-col items-start gap-2 p-12 rounded-lg bg-white'>
                 <button onClick={() => Actions.crossReference.clearSelection()} class='self-end'>Close</button>
-                <div class='flex border-b'>
+                <div class='flex gap-1 border-b'>
                     {Trail(selectionHistory)}
                 </div>
                 <div>

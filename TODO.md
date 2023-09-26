@@ -3,8 +3,6 @@
 - [ ] implement cross-reference functionality
   - [ ] clear the selected cross-reference data when the cross-reference component loads (or ensure the data is
         appropriately cleared in some other way)
-  - [ ] implement `Trail`
-    - [ ] can click "back" to reload CRs
   - [ ] implement tests for the new artifact (is this still applicable?)
   - [ ] write tests for API endpoint (e2e?)
     - incorporate the new `server-api.ts` file in the tests?
