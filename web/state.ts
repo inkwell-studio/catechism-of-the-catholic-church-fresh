@@ -85,9 +85,9 @@ async function loadCrossReferenceSelectedContent(s: State, paragraphNumbers: Num
     return updateCrossReferenceSelectedContent(s, paragraphs);
 }
 
-function clearCrossReferenceSelection(): State {
+function clearCrossReferenceSelection(): void {
     const s = updateCrossReferenceSelectionHistory(state.value, []);
-    return updateCrossReferenceSelectedContent(s, []);
+    state.value = updateCrossReferenceSelectedContent(s, []);
 }
 
 function updateCrossReferenceSelectedContent(s: State, selectedContent: Array<Paragraph>): State {

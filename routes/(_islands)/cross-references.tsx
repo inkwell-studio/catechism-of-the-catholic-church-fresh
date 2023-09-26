@@ -13,7 +13,7 @@ export default function CrossReferences(): JSX.Element {
     const latestSelectedReference = selectionHistory.at(-1);
     if (latestSelectedReference) {
         return (
-            <div class='fixed top-8 right-4 flex flex-col items-start gap-2 p-12 rounded-lg bg-white'>
+            <div class='fixed top-8 inset-x-4 flex flex-col items-start gap-2 p-12 rounded-lg bg-white'>
                 <button onClick={() => Actions.crossReference.clearSelection()} class='self-end'>Close</button>
                 <div class='border-b'>
                     {Trail(selectionHistory)}
