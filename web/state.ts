@@ -75,28 +75,32 @@ async function selectCrossReference(reference: NumberOrNumberRange): Promise<voi
     // TODO: Enforce a limit on the maximum number of selections (once exceeded, remove the oldest reference and add the new one)
     if (state.value.crossReference.selectionHistory.at(-1) !== reference) {
         const selectionHistory = state.value.crossReference.selectionHistory.concat(reference);
-        const s = updateCrossReferenceSelections(state.value, selectionHistory);
+        const s = updateCrossReferenceSelectionHistory(state.value, selectionHistory);
         state.value = await loadCrossReferenceSelectedContent(s, reference);
     }
 }
 
 async function loadCrossReferenceSelectedContent(s: State, paragraphNumbers: NumberOrNumberRange): Promise<State> {
     const paragraphs = await server.getParagraphs(paragraphNumbers, s.language);
+    return updateCrossReferenceSelectedContent(s, paragraphs);
+}
 
+function clearCrossReferenceSelection(): State {
+    const s = updateCrossReferenceSelectionHistory(state.value, []);
+    return updateCrossReferenceSelectedContent(s, []);
+}
+
+function updateCrossReferenceSelectedContent(s: State, selectedContent: Array<Paragraph>): State {
     return {
         ...s,
         crossReference: {
             ...s.crossReference,
-            selectedContent: paragraphs,
+            selectedContent,
         },
     };
 }
 
-function clearCrossReferenceSelection(): State {
-    return updateCrossReferenceSelections(state.value, []);
-}
-
-function updateCrossReferenceSelections(s: State, selectionHistory: Array<NumberOrNumberRange>): State {
+function updateCrossReferenceSelectionHistory(s: State, selectionHistory: Array<NumberOrNumberRange>): State {
     return {
         ...s,
         crossReference: {
