@@ -1,6 +1,5 @@
 import { computed, signal } from '@preact/signals';
 import { Language, NumberOrNumberRange, Paragraph } from '../catechism/source/types/types.ts';
-import { getParagraphCrossReferenceContentMap } from '../catechism/source/utils/artifacts.ts';
 
 /*
     The state is contained in the `state` constant below.

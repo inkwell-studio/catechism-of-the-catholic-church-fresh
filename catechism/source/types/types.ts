@@ -19,7 +19,6 @@ export * from './number-or-number-range.ts';
 export * from './other-reference.ts';
 export * from './other-source-enum.ts';
 export * from './paragraph-group.ts';
-export * from './paragraph-cross-reference-content-map.ts';
 export * from './paragraph-number-content-map.ts';
 export * from './paragraph-number-url-map.ts';
 export * from './paragraph-subitem.ts';
