@@ -15,7 +15,7 @@ export default function CrossReferences(): JSX.Element {
         return (
             <div class='fixed top-8 inset-x-4 flex flex-col items-start gap-2 p-12 rounded-lg bg-white'>
                 <button onClick={() => Actions.crossReference.clearSelection()} class='self-end'>Close</button>
-                <div class='border-b'>
+                <div class='flex border-b'>
                     {Trail(selectionHistory)}
                 </div>
                 <div>
@@ -40,12 +40,16 @@ function Content(
 function Trail(refs: Array<NumberOrNumberRange>): Array<JSX.Element> {
     return refs.map((ref, index) => {
         const finalReference = index === refs.length - 1;
-        // TODO: Implement proper `onClick` functionality
-        return (
-            <>
-                <button key={ref}>{ref}{finalReference ? '' : ','}</button>
-                {finalReference ? <></> : ' '}
-            </>
-        );
+
+        if (finalReference) {
+            return <div key={ref}>{ref}</div>;
+        } else {
+            return (
+                <>
+                    <button key={ref} onClick={() => Actions.crossReference.selectFromHistory(index)}>{ref},</button>
+                    {' '}
+                </>
+            );
+        }
     });
 }
