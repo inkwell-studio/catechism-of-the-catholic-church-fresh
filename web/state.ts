@@ -1,4 +1,6 @@
 import { computed, signal } from '@preact/signals';
+
+import * as server from './server-api.ts';
 import { Language, NumberOrNumberRange, Paragraph } from '../catechism/source/types/types.ts';
 
 /*
@@ -78,8 +80,16 @@ async function selectCrossReference(reference: NumberOrNumberRange): Promise<voi
     }
 }
 
-async function loadCrossReferenceSelectedContent(s: State, selection: NumberOrNumberRange): Promise<State> {
-    // TODO: Implement
+async function loadCrossReferenceSelectedContent(s: State, paragraphNumbers: NumberOrNumberRange): Promise<State> {
+    const paragraphs = await server.getParagraphs(paragraphNumbers, s.language);
+
+    return {
+        ...s,
+        crossReference: {
+            ...s.crossReference,
+            selectedContent: paragraphs,
+        },
+    };
 }
 
 function clearCrossReferenceSelection(s: State): State {

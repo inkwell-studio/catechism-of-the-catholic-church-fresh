@@ -6,6 +6,7 @@
       appropriately cleared in some other way)
 
   - [ ] write tests for API endpoint (e2e?)
+    - incorporate the new `server-api.ts` file in the tests?
   - [ ] cross-reference opens in a new component that is placed as a sibling to `<Content>`
     - [ ] can continue navigating through cross-references
     - [ ] history of cross-reference navigation shows on the top of the new component (resets when the component is
