@@ -1,9 +1,8 @@
 # Tasks to complete now
 
 - [ ] implement cross-reference functionality
-  - [ ] clear the selected cross-reference data when the cross-reference component loads (or ensure the data is
-        appropriately cleared in some other way)
   - [ ] implement tests for the new artifact (is this still applicable?)
+  - [ ] fix the cross-reference component language problem
   - [ ] write tests for API endpoint (e2e?)
     - incorporate the new `server-api.ts` file in the tests?
   - [ ] handle all `TODO`s

@@ -50,7 +50,6 @@ export const Actions = {
     },
 } as const;
 
-//#region state-modifying functions
 //#region changelog
 function openChangelog(): void {
     state.value = {
@@ -120,7 +119,6 @@ function updateCrossReferenceSelectionHistory(s: State, selectionHistory: Array<
         },
     };
 }
-//#endregion
 //#endregion
 //#endregion
 

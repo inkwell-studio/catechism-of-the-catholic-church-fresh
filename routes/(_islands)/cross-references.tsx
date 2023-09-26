@@ -15,7 +15,12 @@ export default function CrossReferences(): JSX.Element {
         return (
             <div class='fixed top-8 inset-x-4 flex flex-col items-start gap-2 p-12 rounded-lg bg-white'>
                 {/* TODO: Replace "X" with an icon */}
-                <button onClick={() => Actions.crossReference.clearSelection()} class='self-end p-2'>X</button>
+                <button
+                    onClick={() => Actions.crossReference.clearSelection()}
+                    class='self-end p-2 text-2xl font-mono font-bold'
+                >
+                    X
+                </button>
                 <div class='flex gap-1 border-b'>
                     {Trail(selectionHistory)}
                 </div>
