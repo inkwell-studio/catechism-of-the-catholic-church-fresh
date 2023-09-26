@@ -40,16 +40,11 @@ function Content(
 function Trail(refs: Array<NumberOrNumberRange>): Array<JSX.Element> {
     return refs.map((ref, index) => {
         const finalReference = index === refs.length - 1;
-
-        if (finalReference) {
-            return <div key={ref}>{ref}</div>;
-        } else {
-            return (
-                <>
-                    <button key={ref} onClick={() => Actions.crossReference.selectFromHistory(index)}>{ref},</button>
-                    {' '}
-                </>
-            );
-        }
+        return finalReference ? <div key={ref}>{ref}</div> : (
+            <>
+                <button key={ref} onClick={() => Actions.crossReference.selectFromHistory(index)}>{ref},</button>
+                {' '}
+            </>
+        );
     });
 }
