@@ -29,6 +29,8 @@ const state = signal<State>({
         selectionHistory: [],
     },
 });
+
+const CROSS_REFERENCE_HISTORY_LIMIT = 7;
 //#endregion
 
 //#region Actions
@@ -72,9 +74,11 @@ function updateLanguage(language: Language): void {
 
 //#region cross-references
 async function selectCrossReference(reference: NumberOrNumberRange): Promise<void> {
-    // TODO: Enforce a limit on the maximum number of selections (once exceeded, remove the oldest reference and add the new one)
     if (state.value.crossReference.selectionHistory.at(-1) !== reference) {
         const selectionHistory = state.value.crossReference.selectionHistory.concat(reference);
+        if (selectionHistory.length > CROSS_REFERENCE_HISTORY_LIMIT) {
+            selectionHistory.shift();
+        }
         const s = updateCrossReferenceSelectionHistory(state.value, selectionHistory);
         state.value = await loadCrossReferenceSelectedContent(s, reference);
     }
