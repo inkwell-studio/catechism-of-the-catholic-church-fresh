@@ -1,17 +1,15 @@
 # Tasks to complete now
 
 - [ ] implement citations and cross-reference functionality
-  - IN-PROGRESS WORK:
-    - clear the selected cross-reference data when the cross-reference component loads (or ensure the data is
+  - [ ] clear the selected cross-reference data when the cross-reference component loads (or ensure the data is
       appropriately cleared in some other way)
-
+  - [ ] implement `Trail`
+    - [ ] can click "back" to reload CRs
+  - [ ] implement tests for the new artifact (is this still applicable?)
   - [ ] write tests for API endpoint (e2e?)
     - incorporate the new `server-api.ts` file in the tests?
-  - [ ] cross-reference opens in a new component that is placed as a sibling to `<Content>`
-    - [ ] can continue navigating through cross-references
-    - [ ] history of cross-reference navigation shows on the top of the new component (resets when the component is
-          closed)
-  - [ ] implement tests for the new artifact
+  - [ ] handle all `TODO`s
+  - [ ] make UI decent
 - merge
 
 - [ ] UI changes: handle RTL languages
