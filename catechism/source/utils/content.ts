@@ -99,15 +99,14 @@ export function getParagraphs(content: Array<ContentBase>): Array<Paragraph> {
  * @returns an array of paragraph numbers for all the paragraphs specified by `references`.
  * Paragraph ranges are split up into individual numbers; e.g. `'12-15'` becomes `[12, 13, 14, 15]`.
  */
-// TODO: If possible, modify this so the `references` parameter is not an `Array`, but just a single `NumberOrNumberRange` value
-export function getParagraphNumbers(references: Array<NumberOrNumberRange>): Array<number> {
-    return references.flatMap((reference) => {
-        if ('number' === typeof reference) {
-            return reference;
-        } else {
-            const numbers: Array<number> = [];
+export function getParagraphNumbers(reference: number | string): Array<number> {
+    if ('number' === typeof reference) {
+        return [reference];
+    } else {
+        if (reference.includes('-')) {
             const [low, high] = reference.split('-').map((v) => Number(v));
 
+            const numbers: Array<number> = [];
             if ('number' === typeof low && 'number' === typeof high) {
                 for (let i = low; i <= high; i++) {
                     numbers.push(i);
@@ -116,8 +115,11 @@ export function getParagraphNumbers(references: Array<NumberOrNumberRange>): Arr
             } else {
                 throw new Error(`Failed to parse a paragraph cross-reference value: ${reference}`);
             }
+        } else {
+            const num = Number(reference);
+            return num ? [num] : [];
         }
-    });
+    }
 }
 
 export function getTextWrappers(content: ContentContainer): Array<TextWrapper> {

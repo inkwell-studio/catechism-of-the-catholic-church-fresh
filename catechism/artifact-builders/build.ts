@@ -3,11 +3,7 @@ import { build as buildParagraphContentMap } from './paragraph-number-to-content
 import { build as buildParagraphUrlMap } from './paragraph-number-to-url-map.ts';
 import { build as buildSemanticMap } from './semantic-path-to-renderable-path-id-map.ts';
 import { build as buildTableOfContents } from './table-of-contents.ts';
-import {
-    Language,
-    ParagraphNumberContentMap,
-    ParagraphNumberUrlMap,
-} from '../source/types/types.ts';
+import { Language, ParagraphNumberContentMap, ParagraphNumberUrlMap } from '../source/types/types.ts';
 import { getCatechism } from '../source/utils/content.ts';
 import { getSupportedLanguages } from '../source/utils/language.ts';
 import {
