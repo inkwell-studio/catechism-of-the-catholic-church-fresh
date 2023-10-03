@@ -1,6 +1,6 @@
 import { computed, signal } from '@preact/signals';
 
-import * as server from './server-api.ts';
+import * as server from './server.ts';
 import { Language, NumberOrNumberRange, Paragraph } from '../catechism/source/types/types.ts';
 
 /*
