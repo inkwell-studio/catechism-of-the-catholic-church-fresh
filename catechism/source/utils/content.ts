@@ -6,7 +6,6 @@ import {
     InBrief,
     InBriefContainer,
     Language,
-    NumberOrNumberRange,
     Paragraph,
     PathID,
     SemanticPath,

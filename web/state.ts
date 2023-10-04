@@ -1,4 +1,4 @@
-import { batch, computed, signal, Signal} from '@preact/signals';
+import { batch, computed, Signal, signal } from '@preact/signals';
 
 import * as server from './server.ts';
 import { Language, NumberOrNumberRange, Paragraph } from '../catechism/source/types/types.ts';

@@ -2,7 +2,8 @@
 
 - [ ] implement cross-reference functionality
   - [ ] fix the cross-reference component language problem
-    - [ ] try the state-management paradigm illustrated here: https://fresh.deno.dev/docs/examples/sharing-state-between-islands#independent-islands
+    - [ ] try the state-management paradigm illustrated here:
+          https://fresh.deno.dev/docs/examples/sharing-state-between-islands#independent-islands
   - [ ] implement tests for new artifacts
   - [ ] write tests for API endpoint (e2e?)
     - incorporate the new `server-api.ts` file in the tests?
