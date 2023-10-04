@@ -83,6 +83,13 @@ function updateLanguage(language: Language): void {
 //#endregion
 
 //#region cross-references
+function clearCrossReferenceSelection(): void {
+    batch(() => {
+        state.crossReference.selectionHistory.value = [];
+        state.crossReference.selectedContent.value = [];
+    });
+}
+
 function selectCrossReference(reference: NumberOrNumberRange): void {
     if (state.crossReference.selectionHistory.value.at(-1) !== reference) {
         const selectionHistory = state.crossReference.selectionHistory.value.concat(reference);
@@ -90,7 +97,7 @@ function selectCrossReference(reference: NumberOrNumberRange): void {
             selectionHistory.shift();
         }
         batch(() => {
-            updateCrossReferenceSelectionHistory(selectionHistory);
+            state.crossReference.selectionHistory.value = selectionHistory;
             loadCrossReferenceSelectedContent(reference);
         });
     }
@@ -99,29 +106,14 @@ function selectCrossReference(reference: NumberOrNumberRange): void {
 function selectCrossReferenceFromHistory(index: number): void {
     const selectionHistory = state.crossReference.selectionHistory.value.slice(0, index + 1);
     batch(() => {
-        updateCrossReferenceSelectionHistory(selectionHistory);
+        state.crossReference.selectionHistory.value = selectionHistory;
         loadCrossReferenceSelectedContent(selectionHistory.at(-1) as NumberOrNumberRange);
     });
 }
 
 async function loadCrossReferenceSelectedContent(paragraphNumbers: NumberOrNumberRange): Promise<void> {
     const paragraphs = await server.getParagraphs(paragraphNumbers, state.language.value);
-    updateCrossReferenceSelectedContent(paragraphs);
-}
-
-function clearCrossReferenceSelection(): void {
-    batch(() => {
-        updateCrossReferenceSelectionHistory([]);
-        updateCrossReferenceSelectedContent([]);
-    });
-}
-
-function updateCrossReferenceSelectedContent(selectedContent: Array<Paragraph>): void {
-    state.crossReference.selectedContent.value = selectedContent;
-}
-
-function updateCrossReferenceSelectionHistory(selectionHistory: Array<NumberOrNumberRange>): void {
-    state.crossReference.selectionHistory.value = selectionHistory;
+    state.crossReference.selectedContent.value = paragraphs;
 }
 //#endregion
 //#endregion

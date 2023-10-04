@@ -1,11 +1,15 @@
 # Tasks to complete now
 
 - [ ] implement cross-reference functionality
+  - [ ] implement functionality:
+    - [ ] have the CR component wait to show until the data is loaded
+    - [ ] can click on a paragraph in the cross-reference component and have it open in the main component (the
+          CR-component clears)
+  - [ ] make UI decent
   - [ ] implement tests for new artifacts
   - [ ] write tests for API endpoint (e2e?)
     - incorporate the new `server-api.ts` file in the tests?
   - [ ] handle all `TODO`s
-  - [ ] make UI decent
 - merge
 
 - [ ] implement citations
