@@ -1,7 +1,9 @@
+import { IS_BROWSER } from '$fresh/runtime.ts';
 import { batch, computed, Signal, signal } from '@preact/signals';
 
 import * as server from './server.ts';
 import { Language, NumberOrNumberRange, Paragraph } from '../catechism/source/types/types.ts';
+import { getLanguageInfo } from '../catechism/source/utils/language.ts';
 
 /*
     The state is contained in the `state` constant below.
@@ -21,8 +23,10 @@ type State = {
     };
 };
 
+const initialLanguage = determineInitialLanguage();
+
 const state: State = {
-    language: signal(Language.ENGLISH),
+    language: signal(initialLanguage),
     showChangelog: signal(false),
     crossReference: {
         selectedContent: signal([]),
@@ -31,6 +35,18 @@ const state: State = {
 };
 
 const CROSS_REFERENCE_HISTORY_LIMIT = 7;
+
+function determineInitialLanguage(): Language {
+    if (IS_BROWSER) {
+        const languageParam = new URL(window.location.href).pathname.split('/')[1];
+        const languageInfo = getLanguageInfo(languageParam);
+        if (languageInfo.language && languageInfo.supported) {
+            return languageInfo.language;
+        }
+    }
+
+    return Language.ENGLISH;
+}
 //#endregion
 
 //#region Actions
