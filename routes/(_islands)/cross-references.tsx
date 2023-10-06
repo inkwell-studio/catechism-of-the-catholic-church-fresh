@@ -9,28 +9,26 @@ export default function CrossReferences(): JSX.Element {
     const content = Selectors.crossReference.selectedContent.value;
     const selectionHistory = Selectors.crossReference.selectionHistory.value;
     const language = Selectors.language.value;
+    const showTrail = selectionHistory.length >= 2;
 
     if (content.length > 0) {
         return (
-            <div class='fixed top-8 inset-x-4 flex flex-col items-start gap-2 p-12 rounded-lg bg-white'>
-                <button
-                    onClick={() => Actions.crossReference.navigateTo()}
-                    class='self-end p-2 text-2xl font-mono font-bold'
-                >
-                    Open
-                </button>
-                {/* TODO: Replace "X" with an icon */}
-                <button
-                    onClick={() => Actions.crossReference.clearSelection()}
-                    class='self-end p-2 text-2xl font-mono font-bold'
-                >
-                    X
-                </button>
-                <div class='flex gap-1 border-b'>
-                    {Trail(selectionHistory)}
+            <div class='fixed bottom-0 inset-x-0 bg-white pb-8 border-t border-black'>
+                <div class='absolute top-4 right-4 flex gap-2 text-lg font-mono'>
+                    <button onClick={() => Actions.crossReference.navigateTo()}>Open</button>
+                    {/* TODO: Replace "X" with an icon */}
+                    <button onClick={() => Actions.crossReference.clearSelection()}>X</button>
                 </div>
-                <div>
-                    {Content(content, language)}
+                <div class='w-full md:max-w-2xl lg:max-w-3xl mx-auto mt-2'>
+                    {showTrail ?
+                        <div class='flex gap-1 py-2 border-b'>
+                            {Trail(selectionHistory)}
+                        </div>
+                        : <></>
+                    }
+                    <div class={showTrail ? 'mt-2' : 'mt-4'}>
+                        {Content(content, language)}
+                    </div>
                 </div>
             </div>
         );
