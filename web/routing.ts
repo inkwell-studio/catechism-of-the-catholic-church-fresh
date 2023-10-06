@@ -1,31 +1,14 @@
-import ParagraphMapEnglish from '../catechism/artifacts/paragraph-number_to_url-en.json' assert { type: 'json' };
-import ParagraphMapLatin from '../catechism/artifacts/paragraph-number_to_url-la.json' assert { type: 'json' };
-import ParagraphMapSpanish from '../catechism/artifacts/paragraph-number_to_url-es.json' assert { type: 'json' };
-
 import PathMapEnglish from '../catechism/artifacts/semantic-path_to_renderable-path-id-en.json' assert { type: 'json' };
 import PathMapLatin from '../catechism/artifacts/semantic-path_to_renderable-path-id-la.json' assert { type: 'json' };
 import PathMapSpanish from '../catechism/artifacts/semantic-path_to_renderable-path-id-es.json' assert { type: 'json' };
 
 import { translate } from './translation.ts';
-import {
-    Language,
-    ParagraphNumberUrlMap,
-    PathID,
-    SemanticPath,
-    SemanticPathPathIdMap,
-} from '../catechism/source/types/types.ts';
-import { IS_BROWSER } from '$fresh/runtime.ts';
+import { Language, PathID, SemanticPath, SemanticPathPathIdMap } from '../catechism/source/types/types.ts';
 
 const pathMaps = {
     [Language.ENGLISH]: PathMapEnglish,
     [Language.LATIN]: PathMapLatin,
     [Language.SPANISH]: PathMapSpanish,
-} as const;
-
-const paragraphUrlMaps = {
-    [Language.ENGLISH]: ParagraphMapEnglish,
-    [Language.LATIN]: ParagraphMapLatin,
-    [Language.SPANISH]: ParagraphMapSpanish,
 } as const;
 
 export enum Element {
@@ -55,28 +38,6 @@ export function getElementAndPathID(
             return null;
         }
     }
-}
-
-export function getUrlByParagraphNumber(
-    potentialParagraphNumber: number | string | unknown,
-    language: Language,
-    request?: Request,
-): string | null {
-    const paragraphNumber = getPotentialParagraphNumber(potentialParagraphNumber);
-
-    if (paragraphNumber) {
-        const urlMap = getParagraphUrlMap(language);
-        const path = urlMap[paragraphNumber];
-        if (path) {
-            if (request) {
-                return (new URL(request.url)).origin + path;
-            } else if (IS_BROWSER) {
-                return new URL(window.location.href).origin + path;
-            }
-        }
-    }
-
-    return null;
 }
 
 /**
@@ -216,15 +177,6 @@ function getRenderablePathID(language: Language, semanticPath: SemanticPath): Pa
     return getPathMap(language)[semanticPath] ?? null;
 }
 
-function getParagraphUrlMap(language: Language): ParagraphNumberUrlMap {
-    return paragraphUrlMaps[language];
-}
-
 function getPathMap(language: Language): SemanticPathPathIdMap {
     return pathMaps[language];
-}
-
-function getPotentialParagraphNumber(value: number | string | unknown = ''): number | null {
-    const numberValue = Number(value);
-    return !isNaN(numberValue) && numberValue > 0 ? numberValue : null;
 }

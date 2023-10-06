@@ -2,7 +2,6 @@ import { IS_BROWSER } from '$fresh/runtime.ts';
 import { batch, computed, Signal, signal } from '@preact/signals';
 
 import * as server from './server.ts';
-import { getUrlByParagraphNumber } from './routing.ts';
 import { Language, NumberOrNumberRange, Paragraph } from '../catechism/source/types/types.ts';
 import { getLanguageInfo } from '../catechism/source/utils/language.ts';
 
@@ -64,7 +63,6 @@ export const Actions = {
         select: selectCrossReference,
         selectFromHistory: selectCrossReferenceFromHistory,
         clearSelection: clearCrossReferenceSelection,
-        navigateTo: navigateToSelectedCrossReference,
     },
 } as const;
 
@@ -116,19 +114,6 @@ function selectCrossReferenceFromHistory(index: number): void {
 async function loadCrossReferenceSelectedContent(paragraphNumbers: NumberOrNumberRange): Promise<void> {
     const paragraphs = await server.getParagraphs(paragraphNumbers, state.language.value);
     state.crossReference.selectedContent.value = paragraphs;
-}
-
-function navigateToSelectedCrossReference(): void {
-    if (IS_BROWSER && state.crossReference.selectedContent.value.length > 0) {
-        const url = getUrlByParagraphNumber(
-            state.crossReference.selectedContent.value[0].paragraphNumber,
-            state.language.value,
-        );
-        if (url) {
-            clearCrossReferenceSelection();
-            window.location.href = url;
-        }
-    }
 }
 //#endregion
 //#endregion

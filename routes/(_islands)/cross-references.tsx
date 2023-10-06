@@ -13,12 +13,6 @@ export default function CrossReferences(): JSX.Element {
     if (content.length > 0) {
         return (
             <div class='fixed top-8 inset-x-4 flex flex-col items-start gap-2 p-12 rounded-lg bg-white'>
-                <button
-                    onClick={() => Actions.crossReference.navigateTo()}
-                    class='self-end p-2 text-2xl font-mono font-bold'
-                >
-                    Open
-                </button>
                 {/* TODO: Replace "X" with an icon */}
                 <button
                     onClick={() => Actions.crossReference.clearSelection()}
