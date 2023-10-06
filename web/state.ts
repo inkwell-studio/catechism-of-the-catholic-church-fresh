@@ -63,6 +63,7 @@ export const Actions = {
         select: selectCrossReference,
         selectFromHistory: selectCrossReferenceFromHistory,
         clearSelection: clearCrossReferenceSelection,
+        navigateTo: navigateToSelectedCrossReference,
     },
 } as const;
 
@@ -114,6 +115,14 @@ function selectCrossReferenceFromHistory(index: number): void {
 async function loadCrossReferenceSelectedContent(paragraphNumbers: NumberOrNumberRange): Promise<void> {
     const paragraphs = await server.getParagraphs(paragraphNumbers, state.language.value);
     state.crossReference.selectedContent.value = paragraphs;
+}
+
+function navigateToSelectedCrossReference(): void {
+    const selectedParagraph = state.crossReference.selectedContent.value[0];
+    if (IS_BROWSER && selectedParagraph) {
+        clearCrossReferenceSelection();
+        window.location.href = new URL(window.location.href).origin + selectedParagraph.url;
+    }
 }
 //#endregion
 //#endregion

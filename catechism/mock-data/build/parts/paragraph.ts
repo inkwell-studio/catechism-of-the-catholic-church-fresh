@@ -6,15 +6,15 @@ import { Content, Paragraph, ParagraphSubitemContainer, TextBlock } from '../../
 export function buildParagraph(): Paragraph {
     return {
         contentType: Content.PARAGRAPH,
-        // This will be set later, after all content is created
-        pathID: '0',
-        // This will be set later, after all content is created
-        semanticPath: '',
-        // This will be set later, after all content is created
-        paragraphNumber: 1,
         openingContent: [],
         mainContent: buildContent(),
         finalContent: [],
+
+        // These will be set later, after all content is created
+        pathID: '0',
+        semanticPath: '',
+        paragraphNumber: 1,
+        url: '',
     };
 }
 
