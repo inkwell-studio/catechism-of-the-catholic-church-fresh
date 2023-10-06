@@ -11,7 +11,7 @@ import {
 } from '../source/types/types.ts';
 import { getFinalContent, getInBrief, getMainContent, getParagraphs } from '../source/utils/content.ts';
 import { buildSemanticPath, getSemanticPathSource } from '../source/utils/semantic-path.ts';
-import { getUrl } from '../../web/routing.ts';
+import { getUrl } from '../../web/routing-server.ts';
 
 //#region builders
 export function build(catechism: CatechismStructure): TableOfContentsType {

@@ -30,7 +30,7 @@ import {
     getMainContent,
     getOpeningContent,
 } from '../../catechism/source/utils/content.ts';
-import { getUrlFragment } from '../../web/routing.ts';
+import { getUrlFragment } from '../../web/routing-shared.ts';
 import { Actions } from '../../web/state.ts';
 import { translate } from '../../web/translation.ts';
 

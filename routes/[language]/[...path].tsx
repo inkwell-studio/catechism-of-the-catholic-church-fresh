@@ -12,7 +12,7 @@ import { getTableOfContents } from '../../catechism/source/utils/artifacts.ts';
 import { getAllLanguages, getLanguageInfo, getNativeLanguageText } from '../../catechism/source/utils/language.ts';
 
 import { loadContent } from '../../web/rendering.ts';
-import { Element, getElementAndPathID } from '../../web/routing.ts';
+import { Element, getElementAndPathID } from '../../web/routing-server.ts';
 import { Actions, Selectors } from '../../web/state.ts';
 import { translate } from '../../web/translation.ts';
 
