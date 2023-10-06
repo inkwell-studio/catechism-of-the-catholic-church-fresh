@@ -2,7 +2,6 @@
 
 - [ ] implement cross-reference functionality
   - [ ] implement functionality:
-    - [ ] have the CR component wait to show until the data is loaded
     - [ ] can click on a paragraph in the cross-reference component and have it open in the main component (the
           CR-component clears)
   - [ ] make UI decent
