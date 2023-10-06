@@ -1,7 +1,6 @@
 import {
     Language,
     ParagraphNumberContentMap,
-    ParagraphNumberUrlMap,
     PathIdContentMap,
     SemanticPathPathIdMap,
     TableOfContentsType,
@@ -17,10 +16,6 @@ export function getRenderablePathMap(language: Language): Promise<SemanticPathPa
 
 export function getParagraphNumberContentMap(language: Language): Promise<ParagraphNumberContentMap> {
     return getArtifact('paragraph-number_to_content', language);
-}
-
-export function getParagraphNumberUrlMap(language: Language): Promise<ParagraphNumberUrlMap> {
-    return getArtifact('paragraph-number_to_url', language);
 }
 
 export function getTableOfContents(language: Language): Promise<TableOfContentsType> {
