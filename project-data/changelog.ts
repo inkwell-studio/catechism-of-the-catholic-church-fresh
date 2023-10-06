@@ -14,6 +14,15 @@ export type Commit = {
 
 export const changelog: Changelog = [
     {
+        date: new Date(2023, 9, 6),
+        commits: [
+            {
+                hash: '60d48bc31d818df537ddc3817d5ed1efd431a708',
+                message: 'add ability to open and navigate by cross-references',
+            },
+        ],
+    },
+    {
         date: new Date(2023, 8, 12),
         commits: [
             {
@@ -56,20 +65,6 @@ export const changelog: Changelog = [
                 hash: '0e92881a9850c3116a98a97992d6f4df879eabe4',
                 message: 'add ability to navigate to particular sections',
             },
-        ],
-    },
-    {
-        date: new Date(2023, 1, 14),
-        commits: [
-            { hash: '81149e5094203ca2427b28d9e1d1258bcceb3f0c', message: 'add update log' },
-            { hash: '752e91674205f7a441b4a8043ad4cac2cd0a2c52', message: 'extract common code' },
-            { hash: 'e89d792bdee6ab4acd77bbd104ce8de395fbe904', message: 'add 404 page' },
-        ],
-    },
-    {
-        date: new Date(2023, 1, 10),
-        commits: [
-            { hash: '4e5f4a61e67ae845d0cb645b28dc580cf57da47f', message: 'add complementary color' },
         ],
     },
 ];
