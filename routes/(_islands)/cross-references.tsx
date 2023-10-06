@@ -4,7 +4,7 @@ import { JSX } from 'preact';
 import ContentBase from './content-base.tsx';
 import { Language, NumberOrNumberRange, Paragraph } from '../../catechism/source/types/types.ts';
 import { Actions, Selectors } from '../../web/state.ts';
-import { translate } from "../../web/translation.ts";
+import { translate } from '../../web/translation.ts';
 
 export default function CrossReferences(): JSX.Element {
     const content = Selectors.crossReference.selectedContent.value;

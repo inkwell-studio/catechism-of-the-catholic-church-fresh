@@ -16,15 +16,19 @@ for await (const [key, language] of getSupportedLanguages()) {
 function runTests(
     languageKey: string,
     catechism: CatechismStructure,
-    contentMap: ParagraphNumberContentMap
+    contentMap: ParagraphNumberContentMap,
 ): void {
     const catechismParagraphs = getAllParagraphs(catechism);
 
     Deno.test(`[${languageKey}] every paragraph is included`, () => {
-        catechismParagraphs.map(p => p.paragraphNumber).forEach(paragraphNumber => {
+        catechismParagraphs.map((p) => p.paragraphNumber).forEach((paragraphNumber) => {
             const mapParagraph = contentMap[paragraphNumber];
-            assertExists(mapParagraph, `missing paragraph: ${paragraphNumber}`)
-            assertStrictEquals(mapParagraph.paragraphNumber, paragraphNumber, `mismatch: the map entry for key ${paragraphNumber} has a paragraph number of ${mapParagraph.paragraphNumber}`)
+            assertExists(mapParagraph, `missing paragraph: ${paragraphNumber}`);
+            assertStrictEquals(
+                mapParagraph.paragraphNumber,
+                paragraphNumber,
+                `mismatch: the map entry for key ${paragraphNumber} has a paragraph number of ${mapParagraph.paragraphNumber}`,
+            );
         });
     });
 
