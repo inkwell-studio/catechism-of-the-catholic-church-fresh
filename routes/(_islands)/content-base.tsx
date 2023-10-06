@@ -289,9 +289,6 @@ function TextWrapperContent(textWrapper: TextWrapper): JSX.Element {
         <span>
             <span class='absolute right-0 font-sans-caption text-xs text-left pt-1 w-6 sm:w-14 md:w-12 lg:w-20 xl:w-24'>
                 {textWrapper.paragraphReferences
-                    // TODO: Determine if anything should be done with these two lines (were they meant to be a more readable implementation?)
-                    // .map((ref) => ref.toString()
-                    // .map((ref) => <Fragment key={ref}>ref.toString()</Fragment>
                     .map((reference, index, allReferences) => {
                         const separator = index < allReferences.length - 1 ? ', ' : '';
 

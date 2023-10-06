@@ -1,9 +1,5 @@
 # Tasks to complete now
 
-- [ ] implement cross-reference functionality
-  - [ ] handle all new `TODO`s
-- merge
-
 - [ ] implement a mechanism to return to:
   - homepage
   - table of contents
