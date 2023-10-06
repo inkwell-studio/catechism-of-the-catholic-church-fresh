@@ -8,6 +8,11 @@
   - [ ] handle all new `TODO`s
 - merge
 
+- [ ] implement a mechanism to return to:
+  - homepage
+  - table of contents
+- merge
+
 - [ ] set caching headers for the fonts (and any other static files?)
 - [ ] implement citations
 - merge
