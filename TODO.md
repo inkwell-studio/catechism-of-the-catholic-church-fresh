@@ -1,7 +1,7 @@
 # Tasks to complete now
 
 - [ ] implement cross-reference functionality
-  - [ ] implement tests for new artifacts
+  - [ ] execute the pre-commit task
   - [ ] write tests for API endpoint (e2e?)
     - incorporate the new `web/server.ts` file in the tests?
   - [ ] handle all new `TODO`s
