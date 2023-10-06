@@ -1,8 +1,6 @@
 # Tasks to complete now
 
 - [ ] implement cross-reference functionality
-  - [ ] write tests for API endpoint (e2e?)
-    - incorporate the new `web/server.ts` file in the tests?
   - [ ] handle all new `TODO`s
 - merge
 
