@@ -10,8 +10,7 @@ export default function CrossReferences(): JSX.Element {
     const selectionHistory = Selectors.crossReference.selectionHistory.value;
     const language = Selectors.language.value;
 
-    const latestSelectedReference = selectionHistory.at(-1);
-    if (latestSelectedReference) {
+    if (content.length > 0) {
         return (
             <div class='fixed top-8 inset-x-4 flex flex-col items-start gap-2 p-12 rounded-lg bg-white'>
                 {/* TODO: Replace "X" with an icon */}
