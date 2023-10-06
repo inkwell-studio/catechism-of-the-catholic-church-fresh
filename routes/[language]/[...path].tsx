@@ -40,7 +40,7 @@ export default defineRoute(async (request, context) => {
                                 <div class='flex justify-center overflow-y-auto'>
                                     <Content content={content} language={languageInfo.language}></Content>
                                 </div>
-                                <Citations></Citations>
+                                {/* <Citations></Citations> */}
                             </div>
                             <CrossReferences></CrossReferences>
                         </>,
@@ -70,7 +70,7 @@ function RenderApp(mainElement: JSX.Element): JSX.Element {
                     {mainElement}
                 </div>
                 <div>
-                    <ActionBar></ActionBar>
+                    {/* <ActionBar></ActionBar> */}
                 </div>
             </body>
         </>
