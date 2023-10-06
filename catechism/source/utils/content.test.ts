@@ -1,11 +1,11 @@
-import { assertEquals, assertStrictEquals } from '$deno/testing/asserts.ts';
+import { assertEquals } from '$deno/testing/asserts.ts';
 
 import { getParagraphNumbers } from './content.ts';
 
 console.log('\nContent logic ...');
 
 Deno.test('getParagraphNumbers(): number', () => {
-    assertStrictEquals(getParagraphNumbers(7), 7);
+    assertEquals(getParagraphNumbers(7), [7]);
 });
 
 Deno.test('getParagraphNumbers(): number range (no gap)', () => {
