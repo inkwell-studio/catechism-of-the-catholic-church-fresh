@@ -53,11 +53,12 @@ async function getParagraphNumberNavigationUrl(
     if (paragraphNumber) {
         const urlMap = await getParagraphNumberUrlMap(language);
         const path = urlMap[paragraphNumber];
-
-        return path ? (new URL(request.url)).origin + path : null;
-    } else {
-        return null;
+        if (path) {
+            return (new URL(request.url)).origin + path;
+        }
     }
+
+    return null;
 }
 
 function getPotentialParagraphNumber(value = ''): number | null {
