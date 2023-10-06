@@ -360,9 +360,12 @@ function buildParagraphCrossReferences(
     }
 
     function buildMultipleReferences(maxParagraphNumber: number): Array<NumberOrNumberRange> {
-        return intArrayOfRandomLength(Limit.paragraph.crossReference.count).map((i) =>
+        const references = intArrayOfRandomLength(Limit.paragraph.crossReference.count).map((i) =>
             buildReference(maxParagraphNumber)
         );
+
+        // Ensure there are no duplicate cross-references
+        return Array.from(new Set(references));
     }
 
     function buildReference(maxParagraphNumber: number): NumberOrNumberRange {
