@@ -1,12 +1,12 @@
-import { assert, assertStrictEquals } from '$deno/testing/asserts.ts';
+import { assert, assertEquals, assertStrictEquals } from '$deno/testing/asserts.ts';
 import { createHandler } from '$fresh/server.ts';
 import { getSupportedLanguages } from '../catechism/source/utils/language.ts';
 import manifest from '../fresh.gen.ts';
 
 const baseUrl = 'http://localhost:8000';
 
-//#region tests
-Deno.test('website: miscellaneous', async (test) => {
+//#region tests: rendered content
+Deno.test('website: rendered content', async (test) => {
     const handler = await createHandler(manifest);
 
     function get(url = ''): Promise<Response> {
@@ -67,6 +67,63 @@ Deno.test('website: miscellaneous', async (test) => {
     await test.step('invalid routes (excessive paragraph number): 404 page', async () => {
         const r = await get('99999');
         assert404(r);
+    });
+});
+//#endregion
+
+//#region tests: data API
+Deno.test('website: data API', async (test) => {
+    const handler = await createHandler(manifest);
+
+    function get(url: string): Promise<Response> {
+        url = `${baseUrl}/api/${url}`;
+        return handler(new Request(url));
+    }
+
+    await test.step('[language]/paragraph/: single paragraph number', async () => {
+        const paragraphNumber = 12;
+
+        const r = await get(`en/paragraph/${paragraphNumber}`);
+        assertStrictEquals(r.status, 200);
+
+        const data = await r.json();
+        assert(Array.isArray(data));
+        assertStrictEquals(data.length, 1);
+        assertStrictEquals(data[0].paragraphNumber, paragraphNumber);
+    });
+
+    await test.step('[language]/paragraph/: paragraph number range', async () => {
+        const paragraphNumberStart = 12;
+        const paragraphNumberEnd = 15;
+        const diff = paragraphNumberEnd - paragraphNumberStart;
+
+        const r = await get(`en/paragraph/${paragraphNumberStart}-${paragraphNumberEnd}`);
+        assertStrictEquals(r.status, 200);
+
+        const data = await r.json();
+        assert(Array.isArray(data));
+        assertStrictEquals(data.length, diff + 1);
+
+        for (let i = 0; i <= diff; i++) {
+            assertStrictEquals(data[i].paragraphNumber, i + paragraphNumberStart);
+        }
+    });
+
+    await test.step('[language]/paragraph/: out-of-range paragraph number', async () => {
+        const r = await get(`en/paragraph/123456789`);
+        assertStrictEquals(r.status, 200);
+
+        const data = await r.json();
+        assert(Array.isArray(data));
+        assertStrictEquals(data.length, 0);
+    });
+
+    await test.step('[language]/paragraph/: invalid or unsupported language code', async () => {
+        const r = await get(`zz/paragraph/10`);
+        assertStrictEquals(r.status, 200);
+
+        const text = await r.text();
+        assertEquals(text, '');
     });
 });
 //#endregion

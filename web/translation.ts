@@ -13,6 +13,10 @@ const translationMap: Record<string, Record<Exclude<Language, Language.ENGLISH>,
         [Language.LATIN]: 'Servo Errore',
         [Language.SPANISH]: 'Error del Servidor',
     },
+    'Error: No content found.': {
+        [Language.LATIN]: 'Errore: non contentus inventus est.',
+        [Language.SPANISH]: 'Error: no se encontró contenido.',
+    },
     'Page not found.': {
         [Language.LATIN]: 'Pagina non inveni.',
         [Language.SPANISH]: 'Página no encontrada.',
@@ -24,6 +28,10 @@ const translationMap: Record<string, Record<Exclude<Language, Language.ENGLISH>,
     'Go Home': {
         [Language.LATIN]: 'Redira ad Initium',
         [Language.SPANISH]: 'Volver a Empezar',
+    },
+    'Open': {
+        [Language.LATIN]: 'Pando',
+        [Language.SPANISH]: 'Desplegar',
     },
     'Unsupported language': {
         [Language.LATIN]: 'Sine lingua',

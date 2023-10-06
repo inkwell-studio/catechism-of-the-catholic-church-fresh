@@ -76,6 +76,9 @@ export default {
             mono: ['Courier New', 'monospace'],
         },
         extend: {
+            gridTemplateRows: {
+                'content-with-permanent-footer': '1fr max-content',
+            },
             screens: {
                 xs: '320px',
             },

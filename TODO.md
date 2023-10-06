@@ -1,17 +1,40 @@
 # Tasks to complete now
 
-- [ ] try implementing artifact caching
-  - test logic locally
+- [ ] implement a mechanism to return to:
+  - the homepage
+  - table of contents
 - merge
 
-- [ ] implement citations and cross-reference functionality
+- [ ] add mobile-rendering data to `<head>`
 - merge
 
+- [ ] set caching headers for the fonts (and any other static files?)
+- [ ] implement citations
+- merge
+
+- [ ] translations: always use a server-side component so data isn't sent up to the client unnecessarily
+- [ ] UI changes: handle RTL languages
 - [ ] implement Action bar
-  - "Home" (to a new "Dashboard" page (at `/en`): TOC with a link to the current "intro" page)
+  - Table of Contents
+    - "Home" (to a new "Dashboard" page (at `/en`): TOC with a link to the current "intro" page)
+      - introductory paragraphs, e.g.:
+        - what the CCC is
+        - how the Search may be used (e.g. keywords, phrases, content titles, paragraph numbers)
+        - how the JSON API may be used
+    - introductory Apostolic Letter
+    - Prologue
+    - Parts 1-X
+    - Glossary
+    - Topical Index
+    - Citation Index
+  - Search
+  - Settings
+    - UI: light/dark/system
+    - text size
+    - "About" (general info)
+    - language switcher
   - Glossary
   - Index
-  - language switcher
     - mock data: use the same high-level structure for all languages
 - merge
 
@@ -31,9 +54,11 @@
 - merge
 
 - [ ] look into "ahead-of-time" builds: https://fresh.deno.dev/docs/concepts/ahead-of-time-builds
+- [ ] research artifact caching methods
 
 ## Unprioritized
 
+- [ ] consider using an unstyled component library for buttons and other like elements
 - [ ] determine the proper status code to use for the paragraph-number redirects
 - [ ] add helpful information and links to the 404 page
 - [ ] look into using Astral for e2e testing: https://astral.deno.dev/

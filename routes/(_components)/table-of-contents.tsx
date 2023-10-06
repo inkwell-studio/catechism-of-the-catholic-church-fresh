@@ -9,13 +9,13 @@ export function TableOfContents(props: { language: Language; tableOfContents: Ta
     return (
         <>
             {Title(props.language)}
-            <div className='flex flex-col gap-12 my-12'>
+            <div class='flex flex-col gap-12 my-12'>
                 <h2 class='text-3xl text-center'>
                     {translate('Table of Contents', props.language)}
                 </h2>
                 <div class='w-48 mx-auto border border-red-900/50 rounded'></div>
                 <nav class='mx-auto'>
-                    <ol className='space-y-6'>
+                    <ol class='space-y-6'>
                         <li>
                             {EntryContainer(props.language, toc.prologue)}
                         </li>

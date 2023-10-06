@@ -10,6 +10,7 @@ import {
     Container,
     Content,
     ContentBase,
+    Language,
     NumberOrNumberRange,
     PathID,
     SemanticPathSource,
@@ -25,6 +26,7 @@ import {
 } from '../../source/utils/content.ts';
 import { getContainerDesignator } from '../../source/utils/path-id.ts';
 import { buildSemanticPath, getSemanticPathSource } from '../../source/utils/semantic-path.ts';
+import { getUrl } from '../../../web/routing-server.ts';
 
 //#region top-level functions
 export function buildMockData(): CatechismStructure {
@@ -41,6 +43,7 @@ export function buildMockData(): CatechismStructure {
     catechism = setPathIDs(catechism);
     catechism = setParagraphNumbers(catechism);
     catechism = setSemanticPaths(catechism);
+    catechism = setParagraphUrls(catechism);
 
     console.log('Validating mock data...');
     const valid = validateCatechism(catechism);
@@ -255,6 +258,26 @@ function setSemanticPathsHelper(
     return content;
 }
 
+function setParagraphUrls(catechism: CatechismStructure): CatechismStructure {
+    catechism = structuredClone(catechism);
+
+    const content = getAllContent(catechism);
+    setParagraphUrlHelper(content, catechism.language);
+
+    return catechism;
+}
+
+function setParagraphUrlHelper(content: Array<ContentBase>, language: Language): void {
+    content.forEach((c) => {
+        if (Content.PARAGRAPH === c.contentType) {
+            (c as any).url = getUrl(language, c.semanticPath);
+        } else if (hasMainContent(c)) {
+            const childContent = getAllChildContent(c);
+            const results = setParagraphUrlHelper(childContent, language);
+        }
+    });
+}
+
 function validateCatechism(catechism: CatechismStructure): boolean {
     function fail(message: string): false {
         console.log(`\nVALIDATION FAILURE: ${message}`);
@@ -337,9 +360,12 @@ function buildParagraphCrossReferences(
     }
 
     function buildMultipleReferences(maxParagraphNumber: number): Array<NumberOrNumberRange> {
-        return intArrayOfRandomLength(Limit.paragraph.crossReference.count).map((i) =>
+        const references = intArrayOfRandomLength(Limit.paragraph.crossReference.count).map((i) =>
             buildReference(maxParagraphNumber)
         );
+
+        // Ensure there are no duplicate cross-references
+        return Array.from(new Set(references));
     }
 
     function buildReference(maxParagraphNumber: number): NumberOrNumberRange {

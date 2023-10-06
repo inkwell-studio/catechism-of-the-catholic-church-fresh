@@ -6,9 +6,11 @@ import {
     InBrief,
     InBriefContainer,
     Language,
+    NumberOrNumberRange,
     Paragraph,
     PathID,
     SemanticPath,
+    TextWrapper,
 } from '../types/types.ts';
 
 export async function getCatechism(language: Language): Promise<CatechismStructure> {
@@ -89,28 +91,64 @@ export function getAllParagraphs(catechism: CatechismStructure): Array<Paragraph
     return getParagraphs(allContent);
 }
 
+export function getParagraphs(content: Array<ContentBase>): Array<Paragraph> {
+    return getAll(content, Content.PARAGRAPH);
+}
+
 /**
- * @returns the `Paragraph`s of the given content in the order that they are listed
+ * @returns an array of paragraph numbers for all the paragraphs specified by `references`.
+ * Paragraph ranges are split up into individual numbers; e.g. `'12-15'` becomes `[12, 13, 14, 15]`.
  */
-export function getParagraphs(allContent: Array<ContentBase>): Array<Paragraph> {
-    return helper([], allContent);
+export function getParagraphNumbers(reference: NumberOrNumberRange): Array<number> {
+    if ('number' === typeof reference) {
+        return [reference];
+    } else {
+        if (reference.includes('-')) {
+            const [low, high] = reference.split('-').map((v) => Number(v));
+
+            const numbers: Array<number> = [];
+            if ('number' === typeof low && 'number' === typeof high) {
+                for (let i = low; i <= high; i++) {
+                    numbers.push(i);
+                }
+                return numbers;
+            } else {
+                throw new Error(`Failed to parse a paragraph cross-reference value: ${reference}`);
+            }
+        } else {
+            const num = Number(reference);
+            return num ? [num] : [];
+        }
+    }
+}
+
+export function getTextWrappers(content: ContentContainer): Array<TextWrapper> {
+    return getAll([content], Content.TEXT_WRAPPER);
+}
+
+/**
+ * @returns all items of the given content type, in the order that they are listed
+ */
+function getAll<T extends ContentBase>(allContent: Array<ContentBase>, contentType: Content): Array<T> {
+    return helper([], allContent, contentType);
 
     function helper(
-        paragraphs: Array<Paragraph>,
+        items: Array<T>,
         content: Array<ContentBase>,
-    ): Array<Paragraph> {
+        contentType: Content,
+    ): Array<T> {
         content.forEach((c) => {
-            if (Content.PARAGRAPH === c.contentType) {
-                paragraphs.push(c as unknown as Paragraph);
+            if (c.contentType === contentType) {
+                items.push(c as unknown as T);
             } else {
                 const childContent = getAllChildContent(c);
                 if (childContent.length > 0) {
-                    helper(paragraphs, childContent);
+                    helper(items, childContent, contentType);
                 }
             }
         });
 
-        return paragraphs;
+        return items;
     }
 }
 

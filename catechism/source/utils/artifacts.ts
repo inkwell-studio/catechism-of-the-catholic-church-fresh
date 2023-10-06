@@ -1,5 +1,6 @@
 import {
     Language,
+    ParagraphNumberContentMap,
     ParagraphNumberUrlMap,
     PathIdContentMap,
     SemanticPathPathIdMap,
@@ -14,12 +15,16 @@ export function getRenderablePathMap(language: Language): Promise<SemanticPathPa
     return getArtifact('semantic-path_to_renderable-path-id', language);
 }
 
-export function getTableOfContents(language: Language): Promise<TableOfContentsType> {
-    return getArtifact('table-of-contents', language);
+export function getParagraphNumberContentMap(language: Language): Promise<ParagraphNumberContentMap> {
+    return getArtifact('paragraph-number_to_content', language);
 }
 
 export function getParagraphNumberUrlMap(language: Language): Promise<ParagraphNumberUrlMap> {
     return getArtifact('paragraph-number_to_url', language);
+}
+
+export function getTableOfContents(language: Language): Promise<TableOfContentsType> {
+    return getArtifact('table-of-contents', language);
 }
 
 // deno-lint-ignore no-explicit-any

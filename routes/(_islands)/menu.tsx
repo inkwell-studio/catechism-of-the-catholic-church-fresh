@@ -1,10 +1,10 @@
 // deno-lint-ignore-file fresh-server-event-handlers
-
+import { JSX } from 'preact';
 import { signal } from '@preact/signals';
 
 const open = signal<boolean>(false);
 
-export default function Menu() {
+export default function Menu(): JSX.Element {
     return (
         <>
             <div onClick={toggle} class='block sm:hidden'>[M]</div>

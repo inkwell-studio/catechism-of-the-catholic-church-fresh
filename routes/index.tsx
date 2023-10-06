@@ -9,7 +9,7 @@ export default function Home(): JSX.Element {
     return (
         <>
             <Changelog></Changelog>
-            <div class='flex flex-col items-center z-10'>
+            <div class='bg-tan-100 flex flex-col items-center'>
                 <div class='w-full h-8 opacity-70'>&nbsp;</div>
 
                 <div class='h-[80vh] flex flex-col justify-center items-center px-8'>
@@ -112,8 +112,8 @@ export default function Home(): JSX.Element {
                     <Paragraph>
                         <>
                             Also, the app has functionality not directly related to the{' '}
-                            <span className='italic'>Catechism</span>, which may result in a less-intuitive experience
-                            for users who are interested in solely the <span className='italic'>Catechism</span>.
+                            <span class='italic'>Catechism</span>, which may result in a less-intuitive experience for
+                            users who are interested in solely the <span class='italic'>Catechism</span>.
                         </>
                     </Paragraph>
 
@@ -162,7 +162,7 @@ export default function Home(): JSX.Element {
                     <Paragraph>
                         If you would like to see the code or contact&nbsp;the&nbsp;developer, please&nbsp;do&nbsp;so:
                     </Paragraph>
-                    <div className='my-4 mx-4 flex flex-col md:flex-row gap-3'>
+                    <div class='my-4 mx-4 flex flex-col md:flex-row gap-3'>
                         <ButtonLink
                             newTab={true}
                             href='https://github.com/inkwell-studio/catechism-of-the-catholic-church'
@@ -187,7 +187,7 @@ export default function Home(): JSX.Element {
                         </>
                     </Paragraph>
                     <Paragraph>
-                        <div className='mt-3 mx-4 flex'>
+                        <div class='mt-3 mx-4 flex'>
                             <ButtonLink newTab={false} href='/en' text='Enter'></ButtonLink>
                         </div>
                     </Paragraph>

@@ -19,7 +19,7 @@ import {
     isPrologueContent,
 } from '../catechism/source/utils/path-id.ts';
 
-export async function getContent(language: Language, pathID: PathID): Promise<ContentContainer> {
+export async function loadContent(language: Language, pathID: PathID): Promise<ContentContainer> {
     try {
         const contentMap = await getContentMap(language);
         return contentMap[pathID];
