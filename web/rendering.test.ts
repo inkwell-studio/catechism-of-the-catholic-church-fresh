@@ -2008,6 +2008,7 @@ function buildParagraph(): Paragraph {
         contentType: Content.PARAGRAPH,
         pathID: '123456789',
         semanticPath: '',
+        url: '',
         paragraphNumber: 123456789,
         openingContent: [],
         mainContent,

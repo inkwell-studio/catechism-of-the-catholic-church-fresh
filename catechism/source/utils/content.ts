@@ -6,6 +6,7 @@ import {
     InBrief,
     InBriefContainer,
     Language,
+    NumberOrNumberRange,
     Paragraph,
     PathID,
     SemanticPath,
@@ -98,7 +99,7 @@ export function getParagraphs(content: Array<ContentBase>): Array<Paragraph> {
  * @returns an array of paragraph numbers for all the paragraphs specified by `references`.
  * Paragraph ranges are split up into individual numbers; e.g. `'12-15'` becomes `[12, 13, 14, 15]`.
  */
-export function getParagraphNumbers(reference: number | string): Array<number> {
+export function getParagraphNumbers(reference: NumberOrNumberRange): Array<number> {
     if ('number' === typeof reference) {
         return [reference];
     } else {

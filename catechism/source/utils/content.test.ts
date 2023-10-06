@@ -1,13 +1,17 @@
-import { assertEquals } from '$deno/testing/asserts.ts';
+import { assertEquals, assertStrictEquals } from '$deno/testing/asserts.ts';
 
 import { getParagraphNumbers } from './content.ts';
-import { NumberOrNumberRange } from '../types/types.ts';
 
 console.log('\nContent logic ...');
 
-Deno.test('getParagraphNumbers()', () => {
-    const input: Array<NumberOrNumberRange> = [7, 3, '10-11', 5, '20-23'];
-    const expectedOutput = [7, 3, 10, 11, 5, 20, 21, 22, 23];
-    const result = getParagraphNumbers(input);
-    assertEquals(result, expectedOutput);
+Deno.test('getParagraphNumbers(): number', () => {
+    assertStrictEquals(getParagraphNumbers(7), 7);
+});
+
+Deno.test('getParagraphNumbers(): number range (no gap)', () => {
+    assertEquals(getParagraphNumbers('10-11'), [10, 11]);
+});
+
+Deno.test('getParagraphNumbers(): number range (with gap)', () => {
+    assertEquals(getParagraphNumbers('10-12'), [10, 11, 12]);
 });
