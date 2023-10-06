@@ -4,6 +4,7 @@ import { JSX } from 'preact';
 import ContentBase from './content-base.tsx';
 import { Language, NumberOrNumberRange, Paragraph } from '../../catechism/source/types/types.ts';
 import { Actions, Selectors } from '../../web/state.ts';
+import { translate } from "../../web/translation.ts";
 
 export default function CrossReferences(): JSX.Element {
     const content = Selectors.crossReference.selectedContent.value;
@@ -15,8 +16,7 @@ export default function CrossReferences(): JSX.Element {
         return (
             <div class='fixed bottom-0 inset-x-0 max-h-[50vh] overflow-y-auto bg-white pb-8 px-4 sm:px-12 border-t border-black'>
                 <div class='absolute top-4 right-4 flex gap-2 text-lg font-mono'>
-                    <button onClick={() => Actions.crossReference.navigateTo()}>Open</button>
-                    {/* TODO: Replace "X" with an icon */}
+                    <button onClick={() => Actions.crossReference.navigateTo()}>{translate('Open', language)}</button>
                     <button onClick={() => Actions.crossReference.clearSelection()}>X</button>
                 </div>
                 <div class='w-full md:max-w-2xl lg:max-w-3xl mx-auto mt-2'>

@@ -17,6 +17,7 @@
 - [ ] implement citations
 - merge
 
+- [ ] translations: always use a server-side component so data isn't sent up to the client unnecessarily
 - [ ] UI changes: handle RTL languages
 - [ ] implement Action bar
   - Table of Contents

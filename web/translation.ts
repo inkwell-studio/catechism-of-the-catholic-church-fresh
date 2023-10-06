@@ -29,6 +29,10 @@ const translationMap: Record<string, Record<Exclude<Language, Language.ENGLISH>,
         [Language.LATIN]: 'Redira ad Initium',
         [Language.SPANISH]: 'Volver a Empezar',
     },
+    'Open': {
+        [Language.LATIN]: 'Pando',
+        [Language.SPANISH]: 'Desplegar',
+    },
     'Unsupported language': {
         [Language.LATIN]: 'Sine lingua',
         [Language.SPANISH]: 'Idioma no admitido',
