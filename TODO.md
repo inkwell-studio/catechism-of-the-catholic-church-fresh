@@ -1,12 +1,11 @@
 # Tasks to complete now
 
 - [ ] implement cross-reference functionality
-  - [ ] implement functionality:
   - [ ] make UI decent
   - [ ] implement tests for new artifacts
   - [ ] write tests for API endpoint (e2e?)
-    - incorporate the new `server-api.ts` file in the tests?
-  - [ ] handle all `TODO`s
+    - incorporate the new `web/server.ts` file in the tests?
+  - [ ] handle all new `TODO`s
 - merge
 
 - [ ] set caching headers for the fonts (and any other static files?)
