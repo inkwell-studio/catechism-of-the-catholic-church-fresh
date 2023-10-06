@@ -2,8 +2,6 @@
 
 - [ ] implement cross-reference functionality
   - [ ] implement functionality:
-    - [ ] can click on a paragraph in the cross-reference component and have it open in the main component (the
-          CR-component clears)
   - [ ] make UI decent
   - [ ] implement tests for new artifacts
   - [ ] write tests for API endpoint (e2e?)
@@ -11,6 +9,7 @@
   - [ ] handle all `TODO`s
 - merge
 
+- [ ] set caching headers for the fonts (and any other static files?)
 - [ ] implement citations
 - merge
 
