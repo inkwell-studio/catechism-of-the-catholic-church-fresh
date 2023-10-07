@@ -21,7 +21,7 @@ export default function CrossReferences(): JSX.Element {
                 </div>
                 <div class='w-full md:max-w-2xl lg:max-w-3xl mx-auto mt-2'>
                     {showTrail && (
-                        <div class='flex gap-1 py-2 border-b'>
+                        <div class='flex gap-2 py-2 border-b'>
                             {Trail(selectionHistory)}
                         </div>
                     )}
@@ -46,17 +46,15 @@ function Content(
 }
 
 function Trail(refs: Array<NumberOrNumberRange>): Array<JSX.Element> {
-    return refs.map((ref, index) => {
-        const finalReference = index === refs.length - 1;
-        if (finalReference) {
-            return <div key={ref}>{ref}</div>;
-        } else {
-            return (
-                <>
-                    <button key={ref} onClick={() => Actions.crossReference.selectFromHistory(index)}>{ref},</button>
-                    {' '}
-                </>
-            );
-        }
+    return refs.slice(0, -1).map((ref, index, array) => {
+        const final = index === array.length - 1;
+        return (
+            <>
+                <button key={ref} onClick={() => Actions.crossReference.selectFromHistory(index)}>
+                    {ref}
+                    {!final && ', '}
+                </button>
+            </>
+        );
     });
 }
