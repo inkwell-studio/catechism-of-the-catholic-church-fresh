@@ -5,9 +5,6 @@
   - table of contents
 - merge
 
-- [ ] add mobile-rendering data to `<head>`
-- merge
-
 - [ ] set caching headers for the fonts (and any other static files?)
 - [ ] implement citations
 - merge
