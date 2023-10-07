@@ -9,6 +9,7 @@ import * as $3 from './routes/_app.tsx';
 import * as $4 from './routes/_middleware.ts';
 import * as $5 from './routes/api/[language]/paragraph/[paragraph_number_range].ts';
 import * as $6 from './routes/index.tsx';
+import * as $7 from './routes/select-language.tsx';
 import * as $$0 from './routes/(_islands)/changelog-trigger.tsx';
 import * as $$1 from './routes/(_islands)/changelog.tsx';
 import * as $$2 from './routes/(_islands)/citations.tsx';
@@ -28,6 +29,7 @@ const manifest = {
         './routes/_middleware.ts': $4,
         './routes/api/[language]/paragraph/[paragraph_number_range].ts': $5,
         './routes/index.tsx': $6,
+        './routes/select-language.tsx': $7,
     },
     islands: {
         './routes/(_islands)/changelog-trigger.tsx': $$0,

@@ -188,7 +188,7 @@ export default function Home(): JSX.Element {
                     </Paragraph>
                     <Paragraph>
                         <div class='mt-3 mx-4 flex'>
-                            <ButtonLink newTab={false} href='/en' text='Enter'></ButtonLink>
+                            <ButtonLink newTab={false} href='/select-language' text='Enter'></ButtonLink>
                         </div>
                     </Paragraph>
                 </div>
