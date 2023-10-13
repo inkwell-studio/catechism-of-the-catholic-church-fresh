@@ -57,45 +57,40 @@ export default function Home(): JSX.Element {
                         </>
                     </Paragraph>
                     <ol class='list-disc mb-2 ml-6 space-y-0.5'>
-                        <li>
-                            <a class='hover:underline' href='http://www.vatican.va/archive/ENG0015/_INDEX.HTM'>
-                                Vatican archive
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                class='hover:underline'
-                                href='https://www.usccb.org/beliefs-and-teachings/what-we-believe/catechism/catechism-of-the-catholic-church'
-                            >
-                                United States Conference of Catholic Bishops
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                class='hover:underline'
-                                href='https://scborromeo2.org/catechism-of-the-catholic-church'
-                            >
-                                St. Charles Borromeo Catholic Church of Picayune, Mississippi
-                            </a>
-                        </li>
-                        <li>
-                            <a class='hover:underline' href='http://cccref.com/'>
-                                A wrapper around the St. Charles Borromeo website
-                            </a>
-                        </li>
-                        <li>
-                            <a class='hover:underline' href='https://www.catechismonline.com/home'>
-                                www.catechismonline.com
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                class='hover:underline'
-                                href='https://www.catholicculture.org/culture/library/catechism/index.cfm'
-                            >
-                                www.catholicculture.org
-                            </a>
-                        </li>
+                        {[
+                            {
+                                url: 'http://www.vatican.va/archive/ENG0015/_INDEX.HTM',
+                                text: 'Vatican archive',
+                            },
+                            {
+                                url: 'https://www.usccb.org/beliefs-and-teachings/what-we-believe/catechism/catechism-of-the-catholic-church',
+                                text: 'United States Conference of Catholic Bishops',
+                            },
+                            {
+                                url: 'https://scborromeo2.org/catechism-of-the-catholic-church',
+                                text: 'St. Charles Borromeo Catholic Church of Picayune, Mississippi',
+                            },
+                            {
+                                url: 'http://cccref.com/',
+                                text: 'A wrapper around the St. Charles Borromeo website',
+                            },
+                            {
+                                url: 'https://www.catechismonline.com/home',
+                                text: 'www.catechismonline.com',
+                            },
+                            {
+                                url: 'https://www.catholicculture.org/culture/library/catechism/index.cfm',
+                                text: 'www.catholicculture.org',
+                            },
+                            {
+                                url: 'https://www.catholicdoors.com/catechis/index.htm',
+                                text: 'www.catholicdoors.com',
+                            },
+                        ].map((site) => (
+                            <li>
+                                <a class='hover:underline' href={site.url}>{site.text}</a>
+                            </li>
+                        ))}
                     </ol>
                     <Paragraph>
                         <>

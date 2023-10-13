@@ -1,13 +1,36 @@
 # Tasks to complete now
 
-- [ ] implement a mechanism to return to:
-  - the homepage
-  - table of contents
+- [ ] implement a next/previous navigation mechanism
+  - new artifact: a map object, where `PathID`s are the new "renderable PathID"s:
+    ```TypeScript
+    Record<PathID, {
+        previous: { pathID: PathID; title: string } | null;
+        next: { pathID: PathID; title: string } | null;
+    }>;
+    ```
+    - this is derived from an ordered list of "renderable PathID"s (these may need to be newly computed or derived
+      — they can be derived from the Table of Contents entries: taking them in order and filtering out those with URL
+      fragments (i.e. `#` in the URL))
+  - add the current "renderable PathID" to the state
+    - this new state property is used as an index on the the new artifact to display the Next/Previous selectors on the
+      UI
+  - also consider the previously thought of algorithms (potentially now obsolete):
+    - "Next" algorithm:
+      - 2nd main-content child: `0__m.0` -> `0__m.0__m.1`
+      - next sibling: `0__m.0__m.1` -> `0__m.0__m.2`
+      - parent sibling, next (continue ascending as necessary)
+      - `null`
+  - "Previous" algorithm
+    - previous non-first main content sibling: `0__m.0__m.2` -> `0__m.0__m.1`
+    - parent sibling, previous (continue ascending as necessary)
+    - `null`
 - merge
 
-- [ ] set caching headers for the fonts (and any other static files?)
 - [ ] implement citations
+  - [ ] also set caching headers for the fonts (and any other static files?)
 - merge
+
+- [ ] upgrade to Fresh 1.5.x
 
 - [ ] translations: always use a server-side component so data isn't sent up to the client unnecessarily
 - [ ] UI changes: handle RTL languages
@@ -38,24 +61,16 @@
 - [ ] implement hierarchical navigation
 - merge
 
-- [ ] add "next" and "previous" content
-  - "Next" algorithm:
-    - 2nd main-content child: `0__m.0` -> `0__m.0__m.1`
-    - next sibling: `0__m.0__m.1` -> `0__m.0__m.2`
-    - parent sibling, next (continue ascending as necessary)
-    - `null`
-  - "Previous" algorithm
-    - previous non-first main content sibling: `0__m.0__m.2` -> `0__m.0__m.1`
-    - parent sibling, previous (continue ascending as necessary)
-    - `null`
-- merge
-
 - [ ] look into "ahead-of-time" builds: https://fresh.deno.dev/docs/concepts/ahead-of-time-builds
 - [ ] research artifact caching methods
 
 ## Unprioritized
 
-- [ ] consider using an unstyled component library for buttons and other like elements
+- [ ] consider using a component library for buttons and other like elements
+  - https://mantine.dev/
+  - https://www.radix-ui.com/primitives
+  - https://chakra-ui.com/
+  - https://headlessui.com/
 - [ ] determine the proper status code to use for the paragraph-number redirects
 - [ ] add helpful information and links to the 404 page
 - [ ] look into using Astral for e2e testing: https://astral.deno.dev/

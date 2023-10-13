@@ -13,7 +13,7 @@ import { getAllLanguages, getLanguageInfo, getNativeLanguageText } from '../../c
 
 import { loadContent } from '../../web/rendering.ts';
 import { Element, getElementAndPathID } from '../../web/routing-server.ts';
-import { Actions, Selectors } from '../../web/state.ts';
+import { Selectors } from '../../web/state.ts';
 import { translate } from '../../web/translation.ts';
 
 export default defineRoute(async (request, context) => {
@@ -70,7 +70,7 @@ function RenderApp(mainElement: JSX.Element): JSX.Element {
                     {mainElement}
                 </div>
                 <div>
-                    {/* <ActionBar></ActionBar> */}
+                    <ActionBar></ActionBar>
                 </div>
             </body>
         </>
