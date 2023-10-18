@@ -13,7 +13,7 @@ import { getAllLanguages, getLanguageInfo, getNativeLanguageText } from '../../c
 
 import { loadContent } from '../../web/rendering.ts';
 import { Element, getElementAndPathID } from '../../web/routing-server.ts';
-import { Selectors } from '../../web/state.ts';
+import { Actions, Selectors } from '../../web/state.ts';
 import { translate } from '../../web/translation.ts';
 
 export default defineRoute(async (request, context) => {
@@ -26,6 +26,7 @@ export default defineRoute(async (request, context) => {
         const { element, pathID } = elementAndPathID;
 
         if (Element.TABLE_OF_CONTENTS === element) {
+            Actions.navigation.setCurrentRenderableNode(null);
             const tableOfContents = await getTableOfContents(languageInfo.language);
             return RenderApp(
                 <TableOfContents language={languageInfo.language} tableOfContents={tableOfContents}></TableOfContents>,
@@ -34,6 +35,7 @@ export default defineRoute(async (request, context) => {
             if (pathID) {
                 const content = await loadContent(languageInfo.language, pathID);
                 if (content) {
+                    Actions.navigation.setCurrentRenderableNode(pathID);
                     return RenderApp(
                         <>
                             <div class='grid grid-rows-content-with-permanent-footer h-full'>
@@ -46,28 +48,32 @@ export default defineRoute(async (request, context) => {
                         </>,
                     );
                 } else {
+                    Actions.navigation.setCurrentRenderableNode(null);
                     return context.renderNotFound();
                 }
             } else {
+                Actions.navigation.setCurrentRenderableNode(null);
                 return context.renderNotFound();
             }
         }
     } else if (languageInfo.valid) {
+        Actions.navigation.setCurrentRenderableNode(null);
         return UnsupportedLanguage(context.params.language);
     } else {
+        Actions.navigation.setCurrentRenderableNode(null);
         return context.renderNotFound();
     }
 });
 
-function RenderApp(mainElement: JSX.Element): JSX.Element {
+function RenderApp(content: JSX.Element): JSX.Element {
     return (
         <>
             <Head>
                 <title>{translate('Catechism of the Catholic Church', Selectors.language.value)}</title>
             </Head>
             <body class='grid grid-rows-content-with-permanent-footer h-screen bg-tan-100'>
-                <div class='overflow-y-auto'>
-                    {mainElement}
+                <div class='relative overflow-y-auto'>
+                    {content}
                 </div>
                 <div>
                     <ActionBar></ActionBar>

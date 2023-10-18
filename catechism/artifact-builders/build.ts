@@ -1,9 +1,16 @@
 import { build as buildContentMap } from './path-id-to-content-map.ts';
 import { build as buildParagraphContentMap } from './paragraph-number-to-content-map.ts';
 import { build as buildParagraphUrlMap } from './paragraph-number-to-url-map.ts';
+import { build as buildRenderableNodeMap } from './path-id_to_renderable-nodes.ts';
 import { build as buildSemanticMap } from './semantic-path-to-renderable-path-id-map.ts';
 import { build as buildTableOfContents } from './table-of-contents.ts';
-import { Language, ParagraphNumberContentMap, ParagraphNumberUrlMap } from '../source/types/types.ts';
+import {
+    Artifact,
+    Language,
+    ParagraphNumberContentMap,
+    ParagraphNumberUrlMap,
+    RenderableNodeMap,
+} from '../source/types/types.ts';
 import { getCatechism } from '../source/utils/content.ts';
 import { getSupportedLanguages } from '../source/utils/language.ts';
 import {
@@ -24,23 +31,27 @@ function buildArtifacts(catechism: CatechismStructure): void {
 
     console.log('\ttable of contents ...');
     const tableOfContents = buildTableOfContents(catechism);
-    writeJson(tableOfContents, 'table-of-contents', catechism.language);
+    writeJson(tableOfContents, Artifact.TABLE_OF_CONTENTS, catechism.language);
 
     console.log('\tparagraph number to content map ...');
     const paragraphContentMap = buildParagraphContentMap(catechism);
-    writeJson(paragraphContentMap, 'paragraph-number_to_content', catechism.language);
+    writeJson(paragraphContentMap, Artifact.PARAGRAPH_NUMBER_TO_CONTENT, catechism.language);
 
     console.log('\tparagraph number to URL map ...');
     const paragraphUrlMap = buildParagraphUrlMap(catechism);
-    writeJson(paragraphUrlMap, 'paragraph-number_to_url', catechism.language);
+    writeJson(paragraphUrlMap, Artifact.PARAGRAPH_NUMBER_TO_URL, catechism.language);
+
+    console.log('\tPathID to RenderableNode map ...');
+    const renderableNodeMap = buildRenderableNodeMap(tableOfContents);
+    writeJson(renderableNodeMap, Artifact.PATH_ID_TO_RENDERABLE_NODES, catechism.language);
 
     console.log('\tSemanticPath to renderable PathID map ...');
     const renderablePathMap = buildSemanticMap(tableOfContents);
-    writeJson(renderablePathMap, 'semantic-path_to_renderable-path-id', catechism.language);
+    writeJson(renderablePathMap, Artifact.SEMANTIC_PATH_TO_RENDERABLE_PATH_ID, catechism.language);
 
     console.log('\trenderable PathID to content map ...');
     const contentMap = buildContentMap(renderablePathMap, catechism);
-    writeJson(contentMap, 'renderable-path-id_to_content', catechism.language);
+    writeJson(contentMap, Artifact.RENDERABLE_PATH_ID_TO_CONTENT, catechism.language);
 }
 
 function writeJson(
@@ -48,6 +59,7 @@ function writeJson(
         | ParagraphNumberContentMap
         | ParagraphNumberUrlMap
         | PathIdContentMap
+        | RenderableNodeMap
         | SemanticPathPathIdMap
         | TableOfContentsType,
     filename: string,

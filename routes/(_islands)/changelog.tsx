@@ -35,7 +35,7 @@ export default function Changelog(): JSX.Element {
     );
 }
 
-function Changes(changes: CodeChanges) {
+function Changes(changes: CodeChanges): JSX.Element {
     return (
         <div>
             <strong class='font-bold'>{changes.date.toLocaleDateString()}</strong>
@@ -46,7 +46,7 @@ function Changes(changes: CodeChanges) {
     );
 }
 
-function Commit(commit: Commit) {
+function Commit(commit: Commit): JSX.Element {
     return (
         <a
             class='hover:underline'

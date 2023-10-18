@@ -1,36 +1,23 @@
 # Tasks to complete now
 
-- [ ] implement a next/previous navigation mechanism
-  - new artifact: a map object, where `PathID`s are the new "renderable PathID"s:
-    ```TypeScript
-    Record<PathID, {
-        previous: { pathID: PathID; title: string } | null;
-        next: { pathID: PathID; title: string } | null;
-    }>;
-    ```
-    - this is derived from an ordered list of "renderable PathID"s (these may need to be newly computed or derived
-      — they can be derived from the Table of Contents entries: taking them in order and filtering out those with URL
-      fragments (i.e. `#` in the URL))
-  - add the current "renderable PathID" to the state
-    - this new state property is used as an index on the the new artifact to display the Next/Previous selectors on the
-      UI
-  - also consider the previously thought of algorithms (potentially now obsolete):
-    - "Next" algorithm:
-      - 2nd main-content child: `0__m.0` -> `0__m.0__m.1`
-      - next sibling: `0__m.0__m.1` -> `0__m.0__m.2`
-      - parent sibling, next (continue ascending as necessary)
-      - `null`
-  - "Previous" algorithm
-    - previous non-first main content sibling: `0__m.0__m.2` -> `0__m.0__m.1`
-    - parent sibling, previous (continue ascending as necessary)
-    - `null`
+- [ ] implement citations
+  - [ ] add a test (if necessary) for the Catechism content to verify that citation numbers are correctly set
 - merge
 
-- [ ] implement citations
-  - [ ] also set caching headers for the fonts (and any other static files?)
+- [ ] update the intro page if appropriate
+- merge
+
+- [ ] separate the state logic into obvious client-side and server-side files (to aid with developer understanding, and
+      to mitigate potential bugs)
+- merge
+
+- [ ] set caching headers for the fonts (and any other static files?)
 - merge
 
 - [ ] upgrade to Fresh 1.5.x
+  - check for deployment errors & verify the intro page works
+
+- [ ] consider using a Deno Fresh layout for the `[...path].tsx` rendering
 
 - [ ] translations: always use a server-side component so data isn't sent up to the client unnecessarily
 - [ ] UI changes: handle RTL languages

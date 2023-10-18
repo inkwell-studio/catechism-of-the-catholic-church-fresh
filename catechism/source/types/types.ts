@@ -1,4 +1,5 @@
 export * from './article.ts';
+export * from './artifact.ts';
 export * from './article-paragraph.ts';
 export * from './bible-book.ts';
 export * from './bible-reference.ts';
@@ -31,6 +32,8 @@ export * from './prologue.ts';
 export * from './reference-enum.ts';
 export * from './reference.ts';
 export * from './reference-base.ts';
+export * from './renderable-node.ts';
+export * from './renderable-node-map.ts';
 export * from './section.ts';
 export * from './semantic-path.ts';
 export * from './semantic-path-path-id-map.ts';
