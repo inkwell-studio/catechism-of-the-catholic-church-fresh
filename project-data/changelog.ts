@@ -14,6 +14,15 @@ export type Commit = {
 
 export const changelog: Changelog = [
     {
+        date: new Date(2023, 9, 17),
+        commits: [
+            {
+                hash: 'c34bb897b95fa0a358de65ad749ac349c4137eef',
+                message: 'add ability navigate content by next/previous buttons',
+            },
+        ],
+    },
+    {
         date: new Date(2023, 9, 12),
         commits: [
             {
