@@ -51,7 +51,7 @@ export default function Home(): JSX.Element {
                     <Title>What Already Exists</Title>
                     <Paragraph>
                         <>
-                            Currently, there are six websites with the English translation of the{' '}
+                            Currently, there are at least seven websites with the English translation of the{' '}
                             <span class='italic'>Catechism</span>. All of these lack some, if not all, of the features
                             listed in the next section.
                         </>
@@ -108,7 +108,7 @@ export default function Home(): JSX.Element {
                         <>
                             Also, the app has functionality not directly related to the{' '}
                             <span class='italic'>Catechism</span>, which may result in a less-intuitive experience for
-                            users who are interested in solely the <span class='italic'>Catechism</span>.
+                            users who are interested solely in the <span class='italic'>Catechism</span>.
                         </>
                     </Paragraph>
 
@@ -134,7 +134,9 @@ export default function Home(): JSX.Element {
                         </>
                     </Paragraph>
                     <Paragraph>
-                        This new site, with its architecture, provides opportunity for all these.
+                        <>
+                            This new site, with its architecture, provides opportunity for all these.
+                        </>
                     </Paragraph>
 
                     <Title highlight={true}>What Comes Next</Title>
@@ -155,7 +157,10 @@ export default function Home(): JSX.Element {
 
                     <Title>Learning More</Title>
                     <Paragraph>
-                        If you would like to see the code or contact&nbsp;the&nbsp;developer, please&nbsp;do&nbsp;so:
+                        <>
+                            If you would like to see the code or contact&nbsp;the&nbsp;developer,
+                            please&nbsp;do&nbsp;so:
+                        </>
                     </Paragraph>
                     <div class='my-4 mx-4 flex flex-col md:flex-row gap-3'>
                         <ButtonLink
@@ -171,14 +176,21 @@ export default function Home(): JSX.Element {
                     <Title highlight={true}>View the Demo</Title>
                     <Paragraph>
                         <>
-                            The sample text is from Matthew's Gospel, and bold and italic text formatting is added
-                            randomly.<br />
+                            The sample text is from public domain Scripture translations, and its formatting is
+                            generated randomly.
                         </>
                     </Paragraph>
                     <Paragraph>
                         <>
-                            Many features are not yet implemented. What you will see is primarily a demonstration of the
-                            layout, not interactive functionality.
+                            Many features are not yet implemented, and the user interface is in a draft state.
+                        </>
+                    </Paragraph>
+                    <Paragraph>
+                        <>
+                            Please note that you may click open cross-reference by clicking them, and you may also
+                            navigate to paragraphs directly by the URL<br />
+                            (e.g.{' '}
+                            <a href='en/122' target='_blank' class='font-mono'>www.catholiccatechism.app/en/122</a>).
                         </>
                     </Paragraph>
                     <Paragraph>
@@ -204,7 +216,7 @@ function Title(props: { children: JSX.Element | string; highlight?: boolean }): 
     );
 }
 
-function Paragraph(props: { children: JSX.Element | string }): JSX.Element {
+function Paragraph(props: { children: JSX.Element }): JSX.Element {
     return <p class='px-4 mb-2'>{props.children}</p>;
 }
 
