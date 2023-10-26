@@ -10,7 +10,7 @@ export default function CrossReferences(): JSX.Element {
     const content = Selectors.crossReference.selectedContent.value;
     const selectionHistory = Selectors.crossReference.selectionHistory.value;
     const language = Selectors.language.value;
-    const showTrail = selectionHistory.length >= 2;
+    const showTrail = selectionHistory.length > 0;
 
     if (content.length > 0) {
         return (
@@ -47,15 +47,9 @@ function Content(
 }
 
 function Trail(refs: Array<NumberOrNumberRange>): Array<JSX.Element> {
-    return refs.slice(0, -1).map((ref, index, array) => {
-        const final = index === array.length - 1;
-        return (
-            <>
-                <button key={ref} onClick={() => Actions.crossReference.selectFromHistory(index)}>
-                    {ref}
-                    {!final && ', '}
-                </button>
-            </>
-        );
+    return refs.map((ref, index, array) => {
+        return index === array.length - 1
+            ? <span>{ref}</span>
+            : <button key={ref} onClick={() => Actions.crossReference.selectFromHistory(index)}>{ref}{', '}</button>;
     });
 }
