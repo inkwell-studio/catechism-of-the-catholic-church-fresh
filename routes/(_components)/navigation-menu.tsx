@@ -8,14 +8,10 @@ export function NavigationMenu(): JSX.Element {
 
     return (
         <div className='flex text-sm'>
-            <a href={`/${language}`} class={linkClasses}>{translate('Table of Contents', language)}</a>
-
-            <div class='my-2 border-l'></div>
-
             <a href='/' class={linkClasses}>{translate('Introduction (Home)', language)}</a>
-
             <div class='my-2 border-l'></div>
-
+            <a href={`/${language}`} class={linkClasses}>{translate('Table of Contents', language)}</a>
+            <div class='my-2 border-l'></div>
             <a href='/select-language' class={linkClasses + ' gap-4'}>
                 <svg
                     xmlns='http://www.w3.org/2000/svg'

@@ -1,5 +1,5 @@
 export enum OtherSourceEnum {
-    SOURCE_1 = 'SOURCE_1',
-    SOURCE_2 = 'SOURCE_2',
-    SOURCE_3 = 'SOURCE_3',
+    CHRISTIFIDELES_LAICI = 'Christifideles Laici',
+    GAUDIUM_ET_SPES = 'Gaudium et spes',
+    HUMANAE_VITAE = 'Humanae Vitae',
 }

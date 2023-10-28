@@ -1,9 +1,5 @@
 # Tasks to complete now
 
-- [ ] implement citations
-  - [ ] add a test (if necessary) for the Catechism content to verify that citation numbers are correctly set
-- merge
-
 - [ ] update the intro page if appropriate
 - merge
 

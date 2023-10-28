@@ -6,5 +6,5 @@ export interface OtherReference extends ReferenceBase {
     readonly referenceType: ReferenceEnum.OTHER;
     readonly direct: boolean;
     readonly source: OtherSourceEnum;
-    readonly pointer: string;
+    readonly pointer: string | null;
 }

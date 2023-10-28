@@ -7,9 +7,12 @@ import {
     BibleBook,
     BibleReference,
     Content,
+    Language,
+    NumberOrNumberRange,
     OtherReference,
     OtherSourceEnum,
     Reference,
+    ReferenceCollection,
     ReferenceEnum,
 } from '../../../source/types/types.ts';
 
@@ -18,7 +21,17 @@ export function getTitleText(contentType: Content, num: number): string {
     return getContentTitle(language, contentType) + ' ' + num;
 }
 
-export function buildReferences(): Array<Reference> {
+export function buildReferenceCollection(): ReferenceCollection {
+    const language = getLanguage();
+
+    return {
+        // This will be set later, after all content is created
+        referenceNumber: 0,
+        references: buildReferences(language),
+    };
+}
+
+function buildReferences(language: Language): Array<Reference> {
     const references = [];
     let numReferences = 0;
 
@@ -31,14 +44,10 @@ export function buildReferences(): Array<Reference> {
     if (chance(Probability.references.count.three)) {
         numReferences = 3;
     }
-    if (chance(Probability.references.count.four)) {
-        numReferences = 4;
-    }
 
     for (let i = 0; i < numReferences; i++) {
-        references.push(
-            randomBoolean() ? buildBibleReference() : buildOtherReference(),
-        );
+        const reference = randomBoolean() ? buildBibleReference() : buildOtherReference(language);
+        references.push(reference);
     }
 
     return references;
@@ -55,12 +64,14 @@ function buildBibleReference(): BibleReference {
         BibleBook.HEBREWS,
     ];
 
-    let verses: number | `${number}-${number}` = randomInt(Limit.bibleReference.verses);
+    let verses: NumberOrNumberRange = randomInt(Limit.bibleReference.verses);
     const multipleVerses = randomBoolean();
     if (multipleVerses) {
         const upperVerse = verses + randomInt(Limit.bibleReference.verseRangeSize);
-        verses = `${verses}-${upperVerse}`;
+        verses = `${verses}–${upperVerse}`;
     }
+
+    const auxillaryText = chance(Probability.references.bible.auxillaryText) ? 'Vulgate' : null;
 
     return {
         referenceType: ReferenceEnum.BIBLE,
@@ -68,28 +79,63 @@ function buildBibleReference(): BibleReference {
         book: books[randomInt(indexLimits(books))],
         chapter: randomInt(Limit.bibleReference.chapter),
         verses,
+        auxillaryText,
     };
 }
 
-function buildOtherReference(): OtherReference {
+function buildOtherReference(language: Language): OtherReference {
     const sources = [
-        OtherSourceEnum.SOURCE_1,
-        OtherSourceEnum.SOURCE_2,
-        OtherSourceEnum.SOURCE_3,
-    ];
-
-    const pointers = [
-        '',
-        '398-401',
-        '742',
-        'Ch. IX, p.4',
-        'Article VII, 8, 3, 1-2',
+        OtherSourceEnum.CHRISTIFIDELES_LAICI,
+        OtherSourceEnum.GAUDIUM_ET_SPES,
+        OtherSourceEnum.HUMANAE_VITAE,
     ];
 
     return {
         referenceType: ReferenceEnum.OTHER,
         direct: randomBoolean(),
         source: sources[randomInt(indexLimits(sources))],
-        pointer: pointers[randomInt(indexLimits(pointers))],
+        pointer: getPointer(language),
     };
+}
+
+function getPointer(language: Language): string | null {
+    const pointers = getPointers(language);
+    return pointers[randomInt(indexLimits(pointers))];
+}
+
+function getPointers(language: Language): Array<string | null> {
+    switch (language) {
+        case Language.ENGLISH:
+            return getPointersEnglish();
+        case Language.LATIN:
+            return getPointersLatin();
+        case Language.SPANISH:
+            return getPointersSpanish();
+    }
+}
+
+function getPointersEnglish(): Array<string | null> {
+    return [
+        null,
+        '398–401',
+        '742',
+        'Ch. IX, p.4',
+        'Article VII, 8, 3, 1-2',
+    ];
+}
+
+function getPointersLatin(): Array<string | null> {
+    return [
+        null,
+        '22–23',
+        '342',
+    ];
+}
+
+function getPointersSpanish(): Array<string | null> {
+    return [
+        null,
+        '424–438',
+        '32',
+    ];
 }

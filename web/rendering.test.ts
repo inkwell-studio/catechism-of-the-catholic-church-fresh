@@ -1751,24 +1751,18 @@ function buildCatechism(): CatechismStructure {
 // The logic here must match that of `buildPart()`
 function getPart(catechism: CatechismStructure, hierarchy: Hierarchy): Part {
     switch (hierarchy) {
-        case Hierarchy.CHAPTER__TO__ARTICLE__TO__ARTICLE_PARAGRAPH: {
+        case Hierarchy.CHAPTER__TO__ARTICLE__TO__ARTICLE_PARAGRAPH:
             return catechism.parts[0];
-        }
-        case Hierarchy.CHAPTER__TO__ARTICLE__TO__SUBARTICLE: {
+        case Hierarchy.CHAPTER__TO__ARTICLE__TO__SUBARTICLE:
             return catechism.parts[1];
-        }
-        case Hierarchy.CHAPTER__TO__SUBARTICLE: {
+        case Hierarchy.CHAPTER__TO__SUBARTICLE:
             return catechism.parts[2];
-        }
-        case Hierarchy.ARTICLE__TO__ARTICLE_PARAGRAPH: {
+        case Hierarchy.ARTICLE__TO__ARTICLE_PARAGRAPH:
             return catechism.parts[3];
-        }
-        case Hierarchy.ARTICLE__TO__SUBARTICLE: {
+        case Hierarchy.ARTICLE__TO__SUBARTICLE:
             return catechism.parts[4];
-        }
-        case Hierarchy.PARAGRAPH_GROUP: {
+        case Hierarchy.PARAGRAPH_GROUP:
             return catechism.parts[5];
-        }
     }
 }
 
@@ -2051,7 +2045,7 @@ function buildTextWrapper(): TextWrapper {
         openingContent: [],
         mainContent,
         finalContent: [],
-        references: [],
+        referenceCollection: null,
         paragraphReferences: [],
     };
 }

@@ -52,39 +52,28 @@ export function getLanguageInfo(languageParam = ''): { language: Language | null
 
 export function getNativeLanguageText(languageCode: string): string {
     switch (languageCode) {
-        case (Language.ENGLISH): {
+        case Language.ENGLISH:
             return 'English';
-        }
-        case (Language.LATIN): {
+        case Language.LATIN:
             return 'Latinus';
-        }
-        case (Language.SPANISH): {
+        case Language.SPANISH:
             return 'Español';
-        }
-        case ('ar'): {
+        case 'ar':
             return 'عربي';
-        }
-        case ('zh'): {
+        case 'zh':
             return '中文';
-        }
-        case ('fr'): {
+        case 'fr':
             return 'Français';
-        }
-        case ('de'): {
+        case 'de':
             return 'Deutsch';
-        }
-        case ('it'): {
+        case 'it':
             return 'Italiano';
-        }
-        case ('mg'): {
+        case 'mg':
             return 'Malagasy';
-        }
-        case ('pt'): {
+        case 'pt':
             return 'Português';
-        }
-        default: {
+        default:
             return '';
-        }
     }
 }
 

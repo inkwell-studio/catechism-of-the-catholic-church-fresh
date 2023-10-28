@@ -20,15 +20,12 @@ export function getText(): string {
 
 function getTextSamples(language: Language): Array<string> {
     switch (language) {
-        case (Language.ENGLISH): {
+        case Language.ENGLISH:
             return englishSamples;
-        }
-        case (Language.LATIN): {
+        case Language.LATIN:
             return latinSamples;
-        }
-        case (Language.SPANISH): {
+        case Language.SPANISH:
             return spanishSamples;
-        }
     }
 }
 

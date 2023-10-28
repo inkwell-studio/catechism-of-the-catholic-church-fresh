@@ -1,7 +1,20 @@
 import { assert, assertNotMatch, assertStrictEquals } from '$deno/testing/asserts.ts';
 
-import { CatechismStructure, Container, ContentBase, PathID, SemanticPath } from '../source/types/types.ts';
 import {
+    BibleReference,
+    CatechismStructure,
+    Chapter,
+    Container,
+    Content,
+    ContentBase,
+    PathID,
+    ReferenceEnum,
+    Section,
+    SemanticPath,
+    TextWrapper,
+} from '../source/types/types.ts';
+import {
+    getAll,
     getAllChildContent,
     getAllContent,
     getAllParagraphs,
@@ -12,6 +25,7 @@ import {
     getInBrief,
     getMainContent,
     getOpeningContent,
+    getReferences,
 } from '../source/utils/content.ts';
 import { getSupportedLanguages } from '../source/utils/language.ts';
 import { getContainerDesignator, isValid } from '../source/utils/path-id.ts';
@@ -150,7 +164,7 @@ function runTests(
         });
     });
 
-    // * ensure that there are no missing paragraphs between #1 and the greatest number
+    // ensure that there are no missing paragraphs between #1 and the greatest number
     Deno.test(`[${languageKey}] the paragraph range is continuous`, () => {
         const paragraphNumbers = paragraphs.map((p) => p.paragraphNumber);
 
@@ -169,6 +183,65 @@ function runTests(
         paragraphs.forEach((paragraph) =>
             assert(paragraph.mainContent.length > 0, `paragraph ${paragraph.paragraphNumber} has no content`)
         );
+    });
+
+    Deno.test(`[${languageKey}] Bible references do not contain hyphens`, () => {
+        const bibleReferences = getReferences(catechism).filter((ref) =>
+            ReferenceEnum.BIBLE === ref.referenceType
+        ) as Array<BibleReference>;
+        const referencesWithHyphens = bibleReferences.filter((ref) =>
+            'number' !== typeof ref.verses && ref.verses.includes('-')
+        );
+
+        assert(
+            referencesWithHyphens.length === 0,
+            `${referencesWithHyphens.length} Bible references with hypens were found`,
+        );
+    });
+
+    Deno.test(`[${languageKey}] all reference numbers are positive`, () => {
+        const content = getAllContent(catechism);
+        const textWrappers = getAll<TextWrapper>(content, Content.TEXT_WRAPPER);
+        const referenceNumbers = textWrappers.map((tw) => tw.referenceCollection?.referenceNumber ?? null);
+        const nonPostiveReferenceNumbers = referenceNumbers.filter((num) => num !== null && num < 1);
+
+        assert(
+            nonPostiveReferenceNumbers.length === 0,
+            `${nonPostiveReferenceNumbers.length} non-positive reference numbers were found`,
+        );
+    });
+
+    Deno.test(`[${languageKey}] the reference numbers for each Section and Chapter start at 1, and are continuous after that`, () => {
+        const content = getAllContent(catechism);
+        const sections = getAll<Section>(content, Content.SECTION);
+        const chapters = getAll<Chapter>(content, Content.CHAPTER);
+
+        [...sections, ...chapters].forEach((sc) => {
+            // Since the referenceNumber count should restart in the Chapter, only look at the opening-content children if the first main-content child of a Section is a Chapter
+            const textWrappers: Array<TextWrapper> =
+                Content.SECTION === sc.contentType && Content.CHAPTER === sc.mainContent[0].contentType
+                    ? getAll<TextWrapper>(sc.openingContent, Content.TEXT_WRAPPER)
+                    : getAll<TextWrapper>([sc], Content.TEXT_WRAPPER);
+
+            const referenceNumbers = textWrappers.map((tw) => tw.referenceCollection?.referenceNumber ?? null);
+            const firstReferenceNumber = referenceNumbers.find((num) => !!num);
+
+            if (firstReferenceNumber) {
+                assertStrictEquals(
+                    firstReferenceNumber,
+                    1,
+                    `the first reference number was ${firstReferenceNumber} at ${sc.pathID}`,
+                );
+            }
+
+            referenceNumbers.forEach((num, index) =>
+                assertStrictEquals(
+                    num,
+                    index + 1,
+                    `referenceNumber ${index + 1} should follow referenceNumber ${index} (encountered ${num} instead)`,
+                )
+            );
+        });
     });
 }
 //#endregion

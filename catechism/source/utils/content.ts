@@ -9,6 +9,7 @@ import {
     NumberOrNumberRange,
     Paragraph,
     PathID,
+    Reference,
     SemanticPath,
     TextWrapper,
 } from '../types/types.ts';
@@ -103,8 +104,8 @@ export function getParagraphNumbers(reference: NumberOrNumberRange): Array<numbe
     if ('number' === typeof reference) {
         return [reference];
     } else {
-        if (reference.includes('-')) {
-            const [low, high] = reference.split('-').map((v) => Number(v));
+        if (reference.includes('–')) {
+            const [low, high] = reference.split('–').map((v) => Number(v));
 
             const numbers: Array<number> = [];
             if ('number' === typeof low && 'number' === typeof high) {
@@ -122,14 +123,18 @@ export function getParagraphNumbers(reference: NumberOrNumberRange): Array<numbe
     }
 }
 
-export function getTextWrappers(content: ContentContainer): Array<TextWrapper> {
-    return getAll([content], Content.TEXT_WRAPPER);
+export function getReferences(catechism: CatechismStructure): Array<Reference> {
+    const content = getAllContent(catechism);
+    const textWrappers = getAll<TextWrapper>(content, Content.TEXT_WRAPPER);
+    return textWrappers
+        .filter((tw) => !!tw.referenceCollection)
+        .flatMap((tw) => tw.referenceCollection?.references) as Array<Reference>;
 }
 
 /**
  * @returns all items of the given content type, in the order that they are listed
  */
-function getAll<T extends ContentBase>(allContent: Array<ContentBase>, contentType: Content): Array<T> {
+export function getAll<T extends ContentBase>(allContent: Array<ContentBase>, contentType: Content): Array<T> {
     return helper([], allContent, contentType);
 
     function helper(

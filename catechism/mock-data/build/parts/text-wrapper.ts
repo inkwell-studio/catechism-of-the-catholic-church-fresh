@@ -1,4 +1,4 @@
-import { buildReferences } from './general.ts';
+import { buildReferenceCollection } from './general.ts';
 import { buildText } from './text.ts';
 import { Limit } from '../config/limit.ts';
 import { intArrayOfRandomLength } from '../utils.ts';
@@ -14,7 +14,7 @@ export function buildTextWrapper(): TextWrapper {
         openingContent: [],
         mainContent: buildContent(),
         finalContent: [],
-        references: buildReferences(),
+        referenceCollection: buildReferenceCollection(),
         // These are set later, after all content is created
         paragraphReferences: [],
     };

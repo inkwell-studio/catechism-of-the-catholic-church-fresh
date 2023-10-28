@@ -8,17 +8,13 @@ export enum LanguageTag {
 
 export function getLanguageTag(language: Language): LanguageTag {
     switch (language) {
-        case (Language.ENGLISH): {
+        case Language.ENGLISH:
             return LanguageTag.ENGLISH;
-        }
-        case (Language.LATIN): {
+        case Language.LATIN:
             return LanguageTag.LATIN;
-        }
-        case (Language.SPANISH): {
+        case Language.SPANISH:
             return LanguageTag.SPANISH;
-        }
-        default: {
+        default:
             return LanguageTag.ENGLISH;
-        }
     }
 }

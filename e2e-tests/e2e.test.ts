@@ -92,12 +92,29 @@ Deno.test('website: data API', async (test) => {
         assertStrictEquals(data[0].paragraphNumber, paragraphNumber);
     });
 
-    await test.step('[language]/paragraph/: paragraph number range', async () => {
+    await test.step('[language]/paragraph/: paragraph number range (hyphen)', async () => {
         const paragraphNumberStart = 12;
         const paragraphNumberEnd = 15;
         const diff = paragraphNumberEnd - paragraphNumberStart;
 
         const r = await get(`en/paragraph/${paragraphNumberStart}-${paragraphNumberEnd}`);
+        assertStrictEquals(r.status, 200);
+
+        const data = await r.json();
+        assert(Array.isArray(data));
+        assertStrictEquals(data.length, diff + 1);
+
+        for (let i = 0; i <= diff; i++) {
+            assertStrictEquals(data[i].paragraphNumber, i + paragraphNumberStart);
+        }
+    });
+
+    await test.step('[language]/paragraph/: paragraph number range (en dash)', async () => {
+        const paragraphNumberStart = 12;
+        const paragraphNumberEnd = 15;
+        const diff = paragraphNumberEnd - paragraphNumberStart;
+
+        const r = await get(`en/paragraph/${paragraphNumberStart}–${paragraphNumberEnd}`);
         assertStrictEquals(r.status, 200);
 
         const data = await r.json();

@@ -14,6 +14,7 @@ import {
     NumberOrNumberRange,
     PathID,
     SemanticPathSource,
+    TextWrapper,
 } from '../../source/types/types.ts';
 import {
     getAllChildContent,
@@ -42,6 +43,7 @@ export function buildMockData(): CatechismStructure {
 
     catechism = setPathIDs(catechism);
     catechism = setParagraphNumbers(catechism);
+    catechism = setReferenceNumbers(catechism);
     catechism = setSemanticPaths(catechism);
     catechism = setParagraphUrls(catechism);
 
@@ -173,6 +175,47 @@ function setParagraphNumbersHelper(
     });
 
     return { content, nextParagraphNumber };
+}
+
+function setReferenceNumbers(catechism: CatechismStructure): CatechismStructure {
+    catechism = structuredClone(catechism);
+
+    const prologueResults = setReferenceNumbersHelper([catechism.prologue], 1);
+    (catechism as any).prologue = prologueResults.content[0];
+
+    const partsResults = setReferenceNumbersHelper(catechism.parts, 1);
+    (catechism as any).parts = partsResults.content;
+
+    return catechism;
+}
+
+function setReferenceNumbersHelper(
+    content: Array<ContentBase>,
+    nextReferenceNumber: number,
+): { content: Array<ContentBase>; nextReferenceNumber: number } {
+    content.forEach((c) => {
+        if (Content.SECTION === c.contentType || Content.CHAPTER === c.contentType) {
+            nextReferenceNumber = 1;
+        }
+
+        if (Content.TEXT_WRAPPER === c.contentType) {
+            const refs = (c as TextWrapper).referenceCollection;
+            if (refs) {
+                (refs as any).referenceNumber = nextReferenceNumber++;
+            }
+        } else if (hasMainContent(c)) {
+            const childContent = getAllChildContent(c);
+            const results = setReferenceNumbersHelper(childContent, nextReferenceNumber);
+            nextReferenceNumber = results.nextReferenceNumber;
+
+            return {
+                content: results.content,
+                nextReferenceNumber,
+            };
+        }
+    });
+
+    return { content, nextReferenceNumber };
 }
 
 /**
@@ -375,7 +418,7 @@ function buildParagraphCrossReferences(
         if (buildRange) {
             const num1 = randomInt(paragraphLimits);
             const num2 = num1 + randomInt(Limit.paragraph.crossReference.range);
-            return `${num1}-${num2}`;
+            return `${num1}–${num2}`;
         } else {
             return randomInt(paragraphLimits);
         }

@@ -10,4 +10,5 @@ export interface BibleReference extends ReferenceBase {
     readonly chapter: number;
     // A number designates a single verse; a string like `3-10` designates a range of verses
     readonly verses: NumberOrNumberRange;
+    readonly auxillaryText: string | null;
 }

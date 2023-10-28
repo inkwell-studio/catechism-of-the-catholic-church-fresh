@@ -30,8 +30,11 @@ export const Probability = {
         count: {
             one: 0.36,
             two: 0.20,
-            three: 0.10,
-            four: 0.03,
+            three: 0.07,
+        },
+        bible: {
+            // The probability that a Bible reference contains auxillary text (see §1202)
+            auxillaryText: 0.05,
         },
     },
     section: {

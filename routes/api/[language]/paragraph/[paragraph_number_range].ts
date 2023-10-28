@@ -9,7 +9,8 @@ export const handler: Handlers<Paragraph | null> = {
     async GET(_request, context) {
         const languageInfo = getLanguageInfo(context.params.language);
         if (languageInfo.language && languageInfo.supported) {
-            const selection = context.params['paragraph_number_range'] as NumberOrNumberRange;
+            // Convert hyphens to en dashes
+            const selection = context.params['paragraph_number_range'].replaceAll('-', '–') as NumberOrNumberRange;
             const paragraphNumbers = getParagraphNumbers(selection);
 
             const contentMap = await getParagraphNumberContentMap(languageInfo.language);

@@ -85,68 +85,47 @@ function getSegmentString(language: Language, segment: SemanticPathSource): stri
 
 function getSegmentContentString(language: Language, contentType: Content): string {
     switch (contentType) {
-        case (Content.PROLOGUE): {
+        case Content.PROLOGUE:
             return translate('prologue', language);
-        }
-        case (Content.PART): {
+        case Content.PART:
             return translate('part', language);
-        }
-        case (Content.SECTION): {
+        case Content.SECTION:
             return translate('section', language);
-        }
-        case (Content.CHAPTER): {
+        case Content.CHAPTER:
             return translate('chapter', language);
-        }
-        case (Content.CHAPTER_SECTION): {
+        case Content.CHAPTER_SECTION:
             return translate('chapter-section', language);
-        }
-        case (Content.ARTICLE): {
+        case Content.ARTICLE:
             return translate('article', language);
-        }
-        case (Content.ARTICLE_PARAGRAPH): {
+        case Content.ARTICLE_PARAGRAPH:
             return translate('article-paragraph', language);
-        }
-        case (Content.SUB_ARTICLE): {
+        case Content.SUB_ARTICLE:
             return translate('subarticle', language);
-        }
-        case (Content.IN_BRIEF): {
+        case Content.IN_BRIEF:
             return translate('in-brief', language);
-        }
-        case (Content.PARAGRAPH_GROUP): {
+        case Content.PARAGRAPH_GROUP:
             return translate('paragraph-group', language);
-        }
-        case (Content.GENERIC_CONTENT_CONTAINER): {
+        case Content.GENERIC_CONTENT_CONTAINER:
             return translate('generic-content-container', language);
-        }
-        case (Content.BLOCK_QUOTE): {
+        case Content.BLOCK_QUOTE:
             return translate('block-quote', language);
-        }
-        case (Content.PARAGRAPH): {
+        case Content.PARAGRAPH:
             return translate('paragraph', language);
-        }
-        case (Content.PARAGRAPH_SUB_ITEM_CONTAINER): {
+        case Content.PARAGRAPH_SUB_ITEM_CONTAINER:
             return translate('paragraph-sub-item-container', language);
-        }
-        case (Content.PARAGRAPH_SUB_ITEM): {
+        case Content.PARAGRAPH_SUB_ITEM:
             return translate('paragraph-sub-item', language);
-        }
-        case (Content.TEXT_BLOCK): {
+        case Content.TEXT_BLOCK:
             return translate('text-block', language);
-        }
-        case (Content.TEXT_HEADING): {
+        case Content.TEXT_HEADING:
             return translate('text-heading', language);
-        }
-        case (Content.TEXT_WRAPPER): {
+        case Content.TEXT_WRAPPER:
             return translate('text-wrapper', language);
-        }
-        case (Content.TEXT): {
+        case Content.TEXT:
             return translate('text', language);
-        }
-        case (Content.CREED): {
+        case Content.CREED:
             return translate('creed', language);
-        }
-        case (Content.TEN_COMMANDMENTS): {
+        case Content.TEN_COMMANDMENTS:
             return translate('ten-commandments', language);
-        }
     }
 }

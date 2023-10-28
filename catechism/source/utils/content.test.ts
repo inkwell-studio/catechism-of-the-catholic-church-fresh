@@ -9,9 +9,9 @@ Deno.test('getParagraphNumbers(): number', () => {
 });
 
 Deno.test('getParagraphNumbers(): number range (no gap)', () => {
-    assertEquals(getParagraphNumbers('10-11'), [10, 11]);
+    assertEquals(getParagraphNumbers('10–11'), [10, 11]);
 });
 
 Deno.test('getParagraphNumbers(): number range (with gap)', () => {
-    assertEquals(getParagraphNumbers('10-12'), [10, 11, 12]);
+    assertEquals(getParagraphNumbers('10–12'), [10, 11, 12]);
 });

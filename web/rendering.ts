@@ -234,18 +234,14 @@ function getNextChild(content: ContentContainer, partialPathID: PathID): Content
             }
         } else if (index !== null && index >= 0) {
             switch (container) {
-                case Container.OPENING: {
+                case Container.OPENING:
                     return content.openingContent[index];
-                }
-                case Container.MAIN: {
+                case Container.MAIN:
                     return content.mainContent[index];
-                }
-                case Container.FINAL: {
+                case Container.FINAL:
                     return content.finalContent[index];
-                }
-                default: {
+                default:
                     throw fail();
-                }
             }
         } else {
             throw fail();

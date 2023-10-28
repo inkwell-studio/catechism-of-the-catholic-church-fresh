@@ -37,21 +37,18 @@ function Title(language: Language): JSX.Element {
     let line2 = <>Catholic Church</>;
 
     switch (language) {
-        case (Language.ENGLISH): {
+        case Language.ENGLISH:
             line1 = <>Catechism of&nbsp;the</>;
             line2 = <>Catholic Church</>;
             break;
-        }
-        case (Language.LATIN): {
+        case Language.LATIN:
             line1 = <>Catechismus</>;
             line2 = <>Catholicae Ecclesiae</>;
             break;
-        }
-        case (Language.SPANISH): {
+        case Language.SPANISH:
             line1 = <>Catecismo de&nbsp;la</>;
             line2 = <>Iglesia Católica</>;
             break;
-        }
     }
 
     return (
@@ -109,33 +106,24 @@ function titleClasses(contentType: Content): string {
     const common = ' font-sans ';
 
     switch (contentType) {
-        case Content.SECTION: {
+        case Content.SECTION:
             return common + 'text-2xl font-bold';
-        }
-        case Content.CHAPTER: {
+        case Content.CHAPTER:
             return common + 'text-lg font-semibold';
-        }
-        case Content.ARTICLE: {
+        case Content.ARTICLE:
             return common + 'font-bold uppercase';
-        }
-        case Content.ARTICLE_PARAGRAPH: {
+        case Content.ARTICLE_PARAGRAPH:
             return common + 'text-sm font-bold';
-        }
-        case Content.SUB_ARTICLE: {
+        case Content.SUB_ARTICLE:
             return common + '';
-        }
-        case Content.PARAGRAPH_GROUP: {
+        case Content.PARAGRAPH_GROUP:
             return common + '';
-        }
-        case Content.TEXT: {
+        case Content.TEXT:
             return common + '';
-        }
-        case Content.TEXT_HEADING: {
+        case Content.TEXT_HEADING:
             return common + '';
-        }
-        default: {
+        default:
             return common + '';
-        }
     }
 }
 

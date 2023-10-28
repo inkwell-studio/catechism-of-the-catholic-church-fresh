@@ -1,21 +1,27 @@
 // deno-lint-ignore-file fresh-server-event-handlers
 import { Fragment, JSX } from 'preact';
+import { useSignal } from '@preact/signals';
 
 import {
     Article,
     ArticleParagraph,
+    BibleReference,
     BlockQuote,
     Chapter,
     Content as ContentEnum,
     ContentBase as ContentBaseType,
     InBrief,
     Language,
+    OtherReference,
     Paragraph,
     ParagraphGroup,
     ParagraphSubitem,
     ParagraphSubitemContainer,
     Part,
     Prologue,
+    ReferenceBase,
+    ReferenceCollection,
+    ReferenceEnum,
     Section,
     Subarticle,
     Text,
@@ -30,76 +36,62 @@ import {
     getMainContent,
     getOpeningContent,
 } from '../../catechism/source/utils/content.ts';
+import { getBibleReferenceUrl, getOtherReferenceUrl } from '../../web/reference.ts';
 import { getUrlFragment } from '../../web/routing-shared.ts';
 import { Actions } from '../../web/state.ts';
 import { translate } from '../../web/translation.ts';
 
 // TODO: Consider all rendering function implementations to be incomplete
 
+//#region top-level component
 export default function ContentBase(props: { content: ContentBaseType; language: Language }): JSX.Element {
     const content = props.content;
     const language = props.language;
 
     switch (content.contentType) {
-        case ContentEnum.PART: {
+        case ContentEnum.PART:
             return PartContent(content as Part, language);
-        }
-        case ContentEnum.ARTICLE: {
+        case ContentEnum.ARTICLE:
             return ArticleContent(content as Article, language);
-        }
-        case ContentEnum.ARTICLE_PARAGRAPH: {
+        case ContentEnum.ARTICLE_PARAGRAPH:
             return ArticleParagraphContent(content as ArticleParagraph, language);
-        }
-        case ContentEnum.BLOCK_QUOTE: {
+        case ContentEnum.BLOCK_QUOTE:
             return BlockQuoteContent(content as BlockQuote, language);
-        }
-        case ContentEnum.CHAPTER: {
+        case ContentEnum.CHAPTER:
             return ChapterContent(content as Chapter, language);
-        }
-        case ContentEnum.IN_BRIEF: {
+        case ContentEnum.IN_BRIEF:
             return InBriefContent(content as InBrief, language);
-        }
-        case ContentEnum.PARAGRAPH: {
+        case ContentEnum.PARAGRAPH:
             return ParagraphContent(content as Paragraph, language);
-        }
-        case ContentEnum.PARAGRAPH_GROUP: {
+        case ContentEnum.PARAGRAPH_GROUP:
             return ParagraphGroupContent(content as ParagraphGroup, language);
-        }
-        case ContentEnum.PARAGRAPH_SUB_ITEM: {
+        case ContentEnum.PARAGRAPH_SUB_ITEM:
             return ParagraphSubitemContent(content as ParagraphSubitem, language);
-        }
-        case ContentEnum.PARAGRAPH_SUB_ITEM_CONTAINER: {
+        case ContentEnum.PARAGRAPH_SUB_ITEM_CONTAINER:
             return ParagraphSubitemContainerContent(content as ParagraphSubitemContainer, language);
-        }
-        case ContentEnum.PROLOGUE: {
+        case ContentEnum.PROLOGUE:
             return PrologueContent(content as Prologue, language);
-        }
-        case ContentEnum.SECTION: {
+        case ContentEnum.SECTION:
             return SectionContent(content as Section, language);
-        }
-        case ContentEnum.SUB_ARTICLE: {
+        case ContentEnum.SUB_ARTICLE:
             return SubarticleContent(content as Subarticle, language);
-        }
-        case ContentEnum.TEXT_BLOCK: {
+        case ContentEnum.TEXT_BLOCK:
             return TextBlockContent(content as TextBlock, language);
-        }
-        case ContentEnum.TEXT_HEADING: {
+        case ContentEnum.TEXT_HEADING:
             return TextHeadingContent(content as TextHeading);
-        }
-        case ContentEnum.TEXT_WRAPPER: {
-            return TextWrapperContent(content as TextWrapper);
-        }
-        default: {
+        case ContentEnum.TEXT_WRAPPER:
+            return TextWrapperContent(content as TextWrapper, language);
+        default:
             return UnknownContent(content);
-        }
     }
 }
+//#endregion
 
+//#region helper components
 function ContentBaseArray(content: Array<ContentBaseType>, language: Language): Array<JSX.Element> {
     return content.map((c) => <ContentBase key={c} content={c} language={language}></ContentBase>);
 }
 
-//#region helper components
 function ArticleContent(article: Article, language: Language): JSX.Element {
     const nonFinalChildContent = [
         ...getOpeningContent(article),
@@ -277,14 +269,24 @@ function TextWrapperArray(array: Array<ContentBaseType | TextWrapper>, language:
                 ContentEnum.TEXT_WRAPPER === array[index - 1].contentType;
             const spacer = precedingContentWasTextWrapper ? ' ' : '';
 
-            return <Fragment key={c}>{spacer}{TextWrapperContent(c as TextWrapper)}</Fragment>;
+            return <Fragment key={c}>{spacer}{TextWrapperContent(c as TextWrapper, language)}</Fragment>;
         } else {
             return <ContentBase key={c} content={c} language={language}></ContentBase>;
         }
     });
 }
 
-function TextWrapperContent(textWrapper: TextWrapper): JSX.Element {
+function TextWrapperContent(textWrapper: TextWrapper, language: Language): JSX.Element {
+    const textContent = textWrapper.mainContent
+        .map((text, index) => {
+            const lastFragment = index === textWrapper.mainContent.length - 1;
+            return (
+                <Fragment key={text}>
+                    {PlainText(text as Text, lastFragment)}
+                </Fragment>
+            );
+        });
+
     return (
         <span>
             <span class='absolute right-0 font-sans-caption text-xs text-left pt-1 w-6 sm:w-14 md:w-12 lg:w-20 xl:w-24'>
@@ -303,11 +305,8 @@ function TextWrapperContent(textWrapper: TextWrapper): JSX.Element {
                     })}
             </span>
             <span>
-                {textWrapper.mainContent
-                    .map((text, index) => {
-                        const lastFragment = index === textWrapper.mainContent.length - 1;
-                        return <Fragment key={text}>{PlainText(text as Text, lastFragment)}</Fragment>;
-                    })}
+                {textContent}
+                {ReferenceCollectionContent(textWrapper.referenceCollection, language)}
             </span>
         </span>
     );
@@ -358,8 +357,75 @@ function PlainText(text: Text, lastFragment: boolean): JSX.Element {
     }
 }
 
+function ReferenceCollectionContent(referenceCollection: ReferenceCollection | null, language: Language): JSX.Element {
+    if (!referenceCollection || referenceCollection.references.length === 0) {
+        return <></>;
+    }
+
+    const isOpen = useSignal(false);
+
+    const superscript = (
+        <button onClick={() => isOpen.value = !isOpen.value} class='px-0.5'>
+            <sup>{referenceCollection.referenceNumber}</sup>
+        </button>
+    );
+
+    const fullDisplay = isOpen.value
+        ? (
+            <div className='absolute z-10 bottom-6 -left-8 w-max text-sm font-sans p-2 bg-white border'>
+                {referenceCollection.references.map((ref, i, refs) => {
+                    const divider = i > 0 && i < refs.length ? '; ' : '';
+
+                    return <>{divider}{ReferenceContent(ref, language)}</>;
+                })}
+                <button onClick={() => isOpen.value = false} class='font-mono ml-2'>
+                    <sup>X</sup>
+                </button>
+            </div>
+        )
+        : <></>;
+
+    return (
+        <span class='relative'>
+            {superscript}
+            {fullDisplay}
+        </span>
+    );
+}
+
+function ReferenceContent(reference: ReferenceBase, language: Language): JSX.Element {
+    if (ReferenceEnum.BIBLE === reference.referenceType) {
+        return BibleReferenceContent(reference as BibleReference, language);
+    } else if (ReferenceEnum.OTHER === reference.referenceType) {
+        return OtherReferenceContent(reference as OtherReference, language);
+    } else {
+        console.warn(`Unknown reference type encountered: ${reference.referenceType}`);
+        return <></>;
+    }
+}
+
+function BibleReferenceContent(reference: BibleReference, language: Language): JSX.Element {
+    const prefix = reference.direct ? '' : translate('Cf. ', language);
+    const postfix = reference.auxillaryText ? ` (${translate(reference.auxillaryText, language)})` : '';
+    const book = translate(reference.book, language);
+
+    return (
+        <a href={getBibleReferenceUrl(reference, language)} target='_blank'>
+            {`${prefix}${book} ${reference.chapter}:${reference.verses}${postfix}`}
+        </a>
+    );
+}
+
+function OtherReferenceContent(reference: OtherReference, language: Language): JSX.Element {
+    const prefix = reference.direct ? '' : translate('Cf. ', language);
+    const source = reference.source;
+    const pointer = reference.pointer ? `: ${reference.pointer}` : '';
+
+    return <a href={getOtherReferenceUrl(reference, language)} target='_blank'>{`${prefix}${source}${pointer}`}</a>;
+}
+
 function UnknownContent(content: ContentBaseType): JSX.Element {
-    // TODO: Log a warning
+    console.warn(`Unknown content type encountered: ${content.contentType}`);
     return <div>Unhandled content: {content.contentType}</div>;
 }
 //#endregion

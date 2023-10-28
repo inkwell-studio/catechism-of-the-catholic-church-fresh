@@ -29,6 +29,7 @@ export * from './part.ts';
 export * from './path-id.ts';
 export * from './path-id-content-map.ts';
 export * from './prologue.ts';
+export * from './reference-collection.ts';
 export * from './reference-enum.ts';
 export * from './reference.ts';
 export * from './reference-base.ts';

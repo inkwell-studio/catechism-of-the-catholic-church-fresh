@@ -124,38 +124,29 @@ export function getContainerInfo(pathID: PathID): { container: Container; index:
 
 export function getContainerDesignator(container: Container): 'o' | 'm' | 'f' | 'i' {
     switch (container) {
-        case Container.OPENING: {
+        case Container.OPENING:
             return 'o';
-        }
-        case Container.MAIN: {
+        case Container.MAIN:
             return 'm';
-        }
-        case Container.FINAL: {
+        case Container.FINAL:
             return 'f';
-        }
-        case Container.IN_BRIEF: {
+        case Container.IN_BRIEF:
             return 'i';
-        }
     }
 }
 
 function getContainerFromDesignator(designator: 'o' | 'm' | 'f' | 'i' | string): Container | null {
     switch (designator) {
-        case 'o': {
+        case 'o':
             return Container.OPENING;
-        }
-        case 'm': {
+        case 'm':
             return Container.MAIN;
-        }
-        case 'f': {
+        case 'f':
             return Container.FINAL;
-        }
-        case 'i': {
+        case 'i':
             return Container.IN_BRIEF;
-        }
-        default: {
+        default:
             return null;
-        }
     }
 }
 
