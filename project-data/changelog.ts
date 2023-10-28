@@ -14,6 +14,15 @@ export type Commit = {
 
 export const changelog: Changelog = [
     {
+        date: new Date(2023, 9, 28),
+        commits: [
+            {
+                hash: '4cc73ee14e6d5549f3604387a503816a1140f561',
+                message: 'add footnotes with links',
+            },
+        ],
+    },
+    {
         date: new Date(2023, 9, 17),
         commits: [
             {
