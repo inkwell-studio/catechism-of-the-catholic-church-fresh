@@ -1,4 +1,4 @@
-import { assertEquals } from '$deno/testing/asserts.ts';
+import { assertEquals } from '$deno/assert/mod.ts';
 
 import { getParagraphNumbers } from './content.ts';
 

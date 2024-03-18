@@ -1,4 +1,4 @@
-import { assertStrictEquals } from '$deno/testing/asserts.ts';
+import { assertStrictEquals } from '$deno/assert/mod.ts';
 import { Artifact, BibleBook, Container, Content, Language, OtherSourceEnum, ReferenceEnum } from './types.ts';
 
 console.log('\nEnums ...');

@@ -1,4 +1,4 @@
-import { assertStrictEquals } from '$deno/testing/asserts.ts';
+import { assertStrictEquals } from '$deno/assert/mod.ts';
 
 import { buildSemanticPath, getSemanticPathSource } from './semantic-path.ts';
 import {

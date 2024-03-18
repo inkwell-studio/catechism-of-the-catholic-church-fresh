@@ -1,4 +1,4 @@
-import { assertStrictEquals } from '$deno/testing/asserts.ts';
+import { assertStrictEquals } from '$deno/assert/mod.ts';
 import { SemanticPathPathIdMap } from '../source/types/semantic-path-path-id-map.ts';
 import { getRenderablePathMap } from '../source/utils/artifacts.ts';
 import { getSupportedLanguages } from '../source/utils/language.ts';

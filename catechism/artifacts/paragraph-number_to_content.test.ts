@@ -1,4 +1,4 @@
-import { assertExists, assertStrictEquals } from '$deno/testing/asserts.ts';
+import { assertExists, assertStrictEquals } from '$deno/assert/mod.ts';
 
 import { getAllParagraphs, getCatechism } from '../source/utils/content.ts';
 import { CatechismStructure, ParagraphNumberContentMap } from '../source/types/types.ts';

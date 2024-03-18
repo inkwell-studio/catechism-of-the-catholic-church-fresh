@@ -8,7 +8,7 @@
             "request": "launch",
             "name": "Web App",
             "type": "node",
-            "program": "${workspaceFolder}/dev.ts",
+            "program": "${workspaceFolder}/website/dev.ts",
             "cwd": "${workspaceFolder}",
             "runtimeExecutable": "deno",
             "runtimeArgs": [
@@ -39,7 +39,7 @@
             "runtimeArgs": [
                 "test",
                 "--inspect-brk",
-                "web/rendering.test.ts"
+                "website/web/rendering.test.ts"
             ],
             "attachSimplePort": 9229
         },

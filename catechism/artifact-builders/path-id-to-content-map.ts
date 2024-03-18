@@ -1,5 +1,5 @@
 import { CatechismStructure, PathIdContentMap, SemanticPathPathIdMap } from '../source/types/types.ts';
-import { getContentForRendering } from '../../web/rendering.ts';
+import { getContentForRendering } from '../../website/logic/server/rendering.ts';
 
 export function build(renderablePathMap: SemanticPathPathIdMap, catechism: CatechismStructure): PathIdContentMap {
     const contentMap: PathIdContentMap = {};

@@ -1,4 +1,4 @@
-import { assertNotMatch, assertNotStrictEquals, assertStrictEquals, fail } from '$deno/testing/asserts.ts';
+import { assertNotMatch, assertNotStrictEquals, assertStrictEquals, fail } from '$deno/assert/mod.ts';
 
 import { CatechismText, getText } from './test-utils.ts';
 import { PathID } from '../source/types/types.ts';

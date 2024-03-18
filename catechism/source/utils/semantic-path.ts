@@ -14,7 +14,7 @@ import {
     SemanticPathSource,
     Subarticle,
 } from '../types/types.ts';
-import { translate } from '../../../web/translation.ts';
+import { translate } from '../../../website/logic/shared/translation.ts';
 
 /**
  * @param ancestors a list of ancestors of `child`, in descending order (i.e. `ancestors[i]` is the parent of `ancestors[i+1]`)

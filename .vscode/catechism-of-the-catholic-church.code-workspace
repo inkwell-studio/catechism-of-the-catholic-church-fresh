@@ -1,0 +1,16 @@
+{
+    "folders": [
+        {
+            "path": ".."
+        }
+    ],
+    "settings": {
+        "deno.enable": true,
+        "deno.lint": true,
+        "deno.unstable": false,
+        "editor.defaultFormatter": "denoland.vscode-deno",
+		"files.associations": {
+			"*.css": "tailwindcss"
+		}
+    }
+}

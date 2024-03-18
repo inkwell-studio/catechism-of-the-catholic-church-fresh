@@ -27,7 +27,7 @@ import {
 } from '../../source/utils/content.ts';
 import { getContainerDesignator } from '../../source/utils/path-id.ts';
 import { buildSemanticPath, getSemanticPathSource } from '../../source/utils/semantic-path.ts';
-import { getUrl } from '../../../web/routing-server.ts';
+import { getUrl } from '../../../website/logic/server/routing.ts';
 
 //#region top-level functions
 export function buildMockData(): CatechismStructure {

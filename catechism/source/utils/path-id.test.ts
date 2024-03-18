@@ -1,4 +1,4 @@
-import { assert, assertEquals, assertStrictEquals, assertThrows } from '$deno/testing/asserts.ts';
+import { assert, assertEquals, assertStrictEquals, assertThrows } from '$deno/assert/mod.ts';
 
 import {
     getContainerDesignator,

@@ -1,4 +1,4 @@
-import { assert, assertStrictEquals } from '$deno/testing/asserts.ts';
+import { assert, assertStrictEquals } from '$deno/assert/mod.ts';
 import { RenderableNode } from '../source/types/renderable-node.ts';
 import { RenderableNodeMap } from '../source/types/types.ts';
 import { getRenderableNodeMap } from '../source/utils/artifacts.ts';

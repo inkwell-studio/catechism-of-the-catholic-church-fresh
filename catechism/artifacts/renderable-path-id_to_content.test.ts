@@ -1,4 +1,4 @@
-import { assertStrictEquals, fail } from '$deno/testing/asserts.ts';
+import { assertStrictEquals, fail } from '$deno/assert/mod.ts';
 
 import { getAllOfProperty, getAllPathIDs, getCatechism } from '../source/utils/content.ts';
 import { CatechismStructure, PathID, PathIdContentMap, SemanticPathPathIdMap } from '../source/types/types.ts';

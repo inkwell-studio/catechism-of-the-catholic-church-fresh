@@ -1,4 +1,4 @@
-import { assert, assertNotMatch, assertStrictEquals } from '$deno/testing/asserts.ts';
+import { assert, assertNotMatch, assertStrictEquals } from '$deno/assert/mod.ts';
 
 import {
     BibleReference,

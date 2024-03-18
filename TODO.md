@@ -1,22 +1,29 @@
 # Tasks to complete now
 
-- [ ] update the intro page if appropriate
+- [ ] improve UI construction
+  - [ ] implement a dark mode toggle
+  - [ ] light/dark/high-contrast mode toggle
+  - [ ] consider using a Layout for the `[...path].tsx` rendering
+  - [ ] use Partials in all appropriate spots
+  - [ ] handle RTL languages
 - merge
 
-- [ ] separate the state logic into obvious client-side and server-side files (to aid with developer understanding, and
-      to mitigate potential bugs)
+- [ ] update UI
+  - [ ] fonts to consider
+    - [ ] Bookman
+    - [ ] Alegreya
+  - [ ] accomodate Forced Colors mode (see Polypane blog)
+  - [ ] dark mode: try to avoid the "window blending" problem (cannot tell where the browser window starts and another
+        application window begins)
+  - [ ] consider all notes about colors found elsewhere in this file
+
+- [ ] update the intro page if appropriate
 - merge
 
 - [ ] set caching headers for the fonts (and any other static files?)
 - merge
 
-- [ ] upgrade to Fresh 1.5.x
-  - check for deployment errors & verify the intro page works
-
-- [ ] consider using a Deno Fresh layout for the `[...path].tsx` rendering
-
 - [ ] translations: always use a server-side component so data isn't sent up to the client unnecessarily
-- [ ] UI changes: handle RTL languages
 - [ ] implement Action bar
   - Table of Contents
     - "Home" (to a new "Dashboard" page (at `/en`): TOC with a link to the current "intro" page)
@@ -60,7 +67,6 @@
 - [ ] consider improving artifact management
   - should artifacts not be commited, and instead be built during deployment?
 - [ ] UI: style for LTR and RTL text
-- [ ] add dark-mode functionality
 - [ ] add e2e UI tests to validate links
 - [ ] add a UI language switcher
   - [ ] update all user-facing text to be
@@ -77,16 +83,12 @@
   - [ ] routing
     - [ ] to in-page anchor tags
 - UI:
-  - consider using Twind presets:
-    - https://twind.style/presets#official-presets
+  - consider if any of the official Tailwind presets would be useful:
+    - https://tailwindcss.com/docs/plugins#official-plugins
   - consider using Radix UI things:
-    - https://twind.style/preset-radix-ui
-      - https://www.radix-ui.com/colors
+    - https://www.radix-ui.com/colors
     - https://www.radix-ui.com/
     - https://icons.radix-ui.com/
-  - [ ] light/dark/high-contrast mode toggle
-    - [ ] dark mode: try to avoid the "window blending" problem (cannot tell where the browser window starts and another
-          application window begins)
   - [ ] consider using the following colors:
     - [ ] #E86D82 (red-pink)
 - [ ] implement unimplemented tests

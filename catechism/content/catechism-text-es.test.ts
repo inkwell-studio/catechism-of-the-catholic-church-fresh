@@ -1,6 +1,6 @@
-import Catechism from './catechism-es.json' assert { type: 'json' };
+import Catechism from './catechism-es.json' with { type: 'json' };
 
-import { assertStrictEquals } from '$deno/testing/asserts.ts';
+import { assertStrictEquals } from '$deno/assert/mod.ts';
 
 import { CatechismStructure, Language } from '../source/types/types.ts';
 
