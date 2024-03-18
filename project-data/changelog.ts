@@ -14,6 +14,15 @@ export type Commit = {
 
 export const changelog: Changelog = [
     {
+        date: new Date(2024, 2, 18),
+        commits: [
+            {
+                hash: 'c2deb526b70989741baaec915a03c197263f47c6',
+                message: 'upgrade to Fresh 1.6.5 and Tailwind CSS',
+            },
+        ],
+    },
+    {
         date: new Date(2023, 9, 28),
         commits: [
             {
