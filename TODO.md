@@ -1,14 +1,7 @@
 # Tasks to complete now
 
-- [ ] improve UI construction
-  - [ ] implement a dark mode toggle
-  - [ ] light/dark/high-contrast mode toggle
-  - [ ] consider using a Layout for the `[...path].tsx` rendering
-  - [ ] use Partials in all appropriate spots
-  - [ ] handle RTL languages
-- merge
-
 - [ ] update UI
+  - [ ] handle RTL languages
   - [ ] fonts to consider
     - [ ] Bookman
     - [ ] Alegreya

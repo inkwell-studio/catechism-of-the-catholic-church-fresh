@@ -5,6 +5,7 @@ export default {
     content: [
         '{routes,islands,components}/**/*.{ts,tsx}',
     ],
+    darkMode: 'class',
     theme: {
         colors: {
             black: '#000',

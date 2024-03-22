@@ -59,12 +59,17 @@ Deno.test('website: rendered content', async (test) => {
         assert(r.headers.get('location')?.includes('/en/prologue#1'));
     });
 
-    await test.step('invalid routes (negative paragraph number): 404 page', async () => {
+    await test.step('invalid routes (paragraph number: 0): 404 page', async () => {
+        const r = await get('0');
+        assert404(r);
+    });
+
+    await test.step('invalid routes (paragraph number: negative): 404 page', async () => {
         const r = await get('-1');
         assert404(r);
     });
 
-    await test.step('invalid routes (excessive paragraph number): 404 page', async () => {
+    await test.step('invalid routes (paragraph number: excessive): 404 page', async () => {
         const r = await get('99999');
         assert404(r);
     });
@@ -114,7 +119,7 @@ Deno.test('website: data API', async (test) => {
         const paragraphNumberEnd = 15;
         const diff = paragraphNumberEnd - paragraphNumberStart;
 
-        const r = await get(`en/paragraph/${paragraphNumberStart}-${paragraphNumberEnd}`);
+        const r = await get(`en/paragraph/${paragraphNumberStart}–${paragraphNumberEnd}`);
         assertStrictEquals(r.status, 200);
 
         const data = await r.json();

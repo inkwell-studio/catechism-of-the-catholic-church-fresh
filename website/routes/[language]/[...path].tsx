@@ -1,107 +1,139 @@
-import { Head } from '$fresh/runtime.ts';
-import { defineRoute } from '$fresh/server.ts';
-import { JSX } from 'preact';
+import { Partial } from '$fresh/runtime.ts';
+import { defineRoute, RouteContext } from '$fresh/server.ts';
+import { ComponentChildren, JSX } from 'preact';
 
-import { ActionBar } from '../(_components)/action-bar.tsx';
+import { App } from '../(_components)/app.tsx';
 import { Content } from '../(_components)/content.tsx';
+import { ContentStart } from '../(_components)/content-start.tsx';
+import { NavigationButton } from '../(_components)/navigation-button.tsx';
+import { PartialEnum } from '../(_components)/partial-enum.ts';
 import { TableOfContents } from '../(_components)/table-of-contents.tsx';
-import Citations from '../(_islands)/citations.tsx';
-import CrossReferences from '../(_islands)/cross-references.tsx';
+import { UnsupportedLanguage } from '../(_components)/unsupported-language.tsx';
 
-import { getTableOfContents } from '../../../catechism/source/utils/artifacts.ts';
-import { getAllLanguages, getLanguageInfo, getNativeLanguageText } from '../../../catechism/source/utils/language.ts';
+import AutoScroller from '../(_islands)/auto-scroller.tsx';
 
 import { loadContent } from '../../logic/server/rendering.ts';
 import { Element, getElementAndPathID } from '../../logic/server/routing.ts';
-import { Actions, Selectors } from '../../logic/shared/state.ts';
-import { translate } from '../../logic/shared/translation.ts';
+import { Actions } from '../../logic/shared/state.ts';
+
+import { ContentContainer, Language, PathID, TableOfContentsType } from '../../../catechism/source/types/types.ts';
+import { getTableOfContents } from '../../../catechism/source/utils/artifacts.ts';
+import { getLanguageInfo } from '../../../catechism/source/utils/language.ts';
 
 export default defineRoute(async (request, context) => {
-    const languageInfo = getLanguageInfo(context.params.language);
-    if (languageInfo.language && languageInfo.supported) {
-        const elementAndPathID = getElementAndPathID(languageInfo.language, context.params.path);
-        if (!elementAndPathID) {
-            return context.renderNotFound();
-        }
-        const { element, pathID } = elementAndPathID;
+    const result = await parseRoute(context.params.path, context.params.language);
 
-        if (Element.TABLE_OF_CONTENTS === element) {
-            Actions.navigation.setCurrentRenderableNode(null);
-            const tableOfContents = await getTableOfContents(languageInfo.language);
-            return RenderApp(
-                <TableOfContents language={languageInfo.language} tableOfContents={tableOfContents}></TableOfContents>,
+    if (result.language) {
+        if (result.content && result.pathID) {
+            return (
+                <Render pathID={result.pathID} isPartial={context.isPartial}>
+                    <Content content={result.content} language={result.language} />
+                </Render>
             );
-        } else if (Element.CONTENT === element) {
-            if (pathID) {
-                const content = await loadContent(languageInfo.language, pathID);
-                if (content) {
-                    Actions.navigation.setCurrentRenderableNode(pathID);
-                    return RenderApp(
-                        <>
-                            <div class='grid grid-rows-content-with-permanent-footer h-full'>
-                                <div class='flex justify-center overflow-y-auto'>
-                                    <Content content={content} language={languageInfo.language}></Content>
-                                </div>
-                                {/* <Citations></Citations> */}
-                            </div>
-                            <CrossReferences></CrossReferences>
-                        </>,
-                    );
-                } else {
-                    Actions.navigation.setCurrentRenderableNode(null);
-                    return context.renderNotFound();
-                }
-            } else {
-                Actions.navigation.setCurrentRenderableNode(null);
-                return context.renderNotFound();
-            }
+        } else if (result.tableOfContents) {
+            return (
+                <Render pathID={null} isPartial={context.isPartial}>
+                    <TableOfContents tableOfContents={result.tableOfContents} language={result.language} />
+                </Render>
+            );
+        } else {
+            return renderNotFound(context);
         }
-    } else if (languageInfo.valid) {
+    } else if ('unsupported-language' === result.error) {
         Actions.navigation.setCurrentRenderableNode(null);
-        return UnsupportedLanguage(context.params.language);
+        return <UnsupportedLanguage languageCode={context.params.language} />;
     } else {
-        Actions.navigation.setCurrentRenderableNode(null);
-        return context.renderNotFound();
+        return renderNotFound(context);
     }
 });
 
-function RenderApp(content: JSX.Element): JSX.Element {
-    return (
-        <>
-            <Head>
-                <title>{translate('Catechism of the Catholic Church', Selectors.language.value)}</title>
-            </Head>
-            <body class='grid grid-rows-content-with-permanent-footer h-screen bg-tan-100'>
-                <div class='relative overflow-y-auto'>
-                    {content}
-                </div>
-                <div>
-                    <ActionBar></ActionBar>
-                </div>
-            </body>
-        </>
-    );
+async function parseRoute(path: string, languageParam: string): Promise<{
+    language: Language | null;
+    pathID: PathID | null;
+    content: ContentContainer | null;
+    tableOfContents: TableOfContentsType | null;
+    error: 'invalid-path' | 'unsupported-language' | null;
+}> {
+    const languageInfo = getLanguageInfo(languageParam);
+    if (languageInfo.language && languageInfo.supported) {
+        const elementAndPathID = getElementAndPathID(languageInfo.language, path);
+        if (elementAndPathID) {
+            const { element, pathID } = elementAndPathID;
+            if (Element.TABLE_OF_CONTENTS === element) {
+                const tableOfContents = await getTableOfContents(languageInfo.language);
+                return {
+                    language: languageInfo.language,
+                    pathID: null,
+                    content: null,
+                    tableOfContents,
+                    error: null,
+                };
+            } else if (Element.CONTENT === element) {
+                if (pathID) {
+                    const content = await loadContent(languageInfo.language, pathID);
+                    if (content) {
+                        return {
+                            language: languageInfo.language,
+                            pathID,
+                            content,
+                            tableOfContents: null,
+                            error: null,
+                        };
+                    }
+                }
+            }
+        }
+    } else if (languageInfo.valid) {
+        return {
+            language: null,
+            pathID: null,
+            content: null,
+            tableOfContents: null,
+            error: 'unsupported-language',
+        };
+    }
+
+    return {
+        language: null,
+        pathID: null,
+        content: null,
+        tableOfContents: null,
+        error: 'invalid-path',
+    };
 }
 
-function UnsupportedLanguage(unsupportedLanguageCode: string): JSX.Element {
-    return (
-        <div class='p-12'>
-            <div>
-                {translate('Unsupported language', Selectors.language.value)}:{' '}
-                <span class='font-mono'>{unsupportedLanguageCode}</span>
-            </div>
-            <div class='mt-4'>
-                <strong class='font-bold'>
-                    {translate('Available languages', Selectors.language.value)}:
-                </strong>
-                <ul class='list-disc mt-2'>
-                    {getAllLanguages().map(([code, _language]) => (
-                        <li>
-                            {getNativeLanguageText(code)}: <span class='font-mono'>{code}</span>
-                        </li>
-                    ))}
-                </ul>
-            </div>
-        </div>
-    );
+function Render(props: { children: ComponentChildren; pathID: PathID | null; isPartial: boolean }): JSX.Element {
+    Actions.navigation.setCurrentRenderableNode(props.pathID);
+
+    if (props.isPartial) {
+        return (
+            <>
+                <Partial name={PartialEnum.CONTENT_MAIN}>
+                    <ContentStart />
+                    {props.children}
+                </Partial>
+                <Partial name={PartialEnum.NAVIGATION_BUTTON_NEXT}>
+                    <NavigationButton direction='next' />
+                </Partial>
+                <Partial name={PartialEnum.NAVIGATION_BUTTON_PREVIOUS}>
+                    <NavigationButton direction='previous' />
+                </Partial>
+            </>
+        );
+    } else {
+        return (
+            <>
+                <App>
+                    <ContentStart />
+                    {props.children}
+                </App>
+                <AutoScroller />
+            </>
+        );
+    }
+}
+
+function renderNotFound(context: RouteContext<void, unknown>): Response | Promise<Response> {
+    Actions.navigation.setCurrentRenderableNode(null);
+    return context.renderNotFound();
 }

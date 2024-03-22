@@ -10,14 +10,13 @@ import * as $_middleware from './routes/_middleware.ts';
 import * as $api_language_paragraph_paragraph_number_range_ from './routes/api/[language]/paragraph/[paragraph_number_range].ts';
 import * as $index from './routes/index.tsx';
 import * as $select_language from './routes/select-language.tsx';
+import * as $_islands_auto_scroller from './routes/(_islands)/auto-scroller.tsx';
 import * as $_islands_changelog_trigger from './routes/(_islands)/changelog-trigger.tsx';
 import * as $_islands_changelog from './routes/(_islands)/changelog.tsx';
-import * as $_islands_citations from './routes/(_islands)/citations.tsx';
-import * as $_islands_content_base from './routes/(_islands)/content-base.tsx';
-import * as $_islands_cross_references from './routes/(_islands)/cross-references.tsx';
-import * as $_islands_search from './routes/(_islands)/search.tsx';
-import * as $_islands_trail_hierarchical from './routes/(_islands)/trail-hierarchical.tsx';
-import * as $_islands_trail_historical from './routes/(_islands)/trail-historical.tsx';
+import * as $_islands_cross_reference_link from './routes/(_islands)/cross-reference-link.tsx';
+import * as $_islands_cross_reference_window from './routes/(_islands)/cross-reference-window.tsx';
+import * as $_islands_dark_mode_toggle from './routes/(_islands)/dark-mode-toggle.tsx';
+import * as $_islands_reference_links from './routes/(_islands)/reference-links.tsx';
 import { type Manifest } from '$fresh/server.ts';
 
 const manifest = {
@@ -33,14 +32,13 @@ const manifest = {
         './routes/select-language.tsx': $select_language,
     },
     islands: {
+        './routes/(_islands)/auto-scroller.tsx': $_islands_auto_scroller,
         './routes/(_islands)/changelog-trigger.tsx': $_islands_changelog_trigger,
         './routes/(_islands)/changelog.tsx': $_islands_changelog,
-        './routes/(_islands)/citations.tsx': $_islands_citations,
-        './routes/(_islands)/content-base.tsx': $_islands_content_base,
-        './routes/(_islands)/cross-references.tsx': $_islands_cross_references,
-        './routes/(_islands)/search.tsx': $_islands_search,
-        './routes/(_islands)/trail-hierarchical.tsx': $_islands_trail_hierarchical,
-        './routes/(_islands)/trail-historical.tsx': $_islands_trail_historical,
+        './routes/(_islands)/cross-reference-link.tsx': $_islands_cross_reference_link,
+        './routes/(_islands)/cross-reference-window.tsx': $_islands_cross_reference_window,
+        './routes/(_islands)/dark-mode-toggle.tsx': $_islands_dark_mode_toggle,
+        './routes/(_islands)/reference-links.tsx': $_islands_reference_links,
     },
     baseUrl: import.meta.url,
 } satisfies Manifest;

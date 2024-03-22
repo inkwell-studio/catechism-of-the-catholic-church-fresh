@@ -19,7 +19,7 @@ export default function Changelog(): JSX.Element {
                 </button>
                 <strong class='text-xl font-bold'>Notable updates</strong>
                 <ol class='space-y-6'>
-                    {changelog.map((changes) => <Fragment key={changes}>{Changes(changes)}</Fragment>)}
+                    {changelog.map((changes) => <Fragment key={changes.commits[0].hash}>{Changes(changes)}</Fragment>)}
                 </ol>
                 <a
                     class='hover:underline'
@@ -38,7 +38,7 @@ function Changes(changes: CodeChanges): JSX.Element {
         <div>
             <strong class='font-bold'>{changes.date.toLocaleDateString()}</strong>
             <ol class='list-disc list-inside font-sans mt-1'>
-                {changes.commits.map((c) => <li key={c}>{Commit(c)}</li>)}
+                {changes.commits.map((c) => <li key={c.hash}>{Commit(c)}</li>)}
             </ol>
         </div>
     );

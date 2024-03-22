@@ -13,7 +13,9 @@ export default function App({ Component }: PageProps): JSX.Element {
                 <meta name='viewport' content='width=device-width, initial-scale=1' />
                 <link rel='stylesheet' href='/styles.css' />
             </Head>
-            <Component />
+            <body>
+                <Component />
+            </body>
         </html>
     );
 }

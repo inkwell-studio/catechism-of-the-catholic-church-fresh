@@ -9,9 +9,11 @@
 
 ## Hosting
 
-The web app is hosted by [Deno Deploy](https://deno.com/deploy) at [www.catholiccatechism.app](https://www.catholiccatechism.app/).
+The web app is hosted by [Deno Deploy](https://deno.com/deploy) at
+[www.catholiccatechism.app](https://www.catholiccatechism.app/).
 
-This project uses an [ahead-of-time build](https://fresh.deno.dev/docs/concepts/ahead-of-time-builds), which necessitates the use of GitHub Actions. These are configured by `.github/workflows/deploy.yml`.
+This project uses an [ahead-of-time build](https://fresh.deno.dev/docs/concepts/ahead-of-time-builds), which
+necessitates the use of GitHub Actions. These are configured by `.github/workflows/deploy.yml`.
 
 ## Main tasks
 

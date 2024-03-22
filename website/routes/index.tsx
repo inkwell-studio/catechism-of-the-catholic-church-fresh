@@ -189,7 +189,7 @@ export default function Home(): JSX.Element {
                         <>
                             You may click open cross-reference by clicking them, and you may navigate to paragraphs
                             directly by the URL (e.g.{' '}
-                            <a href='en/192' target='_blank' class='font-mono'>www.catholiccatechism.app/en/192</a>).
+                            <a href='en/192' class='font-mono'>www.catholiccatechism.app/en/192</a>).
                         </>
                     </Paragraph>
                     <Paragraph>

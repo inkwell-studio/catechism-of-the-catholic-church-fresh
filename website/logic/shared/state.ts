@@ -52,7 +52,7 @@ const state: State = {
 
 function determineInitialLanguage(): Language {
     if (IS_BROWSER) {
-        const languageParam = new URL(window.location.href).pathname.split('/')[1];
+        const languageParam = new URL(globalThis.location.href).pathname.split('/')[1];
         const languageInfo = getLanguageInfo(languageParam);
         if (languageInfo.language && languageInfo.supported) {
             return languageInfo.language;
@@ -130,7 +130,6 @@ function navigateToSelectedCrossReference(): void {
         const selectedParagraph = state.crossReference.selectedContent.value[0];
         if (selectedParagraph) {
             clearCrossReferenceSelection();
-            window.location.href = new URL(window.location.href).origin + selectedParagraph.url;
         }
     }
 }

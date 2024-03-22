@@ -3,11 +3,11 @@ import { Fragment, JSX } from 'preact';
 import { translate } from '../../logic/shared/translation.ts';
 import { Content, Language, TableOfContentsEntry, TableOfContentsType } from '../../../catechism/source/types/types.ts';
 
-export function TableOfContents(props: { language: Language; tableOfContents: TableOfContentsType }) {
+export function TableOfContents(props: { tableOfContents: TableOfContentsType; language: Language }) {
     const toc = props.tableOfContents;
 
     return (
-        <>
+        <main f-client-nav>
             {Title(props.language)}
             <div class='flex flex-col gap-12 my-12'>
                 <h2 class='text-3xl text-center'>
@@ -21,14 +21,14 @@ export function TableOfContents(props: { language: Language; tableOfContents: Ta
                         </li>
 
                         {toc.parts.map((part) => (
-                            <li key={part}>
+                            <li key={part.pathID}>
                                 {EntryContainer(props.language, part)}
                             </li>
                         ))}
                     </ol>
                 </nav>
             </div>
-        </>
+        </main>
     );
 }
 
@@ -84,7 +84,9 @@ function ChildEntry(
 
     return (
         <li class={classes + ' ml-4'}>
-            <a href={entry.url} class={titleClasses(entry.contentType)}>{entry.title}</a>
+            <a href={entry.url} class={titleClasses(entry.contentType)}>
+                {entry.title}
+            </a>
             {ParagraphNumbers(language, entry, parent, 'opacity-40 font-sans text-xs ml-1')}
             {Children(language, entry.children, entry, indentationLevel + 1)}
         </li>
@@ -139,7 +141,7 @@ function Children(
         return (
             <ol>
                 {children.map((child) => (
-                    <Fragment key={child}>{ChildEntry(language, child, parent, indentationLevel)}</Fragment>
+                    <Fragment key={child.pathID}>{ChildEntry(language, child, parent, indentationLevel)}</Fragment>
                 ))}
             </ol>
         );

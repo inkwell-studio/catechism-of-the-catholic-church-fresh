@@ -1,26 +1,26 @@
 import { Fragment, JSX } from 'preact';
-import { useSignal } from '@preact/signals';
+
+import CrossReferenceLink from '../(_islands)/cross-reference-link.tsx';
+import ReferenceLinks from '../(_islands)/reference-links.tsx';
+
+import { getUrlFragment } from '../../logic/shared/routing.ts';
+import { translate } from '../../logic/shared/translation.ts';
 
 import {
     Article,
     ArticleParagraph,
-    BibleReference,
     BlockQuote,
     Chapter,
     Content as ContentEnum,
     ContentBase as ContentBaseType,
     InBrief,
     Language,
-    OtherReference,
     Paragraph,
     ParagraphGroup,
     ParagraphSubitem,
     ParagraphSubitemContainer,
     Part,
     Prologue,
-    ReferenceBase,
-    ReferenceCollection,
-    ReferenceEnum,
     Section,
     Subarticle,
     Text,
@@ -35,10 +35,6 @@ import {
     getMainContent,
     getOpeningContent,
 } from '../../../catechism/source/utils/content.ts';
-import { getBibleReferenceUrl, getOtherReferenceUrl } from '../../logic/client/reference.ts';
-import { getUrlFragment } from '../../logic/shared/routing.ts';
-import { Actions } from '../../logic/shared/state.ts';
-import { translate } from '../../logic/shared/translation.ts';
 
 // TODO: Consider all rendering function implementations to be incomplete
 
@@ -88,7 +84,7 @@ export default function ContentBase(props: { content: ContentBaseType; language:
 
 //#region helper components
 function ContentBaseArray(content: Array<ContentBaseType>, language: Language): Array<JSX.Element> {
-    return content.map((c) => <ContentBase key={c} content={c} language={language}></ContentBase>);
+    return content.map((c) => <ContentBase key={getUniqueKey(c)} content={c} language={language}></ContentBase>);
 }
 
 function ArticleContent(article: Article, language: Language): JSX.Element {
@@ -157,7 +153,7 @@ function InBriefContent(inBrief: InBrief, language: Language): JSX.Element {
             <strong class='font-sans text-lg text-purple-900 block mb-1'>{translate('In Brief', language)}</strong>
             <ol>
                 {getAllChildContent(inBrief).map((c) => (
-                    <li key={c} class='mb-2'>
+                    <li key={getUniqueKey(c)} class='mb-2'>
                         <ContentBase content={c} language={language}></ContentBase>
                     </li>
                 ))}
@@ -198,7 +194,9 @@ function ParagraphSubitemContainerContent(
         <ol>
             {paragraphSubitemContainer.mainContent
                 .map((subitem) => {
-                    return <Fragment key={subitem}>{ParagraphSubitemContent(subitem, language)}</Fragment>;
+                    return (
+                        <Fragment key={getUniqueKey(subitem)}>{ParagraphSubitemContent(subitem, language)}</Fragment>
+                    );
                 })}
         </ol>
     );
@@ -268,9 +266,9 @@ function TextWrapperArray(array: Array<ContentBaseType | TextWrapper>, language:
                 ContentEnum.TEXT_WRAPPER === array[index - 1].contentType;
             const spacer = precedingContentWasTextWrapper ? ' ' : '';
 
-            return <Fragment key={c}>{spacer}{TextWrapperContent(c as TextWrapper, language)}</Fragment>;
+            return <Fragment key={getUniqueKey(c)}>{spacer}{TextWrapperContent(c as TextWrapper, language)}</Fragment>;
         } else {
-            return <ContentBase key={c} content={c} language={language}></ContentBase>;
+            return <ContentBase key={getUniqueKey(c)} content={c} language={language}></ContentBase>;
         }
     });
 }
@@ -280,7 +278,7 @@ function TextWrapperContent(textWrapper: TextWrapper, language: Language): JSX.E
         .map((text, index) => {
             const lastFragment = index === textWrapper.mainContent.length - 1;
             return (
-                <Fragment key={text}>
+                <Fragment key={getUniqueKey(text)}>
                     {PlainText(text as Text, lastFragment)}
                 </Fragment>
             );
@@ -295,9 +293,7 @@ function TextWrapperContent(textWrapper: TextWrapper, language: Language): JSX.E
 
                         return (
                             <Fragment key={reference}>
-                                <button onClick={() => Actions.crossReference.select(reference)}>
-                                    {reference.toString()}
-                                </button>
+                                <CrossReferenceLink reference={reference} />
                                 {separator}
                             </Fragment>
                         );
@@ -305,7 +301,7 @@ function TextWrapperContent(textWrapper: TextWrapper, language: Language): JSX.E
             </span>
             <span>
                 {textContent}
-                {ReferenceCollectionContent(textWrapper.referenceCollection, language)}
+                <ReferenceLinks language={language} referenceCollection={textWrapper.referenceCollection} />
             </span>
         </span>
     );
@@ -365,75 +361,14 @@ function PlainText(text: Text, lastFragment: boolean): JSX.Element {
     }
 }
 
-function ReferenceCollectionContent(referenceCollection: ReferenceCollection | null, language: Language): JSX.Element {
-    if (!referenceCollection || referenceCollection.references.length === 0) {
-        return <></>;
-    }
-
-    const isOpen = useSignal(false);
-
-    const superscript = (
-        <button onClick={() => isOpen.value = !isOpen.value} class='px-0.5'>
-            <sup>{referenceCollection.referenceNumber}</sup>
-        </button>
-    );
-
-    const fullDisplay = isOpen.value
-        ? (
-            <div class='absolute z-10 bottom-6 -left-8 w-max text-sm font-sans p-2 bg-white border'>
-                {referenceCollection.references.map((ref, i, refs) => {
-                    const divider = i > 0 && i < refs.length ? '; ' : '';
-
-                    return <>{divider}{ReferenceContent(ref, language)}</>;
-                })}
-                <button onClick={() => isOpen.value = false} class='font-mono ml-2'>
-                    <sup>X</sup>
-                </button>
-            </div>
-        )
-        : <></>;
-
-    return (
-        <span class='relative'>
-            {superscript}
-            {fullDisplay}
-        </span>
-    );
-}
-
-function ReferenceContent(reference: ReferenceBase, language: Language): JSX.Element {
-    if (ReferenceEnum.BIBLE === reference.referenceType) {
-        return BibleReferenceContent(reference as BibleReference, language);
-    } else if (ReferenceEnum.OTHER === reference.referenceType) {
-        return OtherReferenceContent(reference as OtherReference, language);
-    } else {
-        console.warn(`Unknown reference type encountered: ${reference.referenceType}`);
-        return <></>;
-    }
-}
-
-function BibleReferenceContent(reference: BibleReference, language: Language): JSX.Element {
-    const prefix = reference.direct ? '' : translate('Cf. ', language);
-    const postfix = reference.auxillaryText ? ` (${translate(reference.auxillaryText, language)})` : '';
-    const book = translate(reference.book, language);
-
-    return (
-        <a href={getBibleReferenceUrl(reference, language)} target='_blank'>
-            {`${prefix}${book} ${reference.chapter}:${reference.verses}${postfix}`}
-        </a>
-    );
-}
-
-function OtherReferenceContent(reference: OtherReference, language: Language): JSX.Element {
-    const prefix = reference.direct ? '' : translate('Cf. ', language);
-    const source = reference.source;
-    const pointer = reference.pointer ? `: ${reference.pointer}` : '';
-
-    return <a href={getOtherReferenceUrl(reference, language)} target='_blank'>{`${prefix}${source}${pointer}`}</a>;
-}
-
 function UnknownContent(content: ContentBaseType): JSX.Element {
     console.warn(`Unknown content type encountered: ${content.contentType}`);
     return <div>Unhandled content: {content.contentType}</div>;
+}
+//#endregion
+
+//#region helper functions
+function getUniqueKey(content: ContentBaseType): string {
+    return content.pathID;
 }
 //#endregion
