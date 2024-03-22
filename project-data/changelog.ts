@@ -14,6 +14,15 @@ export type Commit = {
 
 export const changelog: Changelog = [
     {
+        date: new Date(2024, 2, 22),
+        commits: [
+            {
+                hash: 'ed2d751f41168d4d3deb168ce33b6ae6b84b2301',
+                message: 'use Fresh Partials for a more app-like experience',
+            },
+        ],
+    },
+    {
         date: new Date(2024, 2, 18),
         commits: [
             {
