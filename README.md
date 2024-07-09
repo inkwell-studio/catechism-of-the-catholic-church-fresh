@@ -1,3 +1,8 @@
+# DEVELOPMENT STATUS:
+
+This branch has some changes that should be pulled into `master`, and some that shouldn't. The appropriate changes
+haven't been pulled into `master` merely on account of time.
+
 # Note
 
 This repository is no longer actively maintained. It has been superseded by the [catechism-of-the-catholic-church](https://github.com/inkwell-studio/catechism-of-the-catholic-church) repository.
