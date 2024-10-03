@@ -1,3 +1,7 @@
+# Note
+
+This repository is no longer actively maintained. It has been superseded by the [catechism-of-the-catholic-church-astro](https://github.com/inkwell-studio/catechism-of-the-catholic-church-astro) repository.
+
 # Catechism of the Catholic Church
 
 ## _A proof-of-concept for a better online version of the Catechism_
