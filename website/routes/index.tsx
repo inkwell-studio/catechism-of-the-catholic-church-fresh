@@ -165,7 +165,7 @@ export default function Home(): JSX.Element {
                     <div class='my-4 mx-4 flex flex-col md:flex-row gap-3'>
                         <ButtonLink
                             newTab={true}
-                            href='https://github.com/inkwell-studio/catechism-of-the-catholic-church'
+                            href='https://github.com/inkwell-studio/catechism-of-the-catholic-church-fresh'
                             text='source code'
                         >
                             <></>
@@ -189,7 +189,7 @@ export default function Home(): JSX.Element {
                         <>
                             You may click open cross-reference by clicking them, and you may navigate to paragraphs
                             directly by the URL (e.g.{' '}
-                            <a href='en/192' class='font-mono'>www.catholiccatechism.app/en/192</a>).
+                            <a href='en/192' class='font-mono'>www.TODO.com/en/192</a>).
                         </>
                     </Paragraph>
                     <Paragraph>

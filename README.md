@@ -1,14 +1,12 @@
 # Note
 
-This repository is no longer actively maintained. It has been superseded by the [catechism-of-the-catholic-church-astro](https://github.com/inkwell-studio/catechism-of-the-catholic-church-astro) repository.
+This repository is no longer actively maintained. It has been superseded by the [catechism-of-the-catholic-church](https://github.com/inkwell-studio/catechism-of-the-catholic-church) repository.
 
 # Catechism of the Catholic Church
 
 ## _A proof-of-concept for a better online version of the Catechism_
 
 This is a website for the _Catechism of the Catholic Church_, built with [Deno Fresh](https://fresh.deno.dev/).
-
-It is available at [https://www.catholiccatechism.app/](https://www.catholiccatechism.app/)
 
 ## Potentially useful links
 

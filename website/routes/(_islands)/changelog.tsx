@@ -24,7 +24,7 @@ export default function Changelog(): JSX.Element {
                 <a
                     class='hover:underline'
                     target='_blank'
-                    href='https://github.com/inkwell-studio/catechism-of-the-catholic-church/commits/master'
+                    href='https://github.com/inkwell-studio/catechism-of-the-catholic-church-fresh/commits/master'
                 >
                     <strong class='font-bold italic'>See all updates</strong>
                 </a>
@@ -49,7 +49,7 @@ function Commit(commit: Commit): JSX.Element {
         <a
             class='hover:underline'
             target='_blank'
-            href={`https://github.com/inkwell-studio/catechism-of-the-catholic-church/commit/${commit.hash}`}
+            href={`https://github.com/inkwell-studio/catechism-of-the-catholic-church-fresh/commit/$-fresh{commit.hash}`}
         >
             {commit.message}
         </a>
