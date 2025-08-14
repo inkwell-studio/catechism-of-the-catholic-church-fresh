@@ -49,7 +49,7 @@ function Commit(commit: Commit): JSX.Element {
         <a
             class='hover:underline'
             target='_blank'
-            href={`https://github.com/inkwell-studio/catechism-of-the-catholic-church-fresh/commit/$-fresh{commit.hash}`}
+            href={`https://github.com/inkwell-studio/catechism-of-the-catholic-church-fresh/commit/${commit.hash}`}
         >
             {commit.message}
         </a>
