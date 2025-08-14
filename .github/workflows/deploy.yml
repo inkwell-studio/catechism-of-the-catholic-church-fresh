@@ -1,7 +1,7 @@
 name: Deploy
 on:
   push:
-    branches: [master]
+    branches: master
   pull_request:
     branches: master
 
@@ -11,18 +11,15 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions:
-      # Needed for authentication with Deno Deploy
-      id-token: write
-
-      # Needed to clone the repository
-      contents: read
+      id-token: write # Needed for auth with Deno Deploy
+      contents: read # Needed to clone the repository
 
     steps:
       - name: Clone repository
         uses: actions/checkout@v4
 
       - name: Install Deno
-        uses: denoland/setup-deno@v1
+        uses: denoland/setup-deno@v2
         with:
           deno-version: v1.x
 
@@ -32,5 +29,8 @@ jobs:
       - name: Upload to Deno Deploy
         uses: denoland/deployctl@v1
         with:
-          project: "TODO"
+          project: "catechism-website"
           entrypoint: "./website/main.ts"
+          root: ""
+          
+          
