@@ -26,20 +26,3 @@ See `deno.json` for all tasks.
 
 The `pre-commit` task should be successfully executed before committing to ensure that the code is linted, correct, and
 formatted, and that the artifacts are kept in-sync with the source.
-
-Commit messages should follow the following pattern:
-
-```
-type(scope): details
-
-more details (optional)
-```
-
-Where `type` is one of:
-
-- `feat` — for user-facing functionality additions and improvements
-- `fix` — for bug fixes
-- `refactor` — for code refactoring that does not substantially change user-facing functionality
-- `chore` — for non-user-facing changes such build or configuration changes, or dependency updates
-- `style` — for merely cosmetic code changes
-- `docs` — for documentation changes
